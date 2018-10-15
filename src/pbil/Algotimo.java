@@ -7,12 +7,12 @@ import java.util.Random;
 import models.*;
 
 public class Algotimo {
-	
+	static List<CommitteeProbability> pvRootCommittee = new ArrayList<CommitteeProbability>();
 	public static void main(String[] args) {
 		Random m = new Random();
-		List<CommitteeProbability> pvRootCommittee = new ArrayList<CommitteeProbability>();
 		List<Committee> pool_1 = new ArrayList<Committee>();
 		for (int i = 0; i < 7; i++) {
+			CommitteeProbability cp = new CommitteeProbability();
 			Parameter p = new Parameter(ConfigType.DOUBLE, "zé");
 			Classifier a = new Classifier();
 			a.nome = new String();
@@ -24,6 +24,9 @@ public class Algotimo {
 			x.classifiers = new ArrayList<Classifier>();
 			x.type = CommitteType.EMSEMBLE;
 			x.classifiers.add(a);
+			cp.Rootmethod=x;
+			cp.value=1;
+			pvRootCommittee.add(cp);
 			pool_1.add(x);
 		}
 		List<Classifier> pool_2 = new ArrayList<Classifier>();
@@ -48,12 +51,14 @@ public class Algotimo {
 		int x = 0;
 		Individual bestSolution = new Individual();
 		bestSolution.accuracy = 0.0;
+		int sum =0;
 		List<Individual> population = new ArrayList<Individual>();
 		//List<Individual> newPopulation = new ArrayList<Individual>();
 		double accuracy = 0;
 		while ((timeLimit > 0) || numberOfGenerations <= generations) {
 			for (int i = 0; i < numberOfIndividuals; i++) {
-				drawCommittee();
+				sum = sumProbability();
+				rootMethodValue = drawCommittee(pvRootCommittee, sum);
 				Individual individual = new Individual();
 				individual.rootMethod = rootMethodValue;
 				if (rootMethodValue.type.equals(CommitteType.NOEMSEMBLE)) {
@@ -90,7 +95,29 @@ public class Algotimo {
 		}
 		return individuals;
 	}
-	private static Committe drawCommittee() {
-		
+	private static Committee drawCommittee(List<CommitteeProbability> cp, int soma) {
+		Random m = new Random();
+		int aux =0;
+		aux = m.nextInt(soma);
+		int i =0;
+		Committee drawed = new Committee();
+		while (aux>=0) {
+			aux -= cp.get(i).value;
+			if (aux<=0) {
+				drawed =cp.get(i).Rootmethod;
+				cp.get(i).value++;
+				pvRootCommittee = cp;
+				break;
+			}
+			i++;
+		}
+		return drawed;
+	}
+	private static int sumProbability() {
+		int sum =0;
+		for (CommitteeProbability committeeProbability : pvRootCommittee) {
+			sum+=committeeProbability.value;
+		}
+		return sum;
 	}
 }
