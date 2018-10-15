@@ -98,7 +98,7 @@ public class Algotimo {
 	private static Committee drawCommittee(List<CommitteeProbability> cp, int soma) {
 		Random m = new Random();
 		int aux =0;
-		aux = m.nextInt(soma);
+		aux = m.nextInt(soma) +1;
 		int i =0;
 		Committee drawed = new Committee();
 		while (aux>=0) {
