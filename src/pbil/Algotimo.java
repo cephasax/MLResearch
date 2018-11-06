@@ -19,7 +19,7 @@ public class Algotimo {
 			a.parameters = new ArrayList<Parameter>();
 			a.parameters.add(p);
 			Committee x = new Committee();
-			x.nome = "metodo "+i;
+			x.setNome("metodo "+i);
 			x.setClassifiers(new ArrayList<Classifier>());
 			x.setType(CommitteType.EMSEMBLE);
 			x.getClassifiers().add(a);
@@ -31,7 +31,7 @@ public class Algotimo {
 		List<Classifier> pool_2 = new ArrayList<Classifier>();
 		for (int i = 0; i < 9; i++) {
 			Classifier x = new Classifier();
-			x.nome = "Classificador base "+i;
+			x.setNome("Classificador base "+i);
 			pool_2.add(x);
 		}
 		Committee rootMethodValue = new Committee();
