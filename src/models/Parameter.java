@@ -17,8 +17,26 @@ public class Parameter {
 		}
 		
 	}
-	public ConfigType type;
-	public String name;
-	public String values;
+	private ConfigType type;
+	private String name;
+	private String values;
+	public ConfigType getType() {
+		return type;
+	}
+	public void setType(ConfigType type) {
+		this.type = type;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getValues() {
+		return values;
+	}
+	public void setValues(String values) {
+		this.values = values;
+	}
 	
 }
