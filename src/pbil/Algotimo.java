@@ -15,24 +15,23 @@ public class Algotimo {
 			CommitteeProbability cp = new CommitteeProbability();
 			Parameter p = new Parameter(ConfigType.DOUBLE, "zé");
 			Classifier a = new Classifier();
-			a.nome = new String();
-			a.nome = "Metodo: "+i+"";
+			a.nome = new String("Metodo: "+i+" ");
 			a.parameters = new ArrayList<Parameter>();
 			a.parameters.add(p);
 			Committee x = new Committee();
-			x.nome = "metodo "+i;
-			x.classifiers = new ArrayList<Classifier>();
-			x.type = CommitteType.EMSEMBLE;
-			x.classifiers.add(a);
-			cp.Rootmethod=x;
-			cp.value=1;
+			x.setNome("metodo "+i);
+			x.setClassifiers(new ArrayList<Classifier>());
+			x.setType(CommitteType.EMSEMBLE);
+			x.getClassifiers().add(a);
+			cp.setRootmethod(x);
+			cp.setValue(1);
 			pvRootCommittee.add(cp);
 			pool_1.add(x);
 		}
 		List<Classifier> pool_2 = new ArrayList<Classifier>();
 		for (int i = 0; i < 9; i++) {
 			Classifier x = new Classifier();
-			x.nome = "Classificador base "+i;
+			x.setNome("Classificador base "+i);
 			pool_2.add(x);
 		}
 		Committee rootMethodValue = new Committee();
@@ -50,8 +49,8 @@ public class Algotimo {
 		double learnigRate = 0.5;
 		int x = 0;
 		Individual bestSolution = new Individual();
-		bestSolution.accuracy = 0.0;
-		int sum =0;
+		bestSolution.setAccuracy(0.0);
+		float sum =0;
 		List<Individual> population = new ArrayList<Individual>();
 		//List<Individual> newPopulation = new ArrayList<Individual>();
 		double accuracy = 0;
@@ -60,25 +59,25 @@ public class Algotimo {
 				sum = sumProbability();
 				rootMethodValue = drawCommittee(pvRootCommittee, sum);
 				Individual individual = new Individual();
-				individual.rootMethod = rootMethodValue;
-				if (rootMethodValue.type.equals(CommitteType.NOEMSEMBLE)) {
+				individual.setRootMethod(rootMethodValue);
+				List<Classifier> baseClassifierConfigs = new ArrayList<Classifier>();
+				if (rootMethodValue.getType().equals(CommitteType.NOEMSEMBLE)) {
 					x = m.nextInt(9);
 					baseClassifierValue = pool_2.get(x);
-					individual.classifiers.add(baseClassifierValue);
+					individual.getClassifiers().add(baseClassifierValue);
 				}
-				List<Classifier> baseClassifierConfigs = new ArrayList<Classifier>();
-				if (rootMethodValue.type.equals(CommitteType.EMSEMBLE)) {
+				else {
 					Committee rootMethodConfigs = new Committee();// =sampleRootConfig
-					rootMethodConfigs.classifiers = new ArrayList<Classifier>();
-					c = rootMethodConfigs.classifiers.size();
+					rootMethodConfigs.setClassifiers(new ArrayList<Classifier>());
+					c = rootMethodConfigs.getClassifiers().size();
 					for (int j = 0; j < c; j++) {
-						baseClassifierConfigs.add(rootMethodConfigs.classifiers.get(j));
+						baseClassifierConfigs.add(rootMethodConfigs.getClassifiers().get(j));
 					}
-					individual.classifiers = baseClassifierConfigs;
+					individual.setClassifiers(baseClassifierConfigs);
 					accuracy = m.nextDouble();
-					individual.accuracy = accuracy;
+					individual.setAccuracy(accuracy);
 				}
-				individual.name = "ihuuu";
+				individual.setName("ihuuu");
 				population.add(individual);
 			}
 			population = bestIndividuals(population, 25);
@@ -90,22 +89,25 @@ public class Algotimo {
 	}
 	private static List<Individual> bestIndividuals(List<Individual> individuals, int n) {
 		Collections.sort(individuals);
-		for (int i =n; i<individuals.size();i++) {
+		int size = individuals.size();
+		for (int i =size-1; i>=n;i--) {
 			individuals.remove(i);
 		}
 		return individuals;
 	}
-	private static Committee drawCommittee(List<CommitteeProbability> cp, int soma) {
+	private static Committee drawCommittee(List<CommitteeProbability> cp, float sum) {
 		Random m = new Random();
-		int aux =0;
-		aux = m.nextInt(soma);
+		float aux =0;
+		aux = m.nextInt((int) sum);
+		System.out.print(aux);
 		int i =0;
 		Committee drawed = new Committee();
 		while (aux>=0) {
-			aux -= cp.get(i).value;
+			aux -= cp.get(i).getValue();
 			if (aux<=0) {
-				drawed =cp.get(i).Rootmethod;
-				cp.get(i).value++;
+				drawed =cp.get(i).getRootmethod();
+				cp.get(i).setValue(cp.get(i).getValue()+1);
+				System.out.println(" "+ cp.get(i));
 				pvRootCommittee = cp;
 				break;
 			}
@@ -113,10 +115,10 @@ public class Algotimo {
 		}
 		return drawed;
 	}
-	private static int sumProbability() {
-		int sum =0;
+	private static float sumProbability() {
+		float sum =0;
 		for (CommitteeProbability committeeProbability : pvRootCommittee) {
-			sum+=committeeProbability.value;
+			sum+=committeeProbability.getValue();
 		}
 		return sum;
 	}

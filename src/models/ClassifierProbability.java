@@ -3,7 +3,25 @@ package models;
 import java.util.List;
 
 public class ClassifierProbability {
-	public String name;
-	public int value;
-	public List<ClassifierProbability> subClassifiers; 
+	private String name;
+	private int value;
+	private List<ClassifierProbability> subClassifiers;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
+	}
+	public List<ClassifierProbability> getSubClassifiers() {
+		return subClassifiers;
+	}
+	public void setSubClassifiers(List<ClassifierProbability> subClassifiers) {
+		this.subClassifiers = subClassifiers;
+	} 
 }
