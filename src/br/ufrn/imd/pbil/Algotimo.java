@@ -1,10 +1,11 @@
-package pbil;
+package br.ufrn.imd.pbil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import models.*;
+
+import br.ufrn.imd.pbil.domain.*;
 
 public class Algotimo {
 	static List<CommitteeProbability> pvRootCommittee = new ArrayList<CommitteeProbability>();

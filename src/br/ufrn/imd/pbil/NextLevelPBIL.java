@@ -1,4 +1,4 @@
-package pbil;
+package br.ufrn.imd.pbil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
-import models.ConfigType;
+import br.ufrn.imd.pbil.domain.ConfigType;
 public class NextLevelPBIL {
 	static Random m = new Random();
 	public static void main(String[] args) {
