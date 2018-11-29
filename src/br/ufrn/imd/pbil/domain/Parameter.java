@@ -1,5 +1,8 @@
 package br.ufrn.imd.pbil.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
@@ -7,18 +10,51 @@ public class Parameter {
 
 	protected ParameterType type;
 	private String name;
-	private String value;
+	private List<?> possibilities;
 
 	Parameter(String name, ParameterType parameterType) throws InvalidParameterTypeException {
 		this.name = name;
 		if (isCorrectParameterType(parameterType)) {
 			this.type = parameterType;
+			castPossibilities();
 		} else {
 			throw new InvalidParameterTypeException();
 		}
+	}
+	
+	public boolean isCorrectParameterType(ParameterType parameterType) {
 
+		if (parameterType == ParameterType.BOOLEAN || parameterType == ParameterType.CHAR
+				|| parameterType == ParameterType.DOUBLE || parameterType == ParameterType.INT
+				|| parameterType == ParameterType.STRING) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
+	public void castPossibilities() {
+		switch (this.type) {
+			case BOOLEAN:
+				this.setPossibilities(new ArrayList<Boolean>());
+				break;
+			case CHAR:
+				this.setPossibilities(new ArrayList<String>());
+				break;
+			case DOUBLE:
+				this.setPossibilities(new ArrayList<Double>());
+				break;
+			case INT:
+				this.setPossibilities(new ArrayList<Integer>());
+				break;
+			case STRING:
+				this.setPossibilities(new ArrayList<String>());
+				break;
+			default:
+				break;
+		}
+	}
+	
 	public ParameterType getType() {
 		return type;
 	}
@@ -35,28 +71,12 @@ public class Parameter {
 		this.name = name;
 	}
 
-	public String getValue() {
-		return value;
+	public List<?> getPossibilities() {
+		return possibilities;
 	}
 
-	public void setValues(String values) {
-		this.value = values;
+	public void setPossibilities(List<?> possibilities) {
+		this.possibilities = possibilities;
 	}
-
-	@Override
-	public String toString() {
-		return "Param: [type=" + type + ", name=" + name + ", value=" + value + "]";
-	}
-
-	public boolean isCorrectParameterType(ParameterType parameterType) {
-
-		if (parameterType == ParameterType.BOOLEAN || parameterType == ParameterType.CHAR
-				|| parameterType == ParameterType.DOUBLE || parameterType == ParameterType.INT
-				|| parameterType == ParameterType.STRING) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	
 }
