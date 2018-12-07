@@ -1,58 +1,16 @@
 package br.ufrn.imd.pbil.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.ufrn.imd.pbil.enums.ParameterType;
-import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class Parameter {
-
-	protected ParameterType type;
-	private String name;
-	private List<?> possibilities;
-
-	Parameter(String name, ParameterType parameterType) throws InvalidParameterTypeException {
-		this.name = name;
-		if (isCorrectParameterType(parameterType)) {
-			this.type = parameterType;
-			castPossibilities();
-		} else {
-			throw new InvalidParameterTypeException();
-		}
-	}
 	
-	public boolean isCorrectParameterType(ParameterType parameterType) {
+	private ParameterType type;
+	private String name;
+	private String value;
 
-		if (parameterType == ParameterType.BOOLEAN || parameterType == ParameterType.CHAR
-				|| parameterType == ParameterType.DOUBLE || parameterType == ParameterType.INT
-				|| parameterType == ParameterType.STRING) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public void castPossibilities() {
-		switch (this.type) {
-			case BOOLEAN:
-				this.setPossibilities(new ArrayList<Boolean>());
-				break;
-			case CHAR:
-				this.setPossibilities(new ArrayList<String>());
-				break;
-			case DOUBLE:
-				this.setPossibilities(new ArrayList<Double>());
-				break;
-			case INT:
-				this.setPossibilities(new ArrayList<Integer>());
-				break;
-			case STRING:
-				this.setPossibilities(new ArrayList<String>());
-				break;
-			default:
-				break;
-		}
+	public Parameter(String name, ParameterType type ) {
+		this.name = name;
+		this.type = type;
 	}
 	
 	public ParameterType getType() {
@@ -71,12 +29,12 @@ public class Parameter {
 		this.name = name;
 	}
 
-	public List<?> getPossibilities() {
-		return possibilities;
+	public String getValue() {
+		return value;
 	}
 
-	public void setPossibilities(List<?> possibilities) {
-		this.possibilities = possibilities;
+	public void setValue(String value) {
+		this.value = value;
 	}
-	
+
 }

@@ -7,15 +7,15 @@ import br.ufrn.imd.pbil.enums.ClassifierType;
 
 public abstract class Classifier {
 
-	private ClassifierType classifierType;
-	private String name;
-	private List<Parameter> parameters;
+	protected ClassifierType classifierType;
+	protected String name;
+	protected List<Parameter> parameters;
 
 	public Classifier() {
 		this.name = new String();
 		this.parameters = new ArrayList<Parameter>();
 	}
-
+	
 	public void addParameter(Parameter parameter) {
 		this.parameters.add(parameter);
 	}

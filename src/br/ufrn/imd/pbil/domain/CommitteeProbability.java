@@ -38,6 +38,6 @@ public class CommitteeProbability {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return rootmethod.getNome() + ": " + value;
+		return rootmethod.getName() + ": " + value;
 	}
 }

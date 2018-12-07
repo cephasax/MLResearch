@@ -18,8 +18,7 @@ public class BaseClassifier extends Classifier {
 		this.baseClassifierType = baseClassifierType;
 	}
 
-	
-	@Override
+	/*@Override
 	public String toString() {
 		String param = " :";
 		StringBuilder sb = new StringBuilder();
@@ -31,7 +30,7 @@ public class BaseClassifier extends Classifier {
 		this.name + sb.toString();
 		
 		return "BaseClassifier [baseClassifierType=" + baseClassifierType + "]";
-	}
+	}*/
 
 	
 	
