@@ -5,15 +5,10 @@ import br.ufrn.imd.pbil.domain.BayesNet;
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.prototypes.BayesNetPrototype;
-import br.ufrn.imd.pbil.domain.prototypes.ClassifierPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class BayesNetBuilder extends ClassifierBuilder{
-
-	public BayesNetBuilder(ClassifierPrototype classifierPrototype) {
-		super(classifierPrototype);
-	}
 
 	@Override
 	public Classifier defautBuild() {
@@ -52,12 +47,6 @@ public class BayesNetBuilder extends ClassifierBuilder{
 
 	@Override
 	public Classifier wheitedDrawBuild() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Classifier weightedDrawBuild() {
 		// TODO Auto-generated method stub
 		return null;
 	}

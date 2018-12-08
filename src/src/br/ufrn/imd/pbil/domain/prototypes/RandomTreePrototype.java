@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RandomTreePrototype extends ClassifierPrototype{
-	
 	public RandomTreePrototype() throws InvalidParameterTypeException {
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.INT);
 		m = parameterBuilder(m, 1, 64);
