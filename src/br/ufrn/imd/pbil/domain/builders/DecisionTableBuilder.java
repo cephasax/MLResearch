@@ -2,12 +2,9 @@ package br.ufrn.imd.pbil.domain.builders;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.DecisionTable;
 import br.ufrn.imd.pbil.domain.Parameter;
-import br.ufrn.imd.pbil.domain.prototypes.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.prototypes.DecisionTablePrototype;
 import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
@@ -44,7 +41,7 @@ public class DecisionTableBuilder extends ClassifierBuilder {
 		
 		classifier = new DecisionTable();
 		
-		String value = new String();
+
 		int randomizedInt = 0;
 		
 		try {
@@ -57,37 +54,29 @@ public class DecisionTableBuilder extends ClassifierBuilder {
 			
 			Parameter i = new Parameter("I",ParameterType.BOOLEAN);
 			
-			value =  ""+parametersValues.getParameters().get(1)
-			.getPossibilities().get(m.nextInt(1));
-			
-			i.setValue(value);
+			i.setValue(randomValueForParameter(i));
 			parameters.add(i);
 			
 			Parameter s = new Parameter("S",ParameterType.STRING);
 			s.setType(ParameterType.STRING);
 			s.setName("S");
 			
-			value =  ""+parametersValues.getParameters().get(2)
-			.getPossibilities().get(m.nextInt(1));
 			
-			s.setValue(value);
+			s.setValue(randomValueForParameter(s));
 			parameters.add(s);
 			
-			Parameter x = new Parameter("X",ParameterType.STRING);
-			
-			value =  ""+parametersValues.getParameters().get(3)
-			.getPossibilities().get(m.nextInt(3));
-			
-			x.setValue(value);
+			Parameter x = new Parameter("X",ParameterType.STRING);			
+			x.setValue(randomValueForParameter(x));
 			parameters.add(x);
-			randomTable.setClassifierType(ClassifierType.BASE_CLASSIFIER);
-			randomTable.setName("Decision Table");
-			randomTable.setParameters(parameters);
+			
+			classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
+			classifier.setName("Decision Table");
+			classifier.setParameters(parameters);
 			
 		} catch (InvalidParameterTypeException e1) {
 			e1.printStackTrace();
 		}
-		return randomTable;
+		return classifier;
 	}
 	public Classifier wheitedDrawBuild() {
 		// TODO Auto-generated method stub

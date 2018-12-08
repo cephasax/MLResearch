@@ -16,7 +16,7 @@ public class SMOPrototype extends ClassifierPrototype{
 		possibilities.add("Puk");
 		possibilities.add("RBFKernel");
 		u.setPossibilities(possibilities);
-		parameters.add(u);
+		parameters.put(u.getName(),u);
 	}
 	
 }
