@@ -43,4 +43,15 @@ public abstract class Classifier {
 	public void setParameters(List<Parameter> parameters) {
 		this.parameters = parameters;
 	}
+	@Override
+	public String toString() {
+		return this.name +": "+this.parameters.toString();
+	}
+	public void print() {
+		System.out.println(name+":{");
+		for (Parameter parameter : parameters) {
+			parameter.print();
+		}
+		System.out.println("}");
+	}
 }

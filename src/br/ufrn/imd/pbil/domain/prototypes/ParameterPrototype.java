@@ -58,7 +58,7 @@ public class ParameterPrototype {
 	public ParameterType getType() {
 		return type;
 	}
-
+	
 	public void setType(ParameterType type) {
 		this.type = type;
 	}
@@ -74,7 +74,17 @@ public class ParameterPrototype {
 	public List<?> getPossibilities() {
 		return possibilities;
 	}
-
+	@Override
+	public String toString() {
+		return name+" :"+possibilities.toString();
+	}
+	private void print() {
+		System.out.println(name+":{");
+		for (Object object : possibilities) {
+			System.out.println(object.toString());
+		}
+		System.out.println("}");
+	}
 	public void setPossibilities(List<?> possibilities) {
 		this.possibilities = possibilities;
 	}

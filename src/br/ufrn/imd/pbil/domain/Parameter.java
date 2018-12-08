@@ -36,5 +36,12 @@ public class Parameter {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	@Override
+	public String toString() {
+		return name+": "+value+";";
+	}
+	public void print() {
+		System.out.println(this);
+	}
 
 }
