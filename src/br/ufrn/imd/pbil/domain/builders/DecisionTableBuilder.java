@@ -13,11 +13,7 @@ import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class DecisionTableBuilder implements ClassifierBuilder {
-	
-	private Classifier classifier;
-	private ClassifierPrototype prototype;
-	private StringBuilder stringBuilder;
+public class DecisionTableBuilder extends ClassifierBuilder {
 	
 	public Classifier defautBuild() {
 		
@@ -48,19 +44,15 @@ public class DecisionTableBuilder implements ClassifierBuilder {
 		
 		classifier = new DecisionTable();
 		
+		String value = new String();
+		int randomizedInt = 0;
+		
 		try {
 			prototype = new DecisionTablePrototype();
-			stringBuilder = new StringBuilder();
-			
-			Random m = new Random();
 			
 			List<Parameter> parameters = new ArrayList<Parameter>();
 			Parameter e = new Parameter("E", ParameterType.STRING);
-			
-			stringBuilder.append(prototype.getParameters().get(e.getValue());
-			//get(0).getPossibilities().get(m.nextInt(4)));
-			
-			e.setValue(value);
+			e.setValue(randomValueForParameter(e));
 			parameters.add(e);
 			
 			Parameter i = new Parameter("I",ParameterType.BOOLEAN);
@@ -101,4 +93,7 @@ public class DecisionTableBuilder implements ClassifierBuilder {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
 }
