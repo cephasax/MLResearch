@@ -11,11 +11,15 @@ public abstract class ClassifierBuilder {
 	protected Classifier classifier;
 	protected ClassifierPrototype prototype;	
 	
+	public ClassifierBuilder(ClassifierPrototype classifierPrototype) {
+		this.prototype = classifierPrototype;
+	}
+	
 	public abstract Classifier defautBuild();
 	
 	public abstract Classifier randomBuild();
 	
-	public abstract Classifier wheitedDrawBuild();
+	public abstract Classifier weightedDrawBuild();
 	
 	protected int getSizeOfPossibilities(Parameter p){
 		return prototype.getParameters().get(p.getName()).getPossibilities().size();

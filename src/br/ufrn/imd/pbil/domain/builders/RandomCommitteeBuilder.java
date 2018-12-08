@@ -6,20 +6,15 @@ import java.util.List;
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.DecisionTable;
 import br.ufrn.imd.pbil.domain.Parameter;
-import br.ufrn.imd.pbil.domain.prototypes.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.prototypes.MlpPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class DecisionTableBuilder extends ClassifierBuilder {
+public class RandomCommitteeBuilder extends ClassifierBuilder {
 
-	public DecisionTableBuilder(ClassifierPrototype classifierPrototype) {
-		super(classifierPrototype);
-	}
+	public Committee defautBuild() {
 
-	public Classifier defautBuild() {
-
-		classifier = new DecisionTable();
+		classifier = new Random();
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
 		Parameter e = new Parameter("E", ParameterType.STRING);
