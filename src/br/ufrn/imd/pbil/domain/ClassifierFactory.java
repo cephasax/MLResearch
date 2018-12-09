@@ -1,5 +1,7 @@
 package br.ufrn.imd.pbil.domain;
 
+import br.ufrn.imd.pbil.domain.baseclassifiers.BaseClassifier;
+import br.ufrn.imd.pbil.domain.committees.Committee;
 import br.ufrn.imd.pbil.enums.ClassifierType;
 
 public class ClassifierFactory {

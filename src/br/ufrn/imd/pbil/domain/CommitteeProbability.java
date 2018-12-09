@@ -3,6 +3,7 @@ package br.ufrn.imd.pbil.domain;
 import java.util.List;
 
 import br.ufrn.imd.pbil.annotations.ToFix;
+import br.ufrn.imd.pbil.domain.committees.Committee;
 
 public class CommitteeProbability {
 	private Committee rootmethod;
