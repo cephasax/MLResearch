@@ -1,6 +1,8 @@
 package br.ufrn.imd.pbil.domain.baseclassifiers;
 
+import java.sql.ParameterMetaData;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import br.ufrn.imd.pbil.enums.ParameterType;

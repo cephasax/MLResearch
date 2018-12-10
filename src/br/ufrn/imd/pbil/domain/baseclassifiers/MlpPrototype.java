@@ -19,11 +19,7 @@ public class MlpPrototype extends ClassifierPrototype{
 		parameters.put("L", l);
 		
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.DOUBLE);
-		List<Double> mValaues = new ArrayList<Double>();
-		for(double i = 0.1; i <= 1; i = i + 0.1) {
-			mValaues.add(i);
-		}
-		m.setPossibilities(mValaues);
+		m = buildDoubleParamete(0.1, 1, 0.1,m);
 		parameters.put("M", m);
 		
 		ParameterPrototype b = new ParameterPrototype("B", ParameterType.BOOLEAN);
@@ -64,11 +60,7 @@ public class MlpPrototype extends ClassifierPrototype{
 		parameters.put("D", d);
 		
 		ParameterPrototype s = new ParameterPrototype("S", ParameterType.STRING);
-		List<Integer> sValaues = new ArrayList<Integer>();
-		for(int i = 1; i <= 255; i++) {
-			sValaues.add(i);
-		}
-		s.setPossibilities(sValaues);
+		s = buildIntParamete(1, 255, 1,s);
 		parameters.put("S", s);
 	}
 }
