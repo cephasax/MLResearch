@@ -1,10 +1,7 @@
 package br.ufrn.imd.pbil.domain.baseclassifiers;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
@@ -12,7 +9,7 @@ public class KstarPrototype extends ClassifierPrototype{
 	public KstarPrototype() throws InvalidParameterTypeException {
 		// TODO Auto-generated constructor stub
 		ParameterPrototype b = new ParameterPrototype("B",ParameterType.INT);
-		b = bPossibiliteis(b);
+		b = buildIntParamete(1, 100,1, b);
 		parameters.put(b.getName(), b);
 		
 		ParameterPrototype e =new ParameterPrototype("E", ParameterType.BOOLEAN);
@@ -22,14 +19,5 @@ public class KstarPrototype extends ClassifierPrototype{
 		ParameterPrototype x = new ParameterPrototype("C", ParameterType.STRING);
 		x.setPossibilities(Arrays.asList("a","d","m","n"));
 		parameters.put(x.getName(), x);
-	}
-
-	private ParameterPrototype bPossibiliteis(ParameterPrototype b) {
-		List<Integer> bValues = new ArrayList<Integer>();
-		for(int i =1; i<=100;i++) {
-			bValues.add(i);
-		}
-		b.setPossibilities(bValues);
-		return b;
 	}
 }
