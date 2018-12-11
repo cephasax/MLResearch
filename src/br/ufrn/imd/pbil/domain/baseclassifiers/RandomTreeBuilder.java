@@ -30,6 +30,10 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 		n.setValue("3");
 		classifier.addParameter(n);
 		
+		Parameter u = new Parameter("U",ParameterType.INT);
+		u.setValue("false");
+		classifier.addParameter(u);
+		
 		return classifier;
 	}
 
@@ -52,6 +56,9 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 		n.setValue(randomValueForParameter(n));
 		classifier.addParameter(n);
 		
+		Parameter u = new Parameter("U",ParameterType.INT);
+		u.setValue(randomValueForParameter(u));
+		classifier.addParameter(u);
 		return classifier;
 	}
 

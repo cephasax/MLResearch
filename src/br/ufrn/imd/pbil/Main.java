@@ -22,6 +22,12 @@ public class Main {
 			Classifier solucao = ClassifierFactory.buildClassifier(BaseClassifierType.values()[indexOfClassifier]
 					,BaseClassifierConfig.values()[indexOfConfig] );
 			classifiers.add(solucao);
+			generations--;
+		}
+		generations=0;
+		while (generations <=20) {
+			classifiers.get(generations).print();
+			generations++;
 		}
 	}
 
