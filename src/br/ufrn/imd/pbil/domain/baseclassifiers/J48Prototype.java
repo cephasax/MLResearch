@@ -33,30 +33,11 @@ public class J48Prototype extends ClassifierPrototype{
 		parameters.put(s.getName(), s);
 		
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.INT); 
-		m = buildInt(m);
+		m = buildIntParamete(1, 64, 1, m);
 		parameters.put(m.getName(), m);
 		
 		ParameterPrototype c = new ParameterPrototype("C", ParameterType.DOUBLE); 
-		c = buildDouble(c);
+		c = buildDoubleParamete(0.5, 5, 0.5, c);
 		parameters.put(c.getName(), c);
-	
-	}
-
-	private ParameterPrototype buildInt(ParameterPrototype m) {
-		List<Integer> values = Arrays.asList();
-		for (int i =1;i<=64;i++ ) {
-			values.add(i);
-		}
-		m.setPossibilities(values);
-		return m;
-	}
-	
-	private ParameterPrototype buildDouble(ParameterPrototype m) {
-		List<Double> values = Arrays.asList();
-		for(double i =0.5; i<=5; i+=0.5) {
-			values.add(i);
-		}
-		m.setPossibilities(values);
-		return m;
 	}
 }

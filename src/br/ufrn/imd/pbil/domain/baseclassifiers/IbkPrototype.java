@@ -14,7 +14,7 @@ public class IbkPrototype extends ClassifierPrototype {
 		parameters.put(e.getName(), e);
 		
 		ParameterPrototype k  = new ParameterPrototype("K", ParameterType.INT);
-		k = kPossibilities(k);
+		k = buildIntParamete(1, 64, 1, k);
 		parameters.put(k.getName(), k);
 		
 		ParameterPrototype i = new ParameterPrototype("I", ParameterType.BOOLEAN);
@@ -28,14 +28,5 @@ public class IbkPrototype extends ClassifierPrototype {
 		ParameterPrototype x = new ParameterPrototype("X", ParameterType.BOOLEAN);
 		x.setPossibilities(Arrays.asList(true,false));
 		parameters.put(x.getName(), x);
-	}
-
-	private ParameterPrototype kPossibilities(ParameterPrototype k) {
-		List<Integer> values = new ArrayList<Integer>();
-		for(int i =1; i<=64;i++) {
-			values.add(i);
-		}
-		k.setPossibilities(values);
-		return k;
 	}
 }

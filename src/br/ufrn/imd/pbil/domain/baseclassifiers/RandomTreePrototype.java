@@ -11,33 +11,24 @@ public class RandomTreePrototype extends ClassifierPrototype{
 	public RandomTreePrototype() throws InvalidParameterTypeException {
 		
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.INT);
-		m = parameterBuilder(m, 1, 64);
+		m = buildIntParamete( 1, 64,1,m);
 		parameters.put(m.getName(), m);
 		
 		ParameterPrototype k = new ParameterPrototype("K", ParameterType.INT);
-		k = parameterBuilder(k, 0, 32);
+		k = buildIntParamete(0, 32,1,k);
 		parameters.put(k.getName(), k);
 		
 		ParameterPrototype depth = new ParameterPrototype("depth", ParameterType.INT);
-		depth = parameterBuilder(depth, 0, 20);
+		depth = buildIntParamete(0, 20,1,depth);
 		parameters.put(depth.getName(), depth);
 		
 		ParameterPrototype n = new ParameterPrototype("N", ParameterType.INT);
-		n = parameterBuilder(n, 0, 5);
+		n = buildIntParamete(0, 5,1,n);
 		parameters.put(n.getName(), n);
 		
 		ParameterPrototype u = new ParameterPrototype("U", ParameterType.BOOLEAN);
 		u.setPossibilities(Arrays.asList(true,false));
 		parameters.put(u.getName(), u);
 		
-	}
-	
-	public ParameterPrototype parameterBuilder(ParameterPrototype parameter, int inicio, int end) {
-		List<Integer> values = Arrays.asList();
-		for(int i = inicio; i<=end;i++) {
-			values.add(i);
-		}
-		parameter.setPossibilities(values);
-		return parameter;
 	}
 }

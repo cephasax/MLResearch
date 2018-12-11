@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Parameter;
-import br.ufrn.imd.pbil.domain.prototypes.SMOPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
@@ -29,7 +28,7 @@ public class SmoBuilder extends ClassifierBuilder{
 	public Classifier randomBuild() {
 		classifier = new Smo();
 		try {
-			prototype = new SMOPrototype();
+			prototype = new SmoPrototype();
 			Parameter u = new Parameter("U",ParameterType.STRING);
 			u.setValue(randomValueForParameter(u));
 		}
