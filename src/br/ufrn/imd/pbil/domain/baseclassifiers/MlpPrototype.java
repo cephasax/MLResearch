@@ -19,7 +19,7 @@ public class MlpPrototype extends ClassifierPrototype{
 		parameters.put("L", l);
 		
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.DOUBLE);
-		m = buildDoubleParamete(0.1, 1, 0.1,m);
+		m = buildDoubleParamete(10, 100, 10,m);
 		parameters.put("M", m);
 		
 		ParameterPrototype b = new ParameterPrototype("B", ParameterType.BOOLEAN);

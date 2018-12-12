@@ -3,6 +3,11 @@ package br.ufrn.imd.pbil.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import br.ufrn.imd.pbil.enums.ClassifierType;
 
 public abstract class Classifier {
@@ -45,13 +50,23 @@ public abstract class Classifier {
 	}
 	@Override
 	public String toString() {
-		return this.name +": "+this.parameters.toString();
+		Gson gson = new Gson();
+		String a = gson.toJson(this, Classifier.class);
+		jsonFormatter(a);
+		return a;
 	}
 	public void print() {
-		System.out.println(name+":{");
-		for (Parameter parameter : parameters) {
-			parameter.print();
-		}
-		System.out.println("}");
+		Gson gson = new Gson();
+		String a = gson.toJson(this, Classifier.class);
+		a= jsonFormatter(a);
+		System.out.println(a);
 	}
+	private static String jsonFormatter(String text) {
+	    JsonParser parser = new JsonParser();
+	    JsonObject json = parser.parse(text).getAsJsonObject();
+	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	    String prettyJson = gson.toJson(json);			
+	    return prettyJson;
+	}
+	
 }

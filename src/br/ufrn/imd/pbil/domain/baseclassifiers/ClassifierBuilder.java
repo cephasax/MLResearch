@@ -14,19 +14,20 @@ public abstract class ClassifierBuilder {
 		this.prototype = classifierPrototype;
 	}
 	
-	public abstract Classifier defautBuild();
+	public abstract Classifier defaultBuild();
 	
 	public abstract Classifier randomBuild();
 	
 	public abstract Classifier weightedDrawBuild();
 	
-	protected int getSizeOfPossibilities(Parameter p){
+	protected int getSizeOfPossibilities(ParameterPrototype p){
 		return prototype.getParameters().get(p.getName()).getPossibilities().size();
 	}
 	
 	protected String randomValueForParameter(Parameter p) {
 		Random random = new Random();
-		int randomizedInt = random.nextInt(getSizeOfPossibilities(p));
+		ParameterPrototype pP= prototype.parameters.get(p.getName());
+		int randomizedInt = random.nextInt(getSizeOfPossibilities(pP));
 		String temp = (prototype.getParameters().get(p.getName()).getPossibilities().get(randomizedInt)).toString();
 		return temp;
 	}

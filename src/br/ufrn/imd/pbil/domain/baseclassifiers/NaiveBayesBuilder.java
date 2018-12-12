@@ -13,8 +13,8 @@ public class NaiveBayesBuilder extends ClassifierBuilder{
 		super(classifierPrototype);
 	}
 
-	public Classifier defautBuild() {
-		classifier = new NaiveBayes("Naive Bayes");
+	public Classifier defaultBuild() {
+		classifier = new NaiveBayes("Default Naive Bayes");
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		Parameter d = new Parameter("D",ParameterType.BOOLEAN);
 		d.setValue("false");
@@ -26,7 +26,7 @@ public class NaiveBayesBuilder extends ClassifierBuilder{
 	}
 
 	public Classifier randomBuild() {
-		classifier = new NaiveBayes("NaiveBayes");
+		classifier = new NaiveBayes("Random Naive Bayes");
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
 		Parameter d = new Parameter("D",ParameterType.BOOLEAN);

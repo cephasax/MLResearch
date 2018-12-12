@@ -12,8 +12,9 @@ public class J48Builder extends ClassifierBuilder{
 	}
 
 	@Override
-	public Classifier defautBuild() {
+	public Classifier defaultBuild() {
 		classifier = new J48();
+		classifier.setName("Default J48");
 		Parameter o = new Parameter("O",ParameterType.BOOLEAN);
 		o.setValue("false");
 		classifier.addParameter(o);
@@ -42,7 +43,7 @@ public class J48Builder extends ClassifierBuilder{
 		m.setValue("2");
 		classifier.addParameter(m);
 		
-		Parameter c = new Parameter("C",ParameterType.BOOLEAN);
+		Parameter c = new Parameter("C",ParameterType.DOUBLE);
 		c.setValue("0.25");
 		classifier.addParameter(c);
 		return classifier;
@@ -51,13 +52,8 @@ public class J48Builder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new J48();
-		try {
-			prototype = new J48Prototype();
-		} catch (InvalidParameterTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		classifier.setName("Random j48");
+	
 		Parameter o = new Parameter("O",ParameterType.BOOLEAN);
 		o.setValue(randomValueForParameter(o));
 		classifier.addParameter(o);
@@ -86,7 +82,7 @@ public class J48Builder extends ClassifierBuilder{
 		m.setValue(randomValueForParameter(m));
 		classifier.addParameter(m);
 		
-		Parameter c = new Parameter("C",ParameterType.BOOLEAN);
+		Parameter c = new Parameter("C",ParameterType.DOUBLE);
 		c.setValue(randomValueForParameter(c));
 		classifier.addParameter(c);
 		return classifier;

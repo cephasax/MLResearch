@@ -12,9 +12,9 @@ public class IbkBuilder extends ClassifierBuilder{
 	}
 
 	@Override
-	public Classifier defautBuild() {
+	public Classifier defaultBuild() {
 		classifier = new Ibk();
-		
+		classifier.setName("Default IBK");
 		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
 		e.setValue("false");
 		classifier.addParameter(e);
@@ -41,30 +41,27 @@ public class IbkBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Ibk();
-		try {
-			prototype = new IbkPrototype();
-			Parameter e = new Parameter("E", ParameterType.BOOLEAN);
-			e.setValue(randomValueForParameter(e));
-			classifier.addParameter(e);
-			
-			Parameter k = new Parameter("K",ParameterType.INT);
-			k.setValue(randomValueForParameter(k));
-			classifier.addParameter(k);
-			
-			Parameter i = new Parameter("I", ParameterType.BOOLEAN);
-			i.setValue(randomValueForParameter(i));
-			classifier.addParameter(i);
-			
-			Parameter f = new Parameter("F", ParameterType.BOOLEAN);
-			f.setValue(randomValueForParameter(f));
-			classifier.addParameter(f);
-			
-			Parameter x = new Parameter("X", ParameterType.BOOLEAN);
-			x.setValue(randomValueForParameter(x));
-			classifier.addParameter(x);
-		} catch (InvalidParameterTypeException e1) {
-			e1.printStackTrace();
-		}
+		classifier.setName("Random IBK");
+	
+		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
+		e.setValue(randomValueForParameter(e));
+		classifier.addParameter(e);
+		
+		Parameter k = new Parameter("K",ParameterType.INT);
+		k.setValue(randomValueForParameter(k));
+		classifier.addParameter(k);
+		
+		Parameter i = new Parameter("I", ParameterType.BOOLEAN);
+		i.setValue(randomValueForParameter(i));
+		classifier.addParameter(i);
+		
+		Parameter f = new Parameter("F", ParameterType.BOOLEAN);
+		f.setValue(randomValueForParameter(f));
+		classifier.addParameter(f);
+		
+		Parameter x = new Parameter("X", ParameterType.BOOLEAN);
+		x.setValue(randomValueForParameter(x));
+		classifier.addParameter(x);
 		
 		return classifier;
 	}

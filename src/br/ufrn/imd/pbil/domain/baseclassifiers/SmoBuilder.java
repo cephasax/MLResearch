@@ -15,8 +15,9 @@ public class SmoBuilder extends ClassifierBuilder{
 
 	public Classifier classifier;
 	
-	public Classifier defautBuild() {
+	public Classifier defaultBuild() {
 		classifier = new Smo();
+		classifier.setName("Default SMO");
 		Parameter u = new Parameter("U",ParameterType.STRING);
 		u.setValue("Defaut");
 		List<Parameter> params = classifier.getParameters();
@@ -27,20 +28,11 @@ public class SmoBuilder extends ClassifierBuilder{
 
 	public Classifier randomBuild() {
 		classifier = new Smo();
-		try {
-			prototype = new SmoPrototype();
-			Parameter u = new Parameter("U",ParameterType.STRING);
-			u.setValue(randomValueForParameter(u));
-		}
-		catch(InvalidParameterTypeException e) {
-			e.printStackTrace();
-		}
+		classifier.setName("Random Smo");
+		
+		Parameter u = new Parameter("U",ParameterType.STRING);
+		u.setValue(randomValueForParameter(u));
 		return classifier;
-	}
-
-	public Classifier wheitedDrawBuild() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

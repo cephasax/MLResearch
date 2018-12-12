@@ -25,10 +25,11 @@ public abstract class ClassifierPrototype {
 		return p;
 	}
 	
-	protected ParameterPrototype buildDoubleParamete(double begin, double end, double step, ParameterPrototype p ){
+	protected ParameterPrototype buildDoubleParamete(int begin, int end, int step, ParameterPrototype p ){
 		List<Double> values = new ArrayList<Double>();
-		for(double i = begin; i<=end; i+=step) {
-			values.add(i);
+		for(double i = begin; i<=end; i=i+step) {
+			double valor  = i/100;
+			values.add(valor);
 		}
 		p.setPossibilities(values);
 		return p;

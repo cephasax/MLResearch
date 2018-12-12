@@ -10,180 +10,142 @@ public class ClassifierFactory {
 	static ClassifierBuilder builder;
 	static ClassifierPrototype prototype;
 	public static Classifier buildClassifier(BaseClassifierType type, BaseClassifierConfig config) throws InvalidParameterTypeException {
-		ClassifierBuilder builder;
-		ClassifierPrototype prototype;
 		switch(type) {
 			case DECISION_TABLE:
+				prototype = new DecisionTablePrototype();
+				builder = new DecisionTableBuilder(prototype);
 				switch(config) {
-					case DEFAUT:
-						prototype = new DecisionTablePrototype();
-						builder = new DecisionTableBuilder(prototype);
-						classifier = builder.defautBuild();
+					case DEFAULT:
+						classifier = builder.defaultBuild();
 						break;
 					case RANDOM:
-						prototype = new DecisionTablePrototype();
-						builder = new DecisionTableBuilder(prototype);
 						classifier = builder.randomBuild();
 						break;
 					case WHIETED:
-						prototype = new DecisionTablePrototype();
-						builder = new DecisionTableBuilder(prototype);
 						//whieted
-						classifier = builder.defautBuild();
+						classifier = builder.defaultBuild();
 				}
 				break;
 			case J48:
+				prototype = new J48Prototype();
+				builder = new J48Builder(prototype);
 				switch(config) {
-					case DEFAUT:
-						prototype = new J48Prototype();
-						builder = new J48Builder(prototype);
-						classifier = builder.defautBuild();
+					case DEFAULT:
+						classifier = builder.defaultBuild();
 						break;
 					case RANDOM:
-						prototype = new J48Prototype();
-						builder = new J48Builder(prototype);
 						classifier = builder.randomBuild();
 						break;
 					case WHIETED:
-						prototype = new J48Prototype();
-						builder = new J48Builder(prototype);
 						//whieted
-						classifier = builder.defautBuild();
+						classifier = builder.defaultBuild();
 				}
 				break;
 			case RANDOM_TREE:
+				prototype = new RandomTreePrototype();
+				builder = new RandomTreeBuilder(prototype);
 				switch(config) {
-					case DEFAUT:
-						prototype = new RandomTreePrototype();
-						builder = new RandomTreeBuilder(prototype);
-						classifier = builder.defautBuild();
+					case DEFAULT:
+						classifier = builder.defaultBuild();
 						break;
 					case RANDOM:
-						prototype = new RandomTreePrototype();
-						builder = new RandomTreeBuilder(prototype);
 						classifier = builder.randomBuild();
 						break;
 					case WHIETED:
-						prototype = new RandomTreePrototype();
-						builder = new RandomTreeBuilder(prototype);
 						//whieted
-						classifier = builder.defautBuild();
+						classifier = builder.defaultBuild();
 				}
 				break;
 			case NAIVE_BAYES:
+				prototype = new NaiveBayesPrototype();
+				builder = new NaiveBayesBuilder(prototype);
 				switch(config) {
-					case DEFAUT:
-						prototype = new NaiveBayesPrototype();
-						builder = new NaiveBayesBuilder(prototype);
-						classifier = builder.defautBuild();
+					case DEFAULT:
+						classifier = builder.defaultBuild();
 						break;
 					case RANDOM:
-						prototype = new RandomTreePrototype();
-						builder = new RandomTreeBuilder(prototype);
 						classifier = builder.randomBuild();
 						break;
 					case WHIETED:
-						prototype = new RandomTreePrototype();
-						builder = new RandomTreeBuilder(prototype);
 						//whieted
-						classifier = builder.defautBuild();
+						classifier = builder.defaultBuild();
 				}
 				break;
 			case NET:
+				prototype = new BayesNetPrototype();
+				builder = new BayesNetBuilder(prototype);
 				switch(config) {
-					case DEFAUT:
-						prototype = new BayesNetPrototype();
-						builder = new BayesNetBuilder(prototype);
-						classifier = builder.defautBuild();
+					case DEFAULT:
+						classifier = builder.defaultBuild();
 						break;
 					case RANDOM:
-						prototype = new BayesNetPrototype();
-						builder = new BayesNetBuilder(prototype);
 						classifier = builder.randomBuild();
 						break;
 					case WHIETED:
-						prototype = new BayesNetPrototype();
-						builder = new BayesNetBuilder(prototype);
 						//whieted
-						classifier = builder.defautBuild();
+						classifier = builder.defaultBuild();
 						break;
 				}
 				break;
 			case K_STAR:
+				prototype = new KstarPrototype();
+				builder = new KstarBuilder(prototype);
 				switch(config) {
-				case DEFAUT:
-					prototype = new KstarPrototype();
-					builder = new KstarBuilder(prototype);
-					classifier = builder.defautBuild();
+				case DEFAULT:
+					classifier = builder.defaultBuild();
 					break;
 				case RANDOM:
-					prototype = new KstarPrototype();
-					builder = new KstarBuilder(prototype);
 					classifier = builder.randomBuild();
 					break;
 				case WHIETED:
-					prototype = new KstarPrototype();
-					builder = new KstarBuilder(prototype);
 					//whieted
-					classifier = builder.defautBuild();
+					classifier = builder.defaultBuild();
 					break;
 				}
 				break;
 			case IBK:
+				prototype = new IbkPrototype();
+				builder = new IbkBuilder(prototype);
 				switch(config) {
-				case DEFAUT:
-					prototype = new IbkPrototype();
-					builder = new IbkBuilder(prototype);
-					classifier = builder.defautBuild();
+				case DEFAULT:
+					classifier = builder.defaultBuild();
 					break;
 				case RANDOM:
-					prototype = new IbkPrototype();
-					builder = new IbkBuilder(prototype);
 					classifier = builder.randomBuild();
 					break;
 				case WHIETED:
-					prototype = new IbkPrototype();
-					builder = new IbkBuilder(prototype);
 					//whieted
-					classifier = builder.defautBuild();
+					classifier = builder.defaultBuild();
 				}
 				break;
 			case SMO:
+				prototype = new SmoPrototype();
+				builder = new SmoBuilder(prototype);
 				switch(config) {
-				case DEFAUT:
-					prototype = new SmoPrototype();
-					builder = new SmoBuilder(prototype);
-					classifier = builder.defautBuild();
+				case DEFAULT:
+					classifier = builder.defaultBuild();
 					break;
 				case RANDOM:
-					prototype = new SmoPrototype();
-					builder = new SmoBuilder(prototype);
 					classifier = builder.randomBuild();
 					break;
 				case WHIETED:
-					prototype = new SmoPrototype();
-					builder = new SmoBuilder(prototype);
 					//whieted
-					classifier = builder.defautBuild();
+					classifier = builder.defaultBuild();
 				}
 				break;
 			case MULTI_LAYER_PECEPTRON:
+				prototype = new KstarPrototype();
+				builder = new KstarBuilder(prototype);
 				switch(config) {
-				case DEFAUT:
-					prototype = new KstarPrototype();
-					builder = new KstarBuilder(prototype);
-					classifier = builder.defautBuild();
+				case DEFAULT:
+					classifier = builder.defaultBuild();
 					break;
 				case RANDOM:
-					prototype = new KstarPrototype();
-					builder = new KstarBuilder(prototype);
 					classifier = builder.randomBuild();
 					break;
 				case WHIETED:
-					prototype = new KstarPrototype();
-					builder = new KstarBuilder(prototype);
 					//whieted
-					classifier = builder.defautBuild();
+					classifier = builder.defaultBuild();
 				}
 				break;
 		}
