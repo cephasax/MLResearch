@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain.committees;
 
+import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
@@ -32,7 +33,7 @@ public class RandomCommitteeBuilder extends CommitteeBuilder {
 	}
 	@Override
 	public Committee randomBuild() {
-		
+		committee = new RandomCommittee();
 		Parameter i = new Parameter("I",ParameterType.INT);
 		i.setValue(randomValueForParameter(i));
 		committee.addParameter(i);

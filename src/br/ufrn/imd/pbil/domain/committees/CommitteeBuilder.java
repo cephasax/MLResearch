@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.Classifier;
+import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierFactory;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ParameterPrototype;
-import br.ufrn.imd.pbil.enums.BaseClassifierConfig;
+import br.ufrn.imd.pbil.enums.ConfigurationType;
 import br.ufrn.imd.pbil.enums.BaseClassifierType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
@@ -40,7 +41,7 @@ public abstract class CommitteeBuilder {
 			int indexOfConfig = random.nextInt(2);
 			int indexOfClassifier = random.nextInt(9);
 			BaseClassifierType type = BaseClassifierType.values()[indexOfClassifier];
-			BaseClassifierConfig config  =BaseClassifierConfig.values()[indexOfConfig];	
+			ConfigurationType config  =ConfigurationType.values()[indexOfConfig];	
 			Classifier solucao = ClassifierFactory.buildClassifier(type, config);
 			classifiers.add(solucao);
 		}

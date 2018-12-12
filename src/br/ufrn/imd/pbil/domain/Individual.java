@@ -38,9 +38,9 @@ public class Individual{
 	public String toString() {
 		String classi = "";
 		for (Classifier classifier : classifiers) {
-			classi += classifier.getNome() + "\n";
+			classi += classifier.getName() + "\n";
 		}
-		return "Name: " + this.name + "\n Accuracy: " + this.accuracy + "\n Root Method: " + this.rootMethod.getNome()
+		return "Name: " + this.name + "\n Accuracy: " + this.accuracy + "\n Root Method: " + this.rootMethod.getName()
 				+ "\n Classifiers:" + classi;
 	}
 

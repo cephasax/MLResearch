@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain.committees;
 
+import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
@@ -23,7 +24,7 @@ public class BaggingBuilder extends CommitteeBuilder{
 		i.setValue("10");
 		committee.addParameter(i);
 		
-		Parameter s = new Parameter("s", ParameterType.INT);
+		Parameter s = new Parameter("S", ParameterType.INT);
 		s.setValue("10");
 		committee.addParameter(s);
 		
@@ -52,7 +53,7 @@ public class BaggingBuilder extends CommitteeBuilder{
 		i.setValue(randomValueForParameter(i));
 		committee.addParameter(i);
 		
-		Parameter s = new Parameter("s", ParameterType.INT);
+		Parameter s = new Parameter("S", ParameterType.INT);
 		s.setValue(randomValueForParameter(s));
 		committee.addParameter(s);
 		

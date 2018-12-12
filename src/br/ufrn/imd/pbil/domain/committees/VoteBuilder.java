@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain.committees;
 
+import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
@@ -8,7 +9,7 @@ public class VoteBuilder extends CommitteeBuilder{
 
 	public VoteBuilder(CommitteePrototype committeePrototype) {
 		super(committeePrototype);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
