@@ -32,6 +32,7 @@ public class SmoBuilder extends ClassifierBuilder{
 		
 		Parameter u = new Parameter("U",ParameterType.STRING);
 		u.setValue(randomValueForParameter(u));
+		classifier.addParameter(u);
 		return classifier;
 	}
 

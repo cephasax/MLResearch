@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.*;
-import br.ufrn.imd.pbil.domain.committees.Committee;
 
 public class Algotimo {
 	static List<CommitteeProbability> pvRootCommittee = new ArrayList<CommitteeProbability>();

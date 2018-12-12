@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain.committees;
 
+import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;

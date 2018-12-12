@@ -1,7 +1,7 @@
 package br.ufrn.imd.pbil.domain.baseclassifiers;
 
 import br.ufrn.imd.pbil.domain.Classifier;
-import br.ufrn.imd.pbil.enums.BaseClassifierConfig;
+import br.ufrn.imd.pbil.enums.ConfigurationType;
 import br.ufrn.imd.pbil.enums.BaseClassifierType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
@@ -9,7 +9,7 @@ public class ClassifierFactory {
 	static Classifier classifier;
 	static ClassifierBuilder builder;
 	static ClassifierPrototype prototype;
-	public static Classifier buildClassifier(BaseClassifierType type, BaseClassifierConfig config) throws InvalidParameterTypeException {
+	public static Classifier buildClassifier(BaseClassifierType type, ConfigurationType config) throws InvalidParameterTypeException {
 		switch(type) {
 			case DECISION_TABLE:
 				prototype = new DecisionTablePrototype();

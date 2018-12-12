@@ -1,8 +1,12 @@
-package br.ufrn.imd.pbil.domain.committees;
+package br.ufrn.imd.pbil.domain;
 
 import java.util.List;
 
-import br.ufrn.imd.pbil.domain.Classifier;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import br.ufrn.imd.pbil.enums.CommitteeType;
 
 public class Committee extends Classifier {
@@ -28,6 +32,22 @@ public class Committee extends Classifier {
 
 	public void setClassifiers(List<Classifier> classifiers) {
 		this.classifiers = classifiers;
+	}
+	
+	@Override
+	public void print() {
+		Gson gson = new Gson();
+		String a = gson.toJson(this, Committee.class);
+		a= jsonFormatter(a);
+		System.out.println(a);
+	}
+	
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		String a = gson.toJson(this, Committee.class);
+		a= jsonFormatter(a);
+		return a;
 	}
 
 }
