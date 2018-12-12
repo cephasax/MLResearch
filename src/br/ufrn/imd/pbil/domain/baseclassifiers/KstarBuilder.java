@@ -12,10 +12,10 @@ public class KstarBuilder extends ClassifierBuilder{
 	}
 
 	@Override
-	public Classifier defautBuild() {
+	public Classifier defaultBuild() {
 		// TODO Auto-generated method stub
 		classifier = new Kstar();
-		
+		classifier.setName("Default Kstar");
 		Parameter b = new Parameter("B",ParameterType.INT);
 		b.setValue("20");
 		classifier.addParameter(b);
@@ -33,24 +33,18 @@ public class KstarBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Kstar();
-		try {
-			prototype = new KstarPrototype();
-			Parameter b = new Parameter("B", ParameterType.INT);
-			b.setValue(randomValueForParameter(b));
-			classifier.addParameter(b);
-			
-			Parameter e = new Parameter("E", ParameterType.BOOLEAN);
-			e.setValue(randomValueForParameter(e));
-			classifier.addParameter(e);
-			
-			Parameter x = new Parameter("X", ParameterType.BOOLEAN);
-			x.setValue(randomValueForParameter(x));
-			classifier.addParameter(x);
-			
-		} catch (InvalidParameterTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		classifier.setName("Random Kstar");
+		Parameter b = new Parameter("B", ParameterType.INT);
+		b.setValue(randomValueForParameter(b));
+		classifier.addParameter(b);
+		
+		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
+		e.setValue(randomValueForParameter(e));
+		classifier.addParameter(e);
+		
+		Parameter x = new Parameter("X", ParameterType.STRING);
+		x.setValue(randomValueForParameter(x));
+		classifier.addParameter(x);
 		
 		return classifier;
 	}

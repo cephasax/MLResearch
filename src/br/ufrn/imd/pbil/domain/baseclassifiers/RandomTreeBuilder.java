@@ -11,9 +11,9 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 	}
 
 	@Override
-	public Classifier defautBuild() {
+	public Classifier defaultBuild() {
 		classifier = new RandomTree();
-		
+		classifier.setName("Default Random Tree");
 		Parameter m = new Parameter("M",ParameterType.INT);
 		m.setValue("1");
 		classifier.addParameter(m);
@@ -30,7 +30,7 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 		n.setValue("3");
 		classifier.addParameter(n);
 		
-		Parameter u = new Parameter("U",ParameterType.INT);
+		Parameter u = new Parameter("U",ParameterType.BOOLEAN);
 		u.setValue("false");
 		classifier.addParameter(u);
 		
@@ -40,6 +40,7 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new RandomTree();
+		classifier.setName("Random Random Tree");
 		Parameter m = new Parameter("M",ParameterType.INT);
 		m.setValue(randomValueForParameter(m));
 		classifier.addParameter(m);
@@ -56,7 +57,7 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 		n.setValue(randomValueForParameter(n));
 		classifier.addParameter(n);
 		
-		Parameter u = new Parameter("U",ParameterType.INT);
+		Parameter u = new Parameter("U",ParameterType.BOOLEAN);
 		u.setValue(randomValueForParameter(u));
 		classifier.addParameter(u);
 		return classifier;

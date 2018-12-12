@@ -21,14 +21,14 @@ public class J48Prototype extends ClassifierPrototype{
 		parameters.put(b.getName(), b);
 		
 		ParameterPrototype j = new ParameterPrototype("J", ParameterType.BOOLEAN); 
-		o.setPossibilities(Arrays.asList(true,false));
+		j.setPossibilities(Arrays.asList(true,false));
 		parameters.put(j.getName(), j);
 		
 		ParameterPrototype a = new ParameterPrototype("A", ParameterType.BOOLEAN); 
 		a.setPossibilities(Arrays.asList(true,false));
 		parameters.put(a.getName(), a);
 		
-		ParameterPrototype s = new ParameterPrototype("O", ParameterType.BOOLEAN); 
+		ParameterPrototype s = new ParameterPrototype("S", ParameterType.BOOLEAN); 
 		s.setPossibilities(Arrays.asList(true,false));
 		parameters.put(s.getName(), s);
 		
@@ -37,7 +37,7 @@ public class J48Prototype extends ClassifierPrototype{
 		parameters.put(m.getName(), m);
 		
 		ParameterPrototype c = new ParameterPrototype("C", ParameterType.DOUBLE); 
-		c = buildDoubleParamete(0.5, 5, 0.5, c);
+		c = buildDoubleParamete( 5, 500, 5, c);
 		parameters.put(c.getName(), c);
 	}
 }

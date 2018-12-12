@@ -1,75 +1,56 @@
 package br.ufrn.imd.pbil.domain.committees;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Parameter;
-import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierBuilder;
-import br.ufrn.imd.pbil.domain.baseclassifiers.DecisionTable;
-import br.ufrn.imd.pbil.domain.baseclassifiers.MlpPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class RandomCommitteeBuilder extends ClassifierBuilder {
-
-	public Committee defautBuild() {
-
-		classifier = new Random();
-		List<Parameter> parameters = new ArrayList<Parameter>();
-		
-		Parameter e = new Parameter("E", ParameterType.STRING);
-		e.setValue("acc");
-		parameters.add(e);
-
-		Parameter i = new Parameter("I", ParameterType.BOOLEAN);
-		i.setValue("False");
-		parameters.add(i);
-
-		Parameter s = new Parameter("S", ParameterType.STRING);
-		s.setValue("GreedStepWise");
-		parameters.add(s);
-
-		Parameter x = new Parameter("X", ParameterType.INT);
-		x.setValue("1");
-		parameters.add(x);
-
-		classifier.setParameters(parameters);
-		return classifier;
+public class RandomCommitteeBuilder extends CommitteeBuilder {
+	
+	public RandomCommitteeBuilder(CommitteePrototype committeePrototype) {
+		super(committeePrototype);
+		// TODO Auto-generated constructor stub
 	}
-
-	public Classifier randomBuild() {
-
-		classifier = new DecisionTable();
-		List<Parameter> parameters = new ArrayList<Parameter>();
+	@Override
+	public Committee defaultBuild() {
+		committee = new RandomCommittee();
+		
+		Parameter i = new Parameter("I",ParameterType.INT);
+		i.setValue("10");
+		committee.addParameter(i);
+		
+		Parameter s = new Parameter("S",ParameterType.INT);
+		s.setValue("9");
+		committee.addParameter(s);
 		
 		try {
-			prototype = new MlpPrototype();
-
-			Parameter e = new Parameter("E", ParameterType.STRING);
-			e.setValue(randomValueForParameter(e));
-			parameters.add(e);
-
-			Parameter i = new Parameter("I", ParameterType.BOOLEAN);
-			i.setValue(randomValueForParameter(i));
-			parameters.add(i);
-
-			Parameter s = new Parameter("S", ParameterType.STRING);
-			s.setValue(randomValueForParameter(s));
-			parameters.add(s);
-
-			Parameter x = new Parameter("X", ParameterType.STRING);
-			x.setValue(randomValueForParameter(x));
-			parameters.add(x);
-		} catch (InvalidParameterTypeException e1) {
-			e1.printStackTrace();
+			committee.setClassifiers(buildClassifiers(1));
+		} catch (InvalidParameterTypeException e) {
+			e.printStackTrace();
 		}
-
-		classifier.setParameters(parameters);
-		return classifier;
+		
+		return committee;
 	}
-
-	public Classifier weightedDrawBuild() {
+	@Override
+	public Committee randomBuild() {
+		
+		Parameter i = new Parameter("I",ParameterType.INT);
+		i.setValue(randomValueForParameter(i));
+		committee.addParameter(i);
+		
+		Parameter s = new Parameter("S",ParameterType.INT);
+		s.setValue(randomValueForParameter(s));
+		committee.addParameter(s);
+		
+		try {
+			committee.setClassifiers(buildClassifiers(1));
+		} catch (InvalidParameterTypeException e) {
+			e.printStackTrace();
+		}
+		
+		return committee;
+	}
+	@Override
+	public Committee weightedBuild() {
 		// TODO Auto-generated method stub
 		return null;
 	}

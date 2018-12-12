@@ -12,7 +12,7 @@ public class ParameterPrototype {
 	private String name;
 	private List<?> possibilities;
 
-	ParameterPrototype(String name, ParameterType parameterType) throws InvalidParameterTypeException {
+	public ParameterPrototype(String name, ParameterType parameterType) throws InvalidParameterTypeException {
 		this.name = name;
 		if (isCorrectParameterType(parameterType)) {
 			this.type = parameterType;

@@ -13,9 +13,9 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	}
 
 	@Override
-	public Classifier defautBuild() {
+	public Classifier defaultBuild() {
 		classifier =new BayesNet();
-		
+		classifier.setName("Default BayesNet");
 		Parameter q = new Parameter("Q",ParameterType.STRING);
 		q.setValue("K2");
 		classifier.addParameter(q);
@@ -30,20 +30,16 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new BayesNet();
-		try {
-			prototype = new BayesNetPrototype();
-			Parameter q = new Parameter("Q", ParameterType.STRING);
-			q.setValue(randomValueForParameter(q));
-			classifier.addParameter(q);
-			
-			Parameter d = new Parameter("D", ParameterType.BOOLEAN);
-			d.setValue(randomValueForParameter(d));
-			classifier.addParameter(d);
-			
-		} catch (InvalidParameterTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		classifier.setName("Random BayesNet");
+	
+		Parameter q = new Parameter("Q", ParameterType.STRING);
+		q.setValue(randomValueForParameter(q));
+		classifier.addParameter(q);
+		
+		Parameter d = new Parameter("D", ParameterType.BOOLEAN);
+		d.setValue(randomValueForParameter(d));
+		classifier.addParameter(d);
+		
 		return classifier;
 	}
 
