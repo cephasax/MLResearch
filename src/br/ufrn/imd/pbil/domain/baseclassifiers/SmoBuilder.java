@@ -18,7 +18,7 @@ public class SmoBuilder extends ClassifierBuilder{
 	public Classifier defaultBuild() {
 		classifier = new Smo();
 		classifier.setName("Default SMO");
-		Parameter u = new Parameter("U",ParameterType.STRING);
+		Parameter u = new Parameter("SEL",ParameterType.STRING);
 		u.setValue("Defaut");
 		List<Parameter> params = classifier.getParameters();
 		params.add(u);
@@ -30,7 +30,7 @@ public class SmoBuilder extends ClassifierBuilder{
 		classifier = new Smo();
 		classifier.setName("Random Smo");
 		
-		Parameter u = new Parameter("U",ParameterType.STRING);
+		Parameter u = new Parameter("SEL",ParameterType.STRING);
 		u.setValue(randomValueForParameter(u));
 		classifier.addParameter(u);
 		return classifier;

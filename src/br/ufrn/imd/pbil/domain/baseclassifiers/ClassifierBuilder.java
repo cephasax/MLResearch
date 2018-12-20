@@ -24,7 +24,7 @@ public abstract class ClassifierBuilder {
 		return prototype.getParameters().get(p.getName()).getPossibilities().size();
 	}
 	
-	protected String randomValueForParameter(Parameter p) {
+	public String randomValueForParameter(Parameter p) {
 		Random random = new Random();
 		ParameterPrototype pP= prototype.parameters.get(p.getName());
 		int randomizedInt = random.nextInt(getSizeOfPossibilities(pP));

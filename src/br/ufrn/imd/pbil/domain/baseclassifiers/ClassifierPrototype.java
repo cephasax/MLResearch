@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class ClassifierPrototype {
 	
-	protected HashMap<String, ParameterPrototype> parameters = new HashMap<String, ParameterPrototype>();
+	public HashMap<String, ParameterPrototype> parameters = new HashMap<String, ParameterPrototype>();
 
 	public HashMap<String, ParameterPrototype> getParameters() {
 		return parameters;

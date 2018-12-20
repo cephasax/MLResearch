@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.ufrn.imd.pbil.annotations.ToFix;
 
-public class CommitteeProbability {
+public abstract class CommitteeProbability {
 	private Committee rootmethod;
 	private float value;
 	

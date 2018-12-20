@@ -2,11 +2,12 @@ package br.ufrn.imd.pbil.domain.committees;
 
 import java.util.Arrays;
 
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ParameterPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class VotePrototype extends CommitteePrototype{
+public class VotePrototype extends ClassifierPrototype{
 	public VotePrototype() throws InvalidParameterTypeException {
 		ParameterPrototype s = new ParameterPrototype("S", ParameterType.INT);
 		s = buildIntParamete(1, 255, 1, s);

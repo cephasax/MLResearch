@@ -1,45 +1,30 @@
 package br.ufrn.imd.pbil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.util.Map;
 
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Committee;
-import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierFactory;
+import br.ufrn.imd.pbil.domain.Individual;
+import br.ufrn.imd.pbil.domain.committees.AdaBoostPrototype;
 import br.ufrn.imd.pbil.domain.committees.CommitteeFactory;
-import br.ufrn.imd.pbil.enums.ConfigurationType;
-import br.ufrn.imd.pbil.enums.BaseClassifierType;
-import br.ufrn.imd.pbil.enums.CommitteeType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
-
 public class Main {
 
 	public static void main(String[] args) throws InvalidParameterTypeException {
-		int generations =0;
-		List<Committee> population = new ArrayList<Committee>();
-		Random random = new Random();
-		while (generations>=0) {
+		List<Individual	> population = new ArrayList<Individual>();
+		CommitteeFactory factory = new CommitteeFactory();
+		
+		for(int i =0; i<20;i++) {
 			
-			int indexOfClassifier = random.nextInt(6);
-			int indexOfConfig = random.nextInt(2);
+			Individual individual = new Individual();
+			individual.setRootMethod(factory.buildClassifier("AdaBoost"));
+			individual.setName(individual.getRootMethod().getName());
+			population.add(individual);
 			
-			CommitteeType type = CommitteeType.values()[indexOfClassifier];
-			ConfigurationType config  =ConfigurationType.values()[indexOfConfig];
-			Committee solucao = CommitteeFactory.builCommittee(type, config);
-			population.add(solucao);
-			generations--;
 		}
-		generations=0;
-		population.get(generations).print();
 
 	}
-	
-
-
 }

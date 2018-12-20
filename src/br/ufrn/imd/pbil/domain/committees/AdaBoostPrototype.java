@@ -2,11 +2,12 @@ package br.ufrn.imd.pbil.domain.committees;
 
 import java.util.Arrays;
 
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ParameterPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class AdaBoostPrototype extends CommitteePrototype{
+public class AdaBoostPrototype extends ClassifierPrototype{
 	public AdaBoostPrototype() throws InvalidParameterTypeException {
 		ParameterPrototype q = new ParameterPrototype("Q", ParameterType.BOOLEAN);
 		q.setPossibilities(Arrays.asList(true,false));

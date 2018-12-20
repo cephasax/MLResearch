@@ -7,27 +7,24 @@ import java.util.Random;
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierFactory;
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ParameterPrototype;
-import br.ufrn.imd.pbil.enums.ConfigurationType;
-import br.ufrn.imd.pbil.enums.BaseClassifierType;
+
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public abstract class CommitteeBuilder {
+public abstract class CommitteeBuilder extends ClassifierBuilder{
 	
-	public CommitteeBuilder(CommitteePrototype committeePrototype) {
-		this.prototype = committeePrototype;
+	
+	public CommitteeBuilder(ClassifierPrototype classifierPrototype) {
+		// TODO Auto-generated constructor stub
+		super(classifierPrototype);
+		
 	}
-	
+
 	Committee committee;
-	
-	CommitteePrototype prototype;
-	
-	public abstract Committee defaultBuild();
-	
-	public abstract Committee randomBuild();
-	
-	public abstract Committee weightedBuild();
+
 
 	protected int getSizeOfPossibilities(ParameterPrototype p){
 		return prototype.getParameters().get(p.getName()).getPossibilities().size();
@@ -37,22 +34,14 @@ public abstract class CommitteeBuilder {
 	protected List<Classifier> buildClassifiers(int numberOfClassifiers) throws InvalidParameterTypeException {
 		List<Classifier> classifiers = new ArrayList<Classifier>();
 		Random random =new Random();
+		ClassifierFactory factory = new ClassifierFactory();
 		for (int i =0; i<numberOfClassifiers; i++) {	
 			int indexOfConfig = random.nextInt(2);
 			int indexOfClassifier = random.nextInt(9);
-			BaseClassifierType type = BaseClassifierType.values()[indexOfClassifier];
-			ConfigurationType config  =ConfigurationType.values()[indexOfConfig];	
-			Classifier solucao = ClassifierFactory.buildClassifier(type, config);
+			Classifier solucao = factory.buildClassifier(indexOfClassifier, indexOfConfig);
 			classifiers.add(solucao);
 		}
 		return classifiers;
 	}
 	
-	protected String randomValueForParameter(Parameter p) {
-		Random random = new Random();
-		ParameterPrototype pP= prototype.parameters.get(p.getName());
-		int randomizedInt = random.nextInt(getSizeOfPossibilities(pP));
-		String temp = (prototype.getParameters().get(p.getName()).getPossibilities().get(randomizedInt)).toString();
-		return temp;
-	}
 }

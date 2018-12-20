@@ -1,13 +1,15 @@
 package br.ufrn.imd.pbil.domain.committees;
 
+import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class BaggingBuilder extends CommitteeBuilder{
 
-	public BaggingBuilder(CommitteePrototype committeePrototype) {
+	public BaggingBuilder(ClassifierPrototype committeePrototype) {
 		super(committeePrototype);
 		// TODO Auto-generated constructor stub
 	}
@@ -71,9 +73,10 @@ public class BaggingBuilder extends CommitteeBuilder{
 	}
 
 	@Override
-	public Committee weightedBuild() {
+	public Classifier weightedDrawBuild() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

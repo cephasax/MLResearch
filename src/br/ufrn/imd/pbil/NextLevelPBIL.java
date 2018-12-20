@@ -29,11 +29,11 @@ public class NextLevelPBIL {
 						params.put(ConfigType.values()[paramType]+"", "True");
 						paramspv.put("True", 1);
 						
-					}else if(ConfigType.values()[paramType].equals(ConfigType.BOLLEAN) && paramValue>=0) {
+					} else if(ConfigType.values()[paramType].equals(ConfigType.BOLLEAN) && paramValue>=0) {
 						params.put(ConfigType.values()[paramType]+"", "False");
 						paramspv.put("False", 1);
 					}
-					else {
+					 else {
 						params.put(ConfigType.values()[paramType]+"", paramValue+"");
 						paramspv.put(paramValue+"", 1);
 					}

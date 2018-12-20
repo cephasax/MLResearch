@@ -11,11 +11,7 @@ public class MlpPrototype extends ClassifierPrototype{
 	public MlpPrototype() throws InvalidParameterTypeException {
 		
 		ParameterPrototype l = new ParameterPrototype("L", ParameterType.DOUBLE);
-		List<Double> lValaues = new ArrayList<Double>();
-		for(double i = 0.1; i <= 1; i = i + 0.1) {
-			lValaues.add(i);
-		}
-		l.setPossibilities(lValaues);
+		l = buildDoubleParamete(10, 100, 10, l);
 		parameters.put("L", l);
 		
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.DOUBLE);
@@ -56,7 +52,7 @@ public class MlpPrototype extends ClassifierPrototype{
 		List<Boolean> dValaues = new ArrayList<Boolean>();
 		dValaues.add(true);
 		dValaues.add(false);
-		r.setPossibilities(dValaues);
+		d.setPossibilities(dValaues);
 		parameters.put("D", d);
 		
 		ParameterPrototype s = new ParameterPrototype("S", ParameterType.STRING);

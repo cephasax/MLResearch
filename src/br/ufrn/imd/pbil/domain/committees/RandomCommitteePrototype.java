@@ -2,11 +2,12 @@ package br.ufrn.imd.pbil.domain.committees;
 
 
 
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.baseclassifiers.ParameterPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class RandomCommitteePrototype extends CommitteePrototype{
+public class RandomCommitteePrototype extends ClassifierPrototype{
 	RandomCommitteePrototype () throws InvalidParameterTypeException{
 		ParameterPrototype i = new ParameterPrototype("I", ParameterType.INT);
 	 	i = buildIntParamete(2, 64, 1, i);

@@ -1,154 +1,65 @@
 package br.ufrn.imd.pbil.domain.baseclassifiers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import br.ufrn.imd.pbil.domain.Classifier;
-import br.ufrn.imd.pbil.enums.ConfigurationType;
 import br.ufrn.imd.pbil.enums.BaseClassifierType;
+import br.ufrn.imd.pbil.enums.ConfigurationType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class ClassifierFactory {
-	static Classifier classifier;
+	Map<Integer, ClassifierBuilder >classifier;
 	static ClassifierBuilder builder;
 	static ClassifierPrototype prototype;
-	public static Classifier buildClassifier(BaseClassifierType type, ConfigurationType config) throws InvalidParameterTypeException {
-		switch(type) {
-			case DECISION_TABLE:
-				prototype = new DecisionTablePrototype();
-				builder = new DecisionTableBuilder(prototype);
-				switch(config) {
-					case DEFAULT:
-						classifier = builder.defaultBuild();
-						break;
-					case RANDOM:
-						classifier = builder.randomBuild();
-						break;
-					case WHIETED:
-						//whieted
-						classifier = builder.defaultBuild();
-				}
-				break;
-			case J48:
-				prototype = new J48Prototype();
-				builder = new J48Builder(prototype);
-				switch(config) {
-					case DEFAULT:
-						classifier = builder.defaultBuild();
-						break;
-					case RANDOM:
-						classifier = builder.randomBuild();
-						break;
-					case WHIETED:
-						//whieted
-						classifier = builder.defaultBuild();
-				}
-				break;
-			case RANDOM_TREE:
-				prototype = new RandomTreePrototype();
-				builder = new RandomTreeBuilder(prototype);
-				switch(config) {
-					case DEFAULT:
-						classifier = builder.defaultBuild();
-						break;
-					case RANDOM:
-						classifier = builder.randomBuild();
-						break;
-					case WHIETED:
-						//whieted
-						classifier = builder.defaultBuild();
-				}
-				break;
-			case NAIVE_BAYES:
-				prototype = new NaiveBayesPrototype();
-				builder = new NaiveBayesBuilder(prototype);
-				switch(config) {
-					case DEFAULT:
-						classifier = builder.defaultBuild();
-						break;
-					case RANDOM:
-						classifier = builder.randomBuild();
-						break;
-					case WHIETED:
-						//whieted
-						classifier = builder.defaultBuild();
-				}
-				break;
-			case NET:
-				prototype = new BayesNetPrototype();
-				builder = new BayesNetBuilder(prototype);
-				switch(config) {
-					case DEFAULT:
-						classifier = builder.defaultBuild();
-						break;
-					case RANDOM:
-						classifier = builder.randomBuild();
-						break;
-					case WHIETED:
-						//whieted
-						classifier = builder.defaultBuild();
-						break;
-				}
-				break;
-			case K_STAR:
-				prototype = new KstarPrototype();
-				builder = new KstarBuilder(prototype);
-				switch(config) {
-				case DEFAULT:
-					classifier = builder.defaultBuild();
-					break;
-				case RANDOM:
-					classifier = builder.randomBuild();
-					break;
-				case WHIETED:
-					//whieted
-					classifier = builder.defaultBuild();
-					break;
-				}
-				break;
-			case IBK:
-				prototype = new IbkPrototype();
-				builder = new IbkBuilder(prototype);
-				switch(config) {
-				case DEFAULT:
-					classifier = builder.defaultBuild();
-					break;
-				case RANDOM:
-					classifier = builder.randomBuild();
-					break;
-				case WHIETED:
-					//whieted
-					classifier = builder.defaultBuild();
-				}
-				break;
-			case SMO:
-				prototype = new SmoPrototype();
-				builder = new SmoBuilder(prototype);
-				switch(config) {
-				case DEFAULT:
-					classifier = builder.defaultBuild();
-					break;
-				case RANDOM:
-					classifier = builder.randomBuild();
-					break;
-				case WHIETED:
-					//whieted
-					classifier = builder.defaultBuild();
-				}
-				break;
-			case MULTI_LAYER_PECEPTRON:
-				prototype = new KstarPrototype();
-				builder = new KstarBuilder(prototype);
-				switch(config) {
-				case DEFAULT:
-					classifier = builder.defaultBuild();
-					break;
-				case RANDOM:
-					classifier = builder.randomBuild();
-					break;
-				case WHIETED:
-					//whieted
-					classifier = builder.defaultBuild();
-				}
-				break;
+	
+	public ClassifierFactory() throws InvalidParameterTypeException {
+		classifier = new HashMap<Integer, ClassifierBuilder>();
+		
+		DecisionTablePrototype dcP = new DecisionTablePrototype();
+		DecisionTableBuilder dcBuilder = new DecisionTableBuilder(dcP);
+		classifier.put(0,dcBuilder);
+	
+		IbkPrototype ibP = new IbkPrototype();
+		IbkBuilder ibBuilder = new IbkBuilder(ibP);
+		classifier.put(2,ibBuilder);
+		
+		J48Prototype j48P = new J48Prototype();
+		J48Builder j48Builder = new J48Builder(j48P);
+		classifier.put(3,j48Builder);
+
+		KstarPrototype ksP = new KstarPrototype();
+		KstarBuilder ksBuilder = new KstarBuilder(ksP);
+		classifier.put(4,ksBuilder);
+
+		MlpPrototype mlpP = new MlpPrototype();
+		MlpBuilder mlpBuilder = new MlpBuilder(mlpP);
+		classifier.put(5,mlpBuilder);
+						
+		NaiveBayesPrototype nbP = new NaiveBayesPrototype();
+		NaiveBayesBuilder nbBuilder = new NaiveBayesBuilder(nbP);
+		classifier.put(1,nbBuilder);
+		
+		BayesNetPrototype bnP = new BayesNetPrototype();
+		BayesNetBuilder bnBuilder = new BayesNetBuilder(bnP);
+		classifier.put(6,bnBuilder);
+		
+		RandomTreePrototype rtP = new RandomTreePrototype();
+		RandomTreeBuilder rtBuilder = new RandomTreeBuilder(rtP);
+		classifier.put(7,rtBuilder);
+
+		SmoPrototype smoP = new SmoPrototype();
+		SmoBuilder smoBuilder = new SmoBuilder(smoP);
+		classifier.put(8,smoBuilder);
+		
+	
+	}
+	public Classifier buildClassifier(int index, int config) throws InvalidParameterTypeException {
+		if(config==0) {
+			return classifier.get(index).defaultBuild();
 		}
-		return classifier;
+		else {
+			return classifier.get(index).randomBuild();
+		}
 	}
 }

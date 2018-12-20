@@ -1,13 +1,15 @@
 package br.ufrn.imd.pbil.domain.committees;
 
+import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
+import br.ufrn.imd.pbil.domain.baseclassifiers.ClassifierPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class VoteBuilder extends CommitteeBuilder{
 
-	public VoteBuilder(CommitteePrototype committeePrototype) {
+	public VoteBuilder(ClassifierPrototype committeePrototype) {
 		super(committeePrototype);
 
 	}
@@ -69,7 +71,7 @@ public class VoteBuilder extends CommitteeBuilder{
 	}
 
 	@Override
-	public Committee weightedBuild() {
+	public Classifier weightedDrawBuild() {
 		// TODO Auto-generated method stub
 		return null;
 	}
