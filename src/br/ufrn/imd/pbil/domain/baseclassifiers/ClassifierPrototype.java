@@ -25,7 +25,7 @@ public abstract class ClassifierPrototype {
 		return p;
 	}
 	
-	protected ParameterPrototype buildDoubleParamete(int begin, int end, int step, ParameterPrototype p ){
+	protected ParameterPrototype buildDoubleParameter(int begin, int end, int step, ParameterPrototype p ){
 		List<Double> values = new ArrayList<Double>();
 		for(double i = begin; i<=end; i=i+step) {
 			double valor  = i/100;

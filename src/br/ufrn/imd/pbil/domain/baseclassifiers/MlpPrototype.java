@@ -11,11 +11,11 @@ public class MlpPrototype extends ClassifierPrototype{
 	public MlpPrototype() throws InvalidParameterTypeException {
 		
 		ParameterPrototype l = new ParameterPrototype("L", ParameterType.DOUBLE);
-		l = buildDoubleParamete(10, 100, 10, l);
+		l = buildDoubleParameter(10, 100, 10, l);
 		parameters.put("L", l);
 		
 		ParameterPrototype m = new ParameterPrototype("M", ParameterType.DOUBLE);
-		m = buildDoubleParamete(10, 100, 10,m);
+		m = buildDoubleParameter(10, 100, 10,m);
 		parameters.put("M", m);
 		
 		ParameterPrototype b = new ParameterPrototype("B", ParameterType.BOOLEAN);

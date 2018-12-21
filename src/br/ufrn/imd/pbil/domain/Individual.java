@@ -1,5 +1,14 @@
 package br.ufrn.imd.pbil.domain;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Individual{
 	
@@ -30,5 +39,21 @@ public class Individual{
 
 	public void setAccuracy(Double accuracy) {
 		this.accuracy = accuracy;
+	}
+	
+	public String print(){
+		Gson gson = new Gson();
+		String a = gson.toJson(this, Individual.class);
+		a= jsonFormatter(a);
+		System.out.println(a);
+		return a;
+	}
+	
+	protected static String jsonFormatter(String text) {
+	    JsonParser parser = new JsonParser();
+	    JsonObject json = parser.parse(text).getAsJsonObject();
+	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	    String prettyJson = gson.toJson(json);			
+	    return prettyJson;
 	}
 }
