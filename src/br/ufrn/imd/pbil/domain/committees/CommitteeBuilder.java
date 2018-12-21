@@ -36,9 +36,8 @@ public abstract class CommitteeBuilder extends ClassifierBuilder{
 		Random random =new Random();
 		ClassifierFactory factory = new ClassifierFactory();
 		for (int i =0; i<numberOfClassifiers; i++) {	
-			int indexOfConfig = random.nextInt(2);
 			int indexOfClassifier = random.nextInt(9);
-			Classifier solucao = factory.buildClassifier(indexOfClassifier, indexOfConfig);
+			Classifier solucao = factory.buildClassifier(indexOfClassifier, 1);
 			classifiers.add(solucao);
 		}
 		return classifiers;

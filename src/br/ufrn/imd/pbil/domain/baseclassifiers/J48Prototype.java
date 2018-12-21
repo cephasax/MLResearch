@@ -37,7 +37,7 @@ public class J48Prototype extends ClassifierPrototype{
 		parameters.put(m.getName(), m);
 		
 		ParameterPrototype c = new ParameterPrototype("C", ParameterType.DOUBLE); 
-		c = buildDoubleParamete( 5, 500, 5, c);
+		c = buildDoubleParameter( 5, 500, 5, c);
 		parameters.put(c.getName(), c);
 	}
 }
