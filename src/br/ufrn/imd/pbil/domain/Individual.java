@@ -11,7 +11,6 @@ public class Individual{
 	private Classifier rootMethod;
 	private Double accuracy;
 
-
 	public String getName() {
 		return name;
 	}

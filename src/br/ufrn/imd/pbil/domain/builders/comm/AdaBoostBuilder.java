@@ -1,3 +1,4 @@
+
 package br.ufrn.imd.pbil.domain.builders.comm;
 
 import br.ufrn.imd.pbil.domain.Classifier;

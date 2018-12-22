@@ -1,11 +1,10 @@
 package br.ufrn.imd.pbil.domain.prototypes.comm;
 
-import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.ParameterPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class RandomForestPrototype extends ClassifierPrototype{
+public class RandomForestPrototype extends CommitteePrototype{
 	public RandomForestPrototype() throws InvalidParameterTypeException {
 		ParameterPrototype i = new ParameterPrototype("I", ParameterType.INT);
 		i = buildIntParamete(2, 256, 1, i);
@@ -19,5 +18,6 @@ public class RandomForestPrototype extends ClassifierPrototype{
 		w = buildIntParamete(1, 20, 1, w);
 		parameters.put(w.getName(), w);
 		
+		this.setNumberOfBranchClassifiers(1);
 	}
 }

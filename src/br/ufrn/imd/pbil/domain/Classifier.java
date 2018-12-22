@@ -55,6 +55,7 @@ public abstract class Classifier {
 		jsonFormatter(a);
 		return a;
 	}
+	
 	public void print() {
 		Gson gson = new Gson();
 		String a = gson.toJson(this, Classifier.class);

@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain;
 
+import br.ufrn.imd.pbil.domain.baseclassifiers.BaseClassifierFactory;
 import br.ufrn.imd.pbil.domain.committees.CommitteeFactory;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 import br.ufrn.imd.pbil.pde.Possibility;
@@ -12,15 +13,17 @@ public class Factory {
 	private PossibilityFactory possibilityFactory;
 	
 	private Possibility baseClassifierPossibilities;
-	//private Possibility committeePossibilities;
+	private Possibility committeePossibilities;
 	
 	public Factory() throws InvalidParameterTypeException {
 		this.baseclassifierFactory = new BaseClassifierFactory();
 		this.committeeFactory = new CommitteeFactory();
 		this.possibilityFactory = new PossibilityFactory();
 		
-		this.baseClassifierPossibilities = possibilityFactory.buildPossibilities(baseclassifierFactory, "baseclassifierPossibilities");
-		//this.committeePossibilities = possibilityFactory.buildPossibilities(committeeFactory, "committeePossibilities");
+		this.baseClassifierPossibilities = possibilityFactory.buildPossibilitiesForBaseClassifiers(
+				baseclassifierFactory, "baseclassifierPossibilities");
+		this.committeePossibilities = possibilityFactory.buildPossibilitiesForCommittes(
+				committeeFactory, "committeePossibilities");
 	}
 	
 	public ClassifierFactory getBaseclassifierFactory() {
@@ -53,6 +56,14 @@ public class Factory {
 
 	public void setBaseClassifierPossibilities(Possibility baseClassifierPossibilities) {
 		this.baseClassifierPossibilities = baseClassifierPossibilities;
+	}
+
+	public Possibility getCommitteePossibilities() {
+		return committeePossibilities;
+	}
+
+	public void setCommitteePossibilities(Possibility committeePossibilities) {
+		this.committeePossibilities = committeePossibilities;
 	}
 	
 	

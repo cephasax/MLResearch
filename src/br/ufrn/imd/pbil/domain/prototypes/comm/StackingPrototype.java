@@ -1,11 +1,10 @@
 package br.ufrn.imd.pbil.domain.prototypes.comm;
 
-import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.ParameterPrototype;
 import br.ufrn.imd.pbil.enums.ParameterType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
-public class StackingPrototype extends ClassifierPrototype{
+public class StackingPrototype extends CommitteePrototype{
 	public StackingPrototype() throws InvalidParameterTypeException {
 		ParameterPrototype x = new ParameterPrototype("X", ParameterType.INT);
 		x = buildIntParamete(1, 10, 1, x);
@@ -23,5 +22,6 @@ public class StackingPrototype extends ClassifierPrototype{
 		num = buildIntParamete(1, 10, 1, num);
 		parameters.put(num.getName(),num);
 
+		this.setNumberOfBranchClassifiers(2);
 	}
 }

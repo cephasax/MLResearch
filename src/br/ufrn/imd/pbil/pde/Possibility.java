@@ -18,6 +18,26 @@ public class Possibility {
 		this.weight = 1;
 	}
 
+	public void addPossibility(Possibility possibility) {
+		possibility.setFather(this.key);
+		possibilities.add(possibility);
+		this.totalWeight += possibility.getWeight();
+	}
+	
+	public void increaseWeight (float value) {
+		this.totalWeight += value;
+		this.weight += value;
+	}
+	
+	public String possibilityAsString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{" + this.father + ", " + this.key + ", " + this.weight + ", " + this.totalWeight + "}" +"\n");
+		for(Possibility p : possibilities) {
+			sb.append(p.possibilityAsString());
+		}
+		return sb.toString();
+	}
+
 	public String getKey() {
 		return key;
 	}
@@ -50,8 +70,6 @@ public class Possibility {
 		this.possibilities = possibilities;
 	}
 	
-	
-	
 	public String getFather() {
 		return father;
 	}
@@ -60,18 +78,5 @@ public class Possibility {
 		this.father = father;
 	}
 
-	public void addPossibility(Possibility possibility) {
-		possibility.setFather(this.key);
-		possibilities.add(possibility);
-		this.totalWeight += possibility.getWeight();
-	}
-	
-	public String possibilityAsString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("{" + this.father + ", " + this.key + ", " + this.weight + ", " + this.totalWeight + "}" +"\n");
-		for(Possibility p : possibilities) {
-			sb.append(p.possibilityAsString());
-		}
-		return sb.toString();
-	}
+
 }

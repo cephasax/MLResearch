@@ -1,7 +1,6 @@
 package br.ufrn.imd.pbil.domain.committees;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierFactory;
@@ -20,8 +19,6 @@ import br.ufrn.imd.pbil.domain.prototypes.comm.VotePrototype;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class CommitteeFactory extends ClassifierFactory{
-	
-	private Map<String,ClassifierBuilder> builders;
 
 	public CommitteeFactory() throws InvalidParameterTypeException {
 		

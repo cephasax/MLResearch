@@ -1,7 +1,9 @@
-package br.ufrn.imd.pbil.domain;
+package br.ufrn.imd.pbil.domain.baseclassifiers;
 
 import java.util.HashMap;
 
+import br.ufrn.imd.pbil.domain.ClassifierBuilder;
+import br.ufrn.imd.pbil.domain.ClassifierFactory;
 import br.ufrn.imd.pbil.domain.builders.bc.BayesNetBuilder;
 import br.ufrn.imd.pbil.domain.builders.bc.DecisionTableBuilder;
 import br.ufrn.imd.pbil.domain.builders.bc.IbkBuilder;
