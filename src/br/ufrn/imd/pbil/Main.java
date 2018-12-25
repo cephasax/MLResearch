@@ -14,7 +14,7 @@ import java.util.Random;
 import com.google.gson.Gson;
 
 import br.ufrn.imd.pbil.domain.Individual;
-import br.ufrn.imd.pbil.domain.committees.CommitteeFactory;
+import br.ufrn.imd.pbil.domain.comm.CommitteeFactory;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class Main {

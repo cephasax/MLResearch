@@ -62,6 +62,7 @@ public abstract class Classifier {
 		a= jsonFormatter(a);
 		System.out.println(a);
 	}
+	
 	protected static String jsonFormatter(String text) {
 	    JsonParser parser = new JsonParser();
 	    JsonObject json = parser.parse(text).getAsJsonObject();

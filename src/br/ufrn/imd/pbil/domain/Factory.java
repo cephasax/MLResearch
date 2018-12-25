@@ -1,7 +1,9 @@
 package br.ufrn.imd.pbil.domain;
 
-import br.ufrn.imd.pbil.domain.baseclassifiers.BaseClassifierFactory;
-import br.ufrn.imd.pbil.domain.committees.CommitteeFactory;
+import java.util.Random;
+
+import br.ufrn.imd.pbil.domain.bc.BaseClassifierFactory;
+import br.ufrn.imd.pbil.domain.comm.CommitteeFactory;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 import br.ufrn.imd.pbil.pde.Possibility;
 import br.ufrn.imd.pbil.pde.PossibilityFactory;
@@ -12,8 +14,13 @@ public class Factory {
 	private ClassifierFactory committeeFactory;
 	private PossibilityFactory possibilityFactory;
 	
+	private Possibility firstLevel;
 	private Possibility baseClassifierPossibilities;
 	private Possibility committeePossibilities;
+	private Possibility branchClassifierPossibilities;	
+	private Random random;
+	
+	
 	
 	public Factory() throws InvalidParameterTypeException {
 		this.baseclassifierFactory = new BaseClassifierFactory();
@@ -24,22 +31,45 @@ public class Factory {
 				baseclassifierFactory, "baseclassifierPossibilities");
 		this.committeePossibilities = possibilityFactory.buildPossibilitiesForCommittes(
 				committeeFactory, "committeePossibilities");
+		this.branchClassifierPossibilities = possibilityFactory.buildPossibilitiesForBaseClassifiers(
+				baseclassifierFactory, "branchClassifierPossibilities");
+		
+		buildFirstLevelPossibility();
+		random = new Random();
 	}
 	
+	public Classifier buildSolutionFromRandom() {
+		int i = random.nextInt(this.firstLevel.getPossibilities().size());
+		String name = this.firstLevel.getPossibilities().get(i).getKey();
+		
+		if(i <= 5) {
+			return committeeFactory.buildClassifierRandomly(name);
+		}
+		else {
+			int ii = random.nextInt(baseClassifierPossibilities.getPossibilities().size());
+			String nameBase = this.baseClassifierPossibilities.getPossibilities().get(ii).getKey();
+			return baseclassifierFactory.buildClassifierRandomly(nameBase);
+		}
+	}
+	
+	private void buildFirstLevelPossibility() {
+		this.firstLevel = new Possibility("firstLevel");
+		
+		this.firstLevel.addPossibility(new Possibility("AdaBoost"));
+		this.firstLevel.addPossibility(new Possibility("Bagging"));
+		this.firstLevel.addPossibility(new Possibility("RandomCommittee"));
+		this.firstLevel.addPossibility(new Possibility("RandomForest"));
+		this.firstLevel.addPossibility(new Possibility("Stacking"));
+		this.firstLevel.addPossibility(new Possibility("Vote"));
+		this.firstLevel.addPossibility(new Possibility("BaseClassifier"));
+	}
+		
 	public ClassifierFactory getBaseclassifierFactory() {
 		return baseclassifierFactory;
 	}
 
-	public void setBaseclassifierFactory(ClassifierFactory baseclassifierFactory) {
-		this.baseclassifierFactory = baseclassifierFactory;
-	}
-
 	public ClassifierFactory getCommitteeFactory() {
 		return this.committeeFactory;
-	}
-
-	public void setCommitteeFactory(ClassifierFactory committeeFactory) {
-		this.committeeFactory = committeeFactory;
 	}
 
 	public PossibilityFactory getPossibilityFactory() {
@@ -65,6 +95,25 @@ public class Factory {
 	public void setCommitteePossibilities(Possibility committeePossibilities) {
 		this.committeePossibilities = committeePossibilities;
 	}
+
 	
+	public Possibility getBranchClassifierPossibilities() {
+		return branchClassifierPossibilities;
+	}
+
+	
+	public void setBranchClassifierPossibilities(Possibility branchClassifierPossibilities) {
+		this.branchClassifierPossibilities = branchClassifierPossibilities;
+	}
+
+	
+	public Possibility getFirstLevel() {
+		return firstLevel;
+	}
+
+	
+	public void setFirstLevel(Possibility firstLevel) {
+		this.firstLevel = firstLevel;
+	}
 	
 }

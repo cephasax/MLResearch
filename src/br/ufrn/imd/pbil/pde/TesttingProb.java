@@ -17,15 +17,16 @@ public class TesttingProb {
 		System.out.println("----------------------------------------");
 		System.out.println(f.getCommitteePossibilities().possibilityAsString());*/
 
-		Classifier c = f.getBaseclassifierFactory().getBuilders().get("MLP").defaultBuild();
+		//Classifier c = f.getBaseclassifierFactory().getBuilders().get("MLP").defaultBuild();
 		
-		System.out.println(c.toString());
+		System.out.println(f.getFirstLevel().possibilityAsString());
 		
-		ArrayList<String> s = new ArrayList<String>();
-		s.add(c.getName());
-		
-		
-		
+		for (int i = 0; i < 10; i++) {
+			Classifier c = f.buildSolutionFromRandom();
+			System.out.println(c.toString());
+		}
+		/*ArrayList<String> s = new ArrayList<String>();
+		s.add(c.getName());*/
 	}
 
 }

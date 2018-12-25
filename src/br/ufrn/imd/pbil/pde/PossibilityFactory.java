@@ -56,6 +56,5 @@ public class PossibilityFactory {
 		}
 		return poss;
 	}
-
 	
 }
