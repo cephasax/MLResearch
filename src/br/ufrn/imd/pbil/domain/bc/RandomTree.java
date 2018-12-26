@@ -7,4 +7,5 @@ public class RandomTree extends Classifier{
 		super();
 		this.name = "Random Tree";
 	}
+
 }

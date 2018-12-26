@@ -7,4 +7,5 @@ public class J48 extends Classifier{
 		super();
 		this.name = "j48";
 	}
+
 }

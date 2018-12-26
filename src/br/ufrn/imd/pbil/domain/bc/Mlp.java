@@ -1,6 +1,8 @@
 package br.ufrn.imd.pbil.domain.bc;
 
-public class Mlp extends BaseClassifier{
+import br.ufrn.imd.pbil.domain.Classifier;
+
+public class Mlp extends Classifier{
 
 	public Mlp(){
 		super();

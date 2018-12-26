@@ -7,4 +7,5 @@ public class Kstar extends Classifier{
 		super();
 		this.name = "KStar";
 	}
+
 }

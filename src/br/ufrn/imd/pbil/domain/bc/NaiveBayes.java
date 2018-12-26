@@ -7,4 +7,5 @@ public class NaiveBayes extends Classifier{
 		super();
 		this.name = name;
 	}
+
 }

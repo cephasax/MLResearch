@@ -8,4 +8,5 @@ public class Smo extends Classifier {
 		super();
 		this.name = "smo";
 	}
+
 }

@@ -22,7 +22,7 @@ public class Committee extends Classifier {
 	public void setCommitteeType(CommitteeType committeeType) {
 		this.committeeType = committeeType;
 	}
-
+	@Override
 	public List<Classifier> getClassifiers() {
 		return classifiers;
 	}

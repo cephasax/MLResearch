@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain.bc;
 
+
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.enums.BaseClassifierType;
 
