@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import br.ufrn.imd.pbil.annotations.ToFix;
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
@@ -20,7 +19,6 @@ public abstract class CommitteeBuilder extends ClassifierBuilder{
 		super(classifierPrototype);
 	}
 	
-	@ToFix
 	// build a list of classifier with size equals to the number of classifiers each committee need
 	protected List<Classifier> buildClassifiers(int numberOfClassifiers) throws InvalidParameterTypeException {
 		

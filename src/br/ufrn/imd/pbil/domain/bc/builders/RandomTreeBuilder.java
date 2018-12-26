@@ -66,9 +66,4 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 		return classifier;
 	}
 
-	@Override
-	public Classifier weightedDrawBuild() {
-		return null;
-	}
-
 }

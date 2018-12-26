@@ -92,10 +92,4 @@ public class MlpBuilder extends ClassifierBuilder{
 		return classifier;
 	}
 
-	@Override
-	public Classifier weightedDrawBuild() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
