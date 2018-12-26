@@ -15,8 +15,6 @@ public abstract class ClassifierBuilder {
 	
 	public abstract Classifier randomBuild();
 	
-	public abstract Classifier weightedDrawBuild();
-	
 	public int getSizeOfPossibilities(ParameterPrototype p){
 		return prototype.getParameters().get(p.getName()).getPossibilities().size();
 	}

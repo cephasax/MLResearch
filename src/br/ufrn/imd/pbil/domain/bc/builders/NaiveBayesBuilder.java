@@ -47,10 +47,4 @@ public class NaiveBayesBuilder extends ClassifierBuilder{
 	public Classifier wheitedDrawBuild() {
 		return null;
 	}
-
-	@Override
-	public Classifier weightedDrawBuild() {
-		return null;
-	}
-
 }

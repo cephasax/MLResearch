@@ -1,6 +1,5 @@
 package br.ufrn.imd.pbil.domain.comm.builders;
 
-import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
@@ -53,11 +52,4 @@ public class RandomCommitteeBuilder extends CommitteeBuilder {
 		
 		return committee;
 	}
-
-	@Override
-	public Classifier weightedDrawBuild() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

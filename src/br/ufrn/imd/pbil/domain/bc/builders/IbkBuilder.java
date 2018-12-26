@@ -68,9 +68,4 @@ public class IbkBuilder extends ClassifierBuilder{
 		return classifier;
 	}
 
-	@Override
-	public Classifier weightedDrawBuild() {
-		return null;
-	}
-
 }

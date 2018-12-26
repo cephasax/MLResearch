@@ -25,8 +25,14 @@ public class Possibility {
 	}
 	
 	public void increaseWeight (float value) {
-		this.totalWeight += value;
 		this.weight += value;
+	}
+	
+	public void updateWeights() {
+		this.totalWeight = 0;
+		for(Possibility p: this.possibilities) {
+			this.totalWeight += p.getWeight();
+		}
 	}
 	
 	public String possibilityAsString() {

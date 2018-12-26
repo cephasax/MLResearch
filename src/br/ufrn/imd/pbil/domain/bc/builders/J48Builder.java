@@ -89,11 +89,4 @@ public class J48Builder extends ClassifierBuilder{
 		classifier.addParameter(c);
 		return classifier;
 	}
-
-	@Override
-	public Classifier weightedDrawBuild() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
