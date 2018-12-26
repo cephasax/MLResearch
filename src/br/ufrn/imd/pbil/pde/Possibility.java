@@ -44,6 +44,15 @@ public class Possibility {
 		return sb.toString();
 	}
 
+	public Possibility findChildPossibility(String name) {
+		for(Possibility p : possibilities) {
+			if(p.getKey().equals(name)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	public String getKey() {
 		return key;
 	}

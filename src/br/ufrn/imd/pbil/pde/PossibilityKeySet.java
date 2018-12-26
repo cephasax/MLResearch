@@ -1,6 +1,7 @@
 package br.ufrn.imd.pbil.pde;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import br.ufrn.imd.pbil.annotations.ToFix;
@@ -12,12 +13,14 @@ public class PossibilityKeySet {
 
 	private String key;
 	private Map<String, String> keyValuesPairs;
-
 	private ArrayList<PossibilityKeySet> branchClassifiers;
 	
 	@ToFix
 	public PossibilityKeySet(Classifier classifier) {
+		
+		this.keyValuesPairs = new HashMap<String, String>();
 		this.key = classifier.getName();
+		
 		for(Parameter param: classifier.getParameters()) {
 			keyValuesPairs.put(param.getName(), param.getValue());
 		}
@@ -31,7 +34,15 @@ public class PossibilityKeySet {
 		}
 	}
 	
-	private PossibilityKeySet(String key) {
+	public PossibilityKeySet(Possibility possibility) {
+		this.keyValuesPairs = new HashMap<String, String>();
+		this.key = possibility.getKey();
+		for(Possibility poss: possibility.getPossibilities()) {
+			keyValuesPairs.put(poss.getKey(), poss.getPossibilities().get(0).getKey());
+		}
+	}
+	
+	public PossibilityKeySet(String key) {
 		this.key = key;
 	}
 	
