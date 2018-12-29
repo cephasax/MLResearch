@@ -54,21 +54,21 @@ public class Factory {
 		}
 	}
 	
-	public Classifier buildSolutionFromWeightedDraw() {
-		Possibility possibility = drawAndUpdatePossibilityToNewPossibility(this.baseClassifierPossibilities);
-		
+	public PossibilityKeySet buildSolutionFromWeightedDraw() {
+		Possibility possibility = drawPossibility(this.firstLevel);
+		Possibility possibility2;
 		//IF WAS DRAWN A BASE CLASSIFIER
-		if(this.baseclassifierFactory.getClassifierNames().contains(possibility.getKey())) {
-			Possibility possibility2 = drawAndUpdatePossibilityToNewPossibility(this.baseClassifierPossibilities);
+		if(possibility.getKey().equals("BaseClassifier")){
+			possibility2 = drawPossibility(this.baseClassifierPossibilities);
 			
 		}
 		else {
-			
+			possibility2 = drawPossibility(this.committeePossibilities);
 		}
 		
+		return new PossibilityKeySet(possibility2);
 		
-		
-		String name = this.firstLevel.getPossibilities().get(i).getKey();
+		/*String name = this.firstLevel.getPossibilities().get(i).getKey();
 
 		if (i <= 5) {
 			return committeeFactory.buildClassifierRandomly(name);
@@ -76,7 +76,7 @@ public class Factory {
 			int ii = random.nextInt(baseClassifierPossibilities.getPossibilities().size());
 			String nameBase = this.baseClassifierPossibilities.getPossibilities().get(ii).getKey();
 			return baseclassifierFactory.buildClassifierRandomly(nameBase);
-		}
+		}*/
 	}
 	
 	private void buildFirstLevelPossibility() {
@@ -91,21 +91,18 @@ public class Factory {
 		this.firstLevel.addPossibility(new Possibility("BaseClassifier"));
 	}
 	
-	private Possibility drawAndUpdatePossibilityToNewPossibility(Possibility possibility) {
+	private Possibility drawPossibility(Possibility possibility) {
 		
-		float aux = random.nextInt((int) possibility.getTotalWeight());
-		
-		Possibility drawed = new Possibility(possibility.getKey());
-		
+		int aux = random.nextInt((int) possibility.getTotalWeight());
+		System.out.println("tamanho=" + possibility.getTotalWeight() + "| aux=" +aux);
+		Possibility drawed = null;/* = new Possibility(possibility.getKey());*/
 		for(Possibility p: possibility.getPossibilities()) {
 			aux -= p.getWeight();
 			if(aux < 0) {
-				drawed.getPossibilities().add(p);
-				p.increaseWeight(learningRate);
+				drawed.addPossibility(p);
 				break;
 			}
 		}
-		possibility.updateWeights();
 		return drawed;
 	}
 	
@@ -116,7 +113,7 @@ public class Factory {
 		if(p != null) {
 			
 			for(Possibility poss: p.getPossibilities()) {
-				Possibility s = drawAndUpdatePossibilityToNewPossibility(poss);
+				Possibility s = drawPossibility(poss);
 				drawed.addPossibility(s);
 			}
 			return new PossibilityKeySet(drawed); 

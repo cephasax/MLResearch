@@ -70,4 +70,12 @@ public class PossibilityKeySet {
 		return p;
 	}
 
+	@Override
+	public String toString() {
+		return "PossibilityKeySet [key=" + key + ", keyValuesPairs=" + keyValuesPairs + ", branchClassifiers="
+				+ branchClassifiers + "]";
+	}
+
+	
+	
 }
