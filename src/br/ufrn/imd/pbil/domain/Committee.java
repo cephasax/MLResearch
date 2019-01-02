@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.CommitteeType;
 
 public class Committee extends Classifier {
@@ -11,6 +12,11 @@ public class Committee extends Classifier {
 	private CommitteeType committeeType;
 	private List<Classifier> classifiers;
 
+	public Committee() {
+		super();
+		this.setClassifierType(ClassifierType.COMMITTEE);
+	}
+	
 	public int numberOfBaseClassifiers() {
 		return this.classifiers.size();
 	}

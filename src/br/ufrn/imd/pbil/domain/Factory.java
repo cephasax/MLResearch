@@ -150,5 +150,12 @@ public class Factory {
 	public Possibility getFirstLevel() {
 		return firstLevel;
 	}
-	
+
+	public float getLearningRate() {
+		return learningRate;
+	}
+
+	public void setLearningRate(float learningRate) {
+		this.learningRate = learningRate;
+	}
 }

@@ -11,12 +11,11 @@ public class TesttingProb {
 
 		Factory f = new Factory();
 
-		for(int i = 0; i < 100; i++) {
-			PossibilityKeySet s = f.buildSolutionFromWeightedDraw();
+	 	for(int i = 0; i < 100; i++) {
+			PossibilityKeySet s = new PossibilityKeySet(f.buildSolutionFromRandom());
 			System.out.println(s.toString());
 		}
 
-		
 	}
 
 }
