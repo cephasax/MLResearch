@@ -6,22 +6,16 @@ import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 public class TesttingProb {
 
 	public static float rate = 1;
-	
-	public static void main(String[] args) throws InvalidParameterTypeException {
-				
-		Factory f = new Factory();
-		
-		
-		
-		for (int i = 0; i < 5; i++) {
-			PossibilityKeySet s = f.getClassifierFromWeightedDraw("MLP", f.getBaseClassifierPossibilities());
 
-			System.out.println(s.getKey() + " - " + s.getKeyValuesPairs().toString() + "\n");
+	public static void main(String[] args) throws InvalidParameterTypeException {
+
+		Factory f = new Factory();
+
+	 	for(int i = 0; i < 100; i++) {
+			PossibilityKeySet s = new PossibilityKeySet(f.buildSolutionFromRandom());
+			System.out.println(s.toString());
 		}
-		
-		System.out.println(f.getBaseClassifierPossibilities().possibilityAsString());
+
 	}
-	
-	
-	
+
 }
