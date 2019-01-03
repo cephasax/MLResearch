@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.RandomTree;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class RandomTreeBuilder extends ClassifierBuilder{
@@ -16,7 +17,8 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new RandomTree();
-		classifier.setName("Default Random Tree");
+		classifier.setName("RandomTree");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter m = new Parameter("M",ParameterType.INT);
 		m.setValue("1");
 		classifier.addParameter(m);
@@ -43,7 +45,8 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new RandomTree();
-		classifier.setName("Random Random Tree");
+		classifier.setName("RandomTree");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter m = new Parameter("M",ParameterType.INT);
 		m.setValue(randomValueForParameter(m));
 		classifier.addParameter(m);

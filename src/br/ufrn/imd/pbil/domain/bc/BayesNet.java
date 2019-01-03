@@ -8,4 +8,6 @@ public class BayesNet extends Classifier{
 		super();
 		this.name  ="BayesNet";
 	}
+	
+
 }

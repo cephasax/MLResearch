@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.Kstar;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class KstarBuilder extends ClassifierBuilder{
@@ -17,7 +18,8 @@ public class KstarBuilder extends ClassifierBuilder{
 	public Classifier defaultBuild() {
 		// TODO Auto-generated method stub
 		classifier = new Kstar();
-		classifier.setName("Default Kstar");
+		classifier.setName("Kstar");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter b = new Parameter("B",ParameterType.INT);
 		b.setValue("20");
 		classifier.addParameter(b);
@@ -26,16 +28,17 @@ public class KstarBuilder extends ClassifierBuilder{
 		e.setValue("false");
 		classifier.addParameter(e);
 		
-		Parameter x = new Parameter("X", ParameterType.STRING);
-		x.setValue("a");
-		classifier.addParameter(x);
+		Parameter m = new Parameter("M", ParameterType.STRING);
+		m.setValue("a");
+		classifier.addParameter(m);
 		return classifier;
 	}
 
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Kstar();
-		classifier.setName("Random Kstar");
+		classifier.setName("Kstar");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter b = new Parameter("B", ParameterType.INT);
 		b.setValue(randomValueForParameter(b));
 		classifier.addParameter(b);
@@ -44,9 +47,9 @@ public class KstarBuilder extends ClassifierBuilder{
 		e.setValue(randomValueForParameter(e));
 		classifier.addParameter(e);
 		
-		Parameter x = new Parameter("X", ParameterType.STRING);
-		x.setValue(randomValueForParameter(x));
-		classifier.addParameter(x);
+		Parameter m = new Parameter("M", ParameterType.STRING);
+		m.setValue(randomValueForParameter(m));
+		classifier.addParameter(m);
 		
 		return classifier;
 	}

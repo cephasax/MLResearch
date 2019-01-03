@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.DecisionTable;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class DecisionTableBuilder extends ClassifierBuilder {
@@ -17,7 +18,7 @@ public class DecisionTableBuilder extends ClassifierBuilder {
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new DecisionTable();
-		
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter e = new Parameter("E", ParameterType.STRING);
 		e.setValue("acc");
 		classifier.addParameter(e);
@@ -41,7 +42,7 @@ public class DecisionTableBuilder extends ClassifierBuilder {
 	@Override
 	public Classifier randomBuild() {
 		classifier = new DecisionTable();
-		
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter e = new Parameter("E", ParameterType.STRING);
 		e.setValue(randomValueForParameter(e));
 		classifier.addParameter(e);

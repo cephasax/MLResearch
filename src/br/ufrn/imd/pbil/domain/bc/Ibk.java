@@ -7,4 +7,5 @@ public class Ibk extends Classifier{
 		super();
 		this.name = "IBK";
 	}
+
 }

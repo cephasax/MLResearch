@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.J48;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class J48Builder extends ClassifierBuilder{
@@ -16,7 +17,8 @@ public class J48Builder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new J48();
-		classifier.setName("Default J48");
+		classifier.setName("J48");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter o = new Parameter("O",ParameterType.BOOLEAN);
 		o.setValue("false");
 		classifier.addParameter(o);
@@ -54,8 +56,8 @@ public class J48Builder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new J48();
-		classifier.setName("Random j48");
-	
+		classifier.setName("J48");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter o = new Parameter("O",ParameterType.BOOLEAN);
 		o.setValue(randomValueForParameter(o));
 		classifier.addParameter(o);

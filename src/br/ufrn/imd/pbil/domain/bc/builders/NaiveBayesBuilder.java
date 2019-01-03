@@ -8,6 +8,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.NaiveBayes;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class NaiveBayesBuilder extends ClassifierBuilder{
@@ -17,19 +18,25 @@ public class NaiveBayesBuilder extends ClassifierBuilder{
 	}
 
 	public Classifier defaultBuild() {
-		classifier = new NaiveBayes("Default Naive Bayes");
+		classifier = new NaiveBayes();
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		List<Parameter> parameters = new ArrayList<Parameter>();
+		
 		Parameter d = new Parameter("D",ParameterType.BOOLEAN);
 		d.setValue("false");
 		parameters.add(d);
+		
 		d.setName("K");
 		parameters.add(d);
+		
 		classifier.setParameters(parameters);
+		
 		return classifier;
 	}
 
 	public Classifier randomBuild() {
-		classifier = new NaiveBayes("Random Naive Bayes");
+		classifier = new NaiveBayes();
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
 		Parameter d = new Parameter("D",ParameterType.BOOLEAN);

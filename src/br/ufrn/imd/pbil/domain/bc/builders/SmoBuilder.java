@@ -7,6 +7,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.Smo;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class SmoBuilder extends ClassifierBuilder{
@@ -19,7 +20,8 @@ public class SmoBuilder extends ClassifierBuilder{
 	
 	public Classifier defaultBuild() {
 		classifier = new Smo();
-		classifier.setName("Default SMO");
+		classifier.setName("SMO");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter u = new Parameter("SEL",ParameterType.STRING);
 		u.setValue("Defaut");
 		List<Parameter> params = classifier.getParameters();
@@ -30,8 +32,8 @@ public class SmoBuilder extends ClassifierBuilder{
 
 	public Classifier randomBuild() {
 		classifier = new Smo();
-		classifier.setName("Random Smo");
-		
+		classifier.setName("Smo");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter u = new Parameter("SEL",ParameterType.STRING);
 		u.setValue(randomValueForParameter(u));
 		classifier.addParameter(u);

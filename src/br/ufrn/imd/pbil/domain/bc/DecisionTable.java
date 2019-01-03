@@ -1,10 +1,12 @@
 package br.ufrn.imd.pbil.domain.bc;
 
-public class DecisionTable extends BaseClassifier{
+import br.ufrn.imd.pbil.domain.Classifier;
+
+public class DecisionTable extends Classifier{
 
 	public DecisionTable(){
 		super();
-		this.name = "Decision Table";
+		this.name = "DecisionTable";
 	}
 	
 }

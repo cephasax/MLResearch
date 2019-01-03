@@ -15,7 +15,10 @@ public abstract class Classifier {
 	protected ClassifierType classifierType;
 	protected String name;
 	protected List<Parameter> parameters;
-
+	public List<Classifier> getClassifiers(){
+		return new ArrayList<Classifier>();
+	}
+	
 	public Classifier() {
 		this.name = new String();
 		this.parameters = new ArrayList<Parameter>();
