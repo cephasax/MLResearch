@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.BayesNet;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class BayesNetBuilder extends ClassifierBuilder{
@@ -16,7 +17,8 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier =new BayesNet();
-		classifier.setName("Default BayesNet");
+		classifier.setName("BayesNet");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter q = new Parameter("Q",ParameterType.STRING);
 		q.setValue("K2");
 		classifier.addParameter(q);
@@ -31,8 +33,8 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new BayesNet();
-		classifier.setName("Random BayesNet");
-	
+		classifier.setName("BayesNet");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter q = new Parameter("Q", ParameterType.STRING);
 		q.setValue(randomValueForParameter(q));
 		classifier.addParameter(q);

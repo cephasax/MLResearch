@@ -3,9 +3,9 @@ package br.ufrn.imd.pbil.domain.bc;
 import br.ufrn.imd.pbil.domain.Classifier;
 
 public class NaiveBayes extends Classifier{
-	public NaiveBayes(String name ) {
+	public NaiveBayes( ) {
 		super();
-		this.name = name;
+		this.name = "NaiveBayes";
 	}
 
 }

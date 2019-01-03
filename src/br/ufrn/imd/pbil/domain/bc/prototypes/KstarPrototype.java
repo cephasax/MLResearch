@@ -19,8 +19,8 @@ public class KstarPrototype extends ClassifierPrototype{
 		e.setPossibilities(Arrays.asList(true,false));
 		parameters.put(e.getName(), e);
 		
-		ParameterPrototype x = new ParameterPrototype("X", ParameterType.STRING);
-		x.setPossibilities(Arrays.asList("a","d","m","n"));
-		parameters.put(x.getName(), x);
+		ParameterPrototype m = new ParameterPrototype("M", ParameterType.STRING);
+		m.setPossibilities(Arrays.asList("a","d","m","n"));
+		parameters.put(m.getName(), m);
 	}
 }

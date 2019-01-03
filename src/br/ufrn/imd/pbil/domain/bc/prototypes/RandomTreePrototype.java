@@ -20,7 +20,7 @@ public class RandomTreePrototype extends ClassifierPrototype{
 		parameters.put(k.getName(), k);
 		
 		ParameterPrototype depth = new ParameterPrototype("depth", ParameterType.INT);
-		depth = buildIntParamete(0, 20,1,depth);
+		depth = buildIntParamete(2, 20,1,depth);
 		parameters.put(depth.getName(), depth);
 		
 		ParameterPrototype n = new ParameterPrototype("N", ParameterType.INT);

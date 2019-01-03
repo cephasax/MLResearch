@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.Mlp;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class MlpBuilder extends ClassifierBuilder{
@@ -17,7 +18,7 @@ public class MlpBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new Mlp();
-		
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter l =new Parameter("L",ParameterType.DOUBLE);
 		l.setValue("0.3");
 		classifier.addParameter(l);
@@ -56,7 +57,7 @@ public class MlpBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Mlp();
-		
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter l =new Parameter("L",ParameterType.DOUBLE);
 		l.setValue(randomValueForParameter(l));
 		classifier.addParameter(l);

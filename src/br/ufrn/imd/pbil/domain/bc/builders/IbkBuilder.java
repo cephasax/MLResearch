@@ -5,6 +5,7 @@ import br.ufrn.imd.pbil.domain.ClassifierBuilder;
 import br.ufrn.imd.pbil.domain.ClassifierPrototype;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.domain.bc.Ibk;
+import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.enums.ParameterType;
 
 public class IbkBuilder extends ClassifierBuilder{
@@ -16,7 +17,7 @@ public class IbkBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new Ibk();
-		classifier.setName("Default IBK");
+		classifier.setName("IBK");
 		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
 		e.setValue("false");
 		classifier.addParameter(e);
@@ -43,8 +44,8 @@ public class IbkBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Ibk();
-		classifier.setName("Random IBK");
-	
+		classifier.setName("IBK");
+		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
 		e.setValue(randomValueForParameter(e));
 		classifier.addParameter(e);

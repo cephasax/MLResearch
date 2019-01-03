@@ -19,7 +19,7 @@ public class DecisionTablePrototype extends ClassifierPrototype{
 		parameters.put(i.getName(), i);
 		
 		ParameterPrototype s = new ParameterPrototype("S", ParameterType.STRING);
-		s.setPossibilities(Arrays.asList("BestFirst", "GreedyStepWise"));
+		s.setPossibilities(Arrays.asList("BestFirst -D 1 -N 5", "GreedyStepWise -T -1.7976931348623157E308 -N 1 -num-slots 1"));
 		parameters.put(s.getName(), s);
 		
 		ParameterPrototype x= new ParameterPrototype("X", ParameterType.INT);

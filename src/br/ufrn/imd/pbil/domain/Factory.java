@@ -42,7 +42,7 @@ public class Factory {
 	}
 	
 	public Classifier buildSolutionFromRandom() {
-		int i = random.nextInt(this.firstLevel.getPossibilities().size());
+		int i = 6;
 		String name = this.firstLevel.getPossibilities().get(i).getKey();
 
 		if (i <= 5) {

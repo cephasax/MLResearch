@@ -6,7 +6,7 @@ public class Smo extends Classifier {
 	
 	public Smo(){
 		super();
-		this.name = "smo";
+		this.name = "SMO";
 	}
 
 }
