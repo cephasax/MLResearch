@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.domain;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.bc.BaseClassifierFactory;
@@ -55,28 +56,44 @@ public class Factory {
 	}
 	
 	public PossibilityKeySet buildSolutionFromWeightedDraw() {
-		Possibility possibility = drawPossibility(this.firstLevel);
-		Possibility possibility2;
+		Possibility rootMethod = drawOneMethod(this.firstLevel);
+		Possibility baseClassifier;
+		Possibility committee;
+		
+		Possibility p = new Possibility();
+		
+		String name = new String(rootMethod.getKey());
+		
 		//IF WAS DRAWN A BASE CLASSIFIER
-		if(possibility.getKey().equals("BaseClassifier")){
-			possibility2 = drawPossibility(this.baseClassifierPossibilities);
-			
+		if(name.equals("BaseClassifier")){
+			baseClassifier = drawOneMethod(this.baseClassifierPossibilities);
+			p = drawPossibility(baseClassifier);
+			return new PossibilityKeySet(p);
 		}
+		//IF WAS A COMMITTEE
 		else {
-			possibility2 = drawPossibility(this.committeePossibilities);
+			int nBranch = 1;
+			committee = this.committeePossibilities.findChildPossibility(name);
+			p = drawPossibility(committee);
+			PossibilityKeySet ready = new PossibilityKeySet(p);
+			for(Possibility pNum: p.getPossibilities()) {
+				if(pNum.getKey().equals("num")) {
+					nBranch = Integer.valueOf(pNum.getDrawnValue());
+				}
+			}
+			if(nBranch != 0) {
+				ArrayList<PossibilityKeySet> pkss = new ArrayList<PossibilityKeySet>();
+				for(int i = 0; i < nBranch; i++) {
+					PossibilityKeySet pksTemp = new PossibilityKeySet(drawOneMethod(branchClassifierPossibilities));
+					Possibility pTemp = branchClassifierPossibilities.findChildPossibility(pksTemp.getKey());
+					pkss.add(new PossibilityKeySet(drawPossibility(pTemp)));
+				}
+				
+				ready.setBranchClassifiers(pkss);
+			}
+			return ready;
 		}
-		
-		return new PossibilityKeySet(possibility2);
-		
-		/*String name = this.firstLevel.getPossibilities().get(i).getKey();
 
-		if (i <= 5) {
-			return committeeFactory.buildClassifierRandomly(name);
-		} else {
-			int ii = random.nextInt(baseClassifierPossibilities.getPossibilities().size());
-			String nameBase = this.baseClassifierPossibilities.getPossibilities().get(ii).getKey();
-			return baseclassifierFactory.buildClassifierRandomly(nameBase);
-		}*/
 	}
 	
 	private void buildFirstLevelPossibility() {
@@ -92,20 +109,41 @@ public class Factory {
 	}
 	
 	private Possibility drawPossibility(Possibility possibility) {
-		
+		Possibility drawed = new Possibility(possibility.getKey());	
+		for(Possibility p: possibility.getPossibilities()) {
+			drawed.addPossibility(drawOneChildFromPossibility(p));
+		}
+		return drawed;
+	}
+	
+	private Possibility drawOneChildFromPossibility(Possibility possibility) {
+		Possibility drawed = new Possibility(possibility.getKey());
 		int aux = random.nextInt((int) possibility.getTotalWeight());
-		System.out.println("tamanho=" + possibility.getTotalWeight() + "| aux=" +aux);
-		Possibility drawed = null;/* = new Possibility(possibility.getKey());*/
 		for(Possibility p: possibility.getPossibilities()) {
 			aux -= p.getWeight();
 			if(aux < 0) {
-				drawed.addPossibility(p);
+				drawed.setDrawnValue(p.getKey());
+				break;
+			}
+		}
+		return drawed;
+	}
+
+	private Possibility drawOneMethod(Possibility possibility) {
+		int aux = random.nextInt((int) possibility.getTotalWeight());
+		Possibility drawed = new Possibility();
+		for(Possibility p: possibility.getPossibilities()) {
+			aux -= p.getWeight();
+			if(aux < 0) {
+				drawed = p;
+				drawed.setDrawnValue(p.getKey());
 				break;
 			}
 		}
 		return drawed;
 	}
 	
+
 	public PossibilityKeySet getPossibilitykeySetFromWeightedDraw(String classifierName, Possibility possibility) {
 		Possibility drawed = new Possibility(classifierName);
 		

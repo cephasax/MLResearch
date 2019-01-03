@@ -7,6 +7,7 @@ public class Possibility {
 	private String father;
 	
 	private String key;
+	private String drawnValue;
 	private float weight;
 	private float totalWeight;
 	private ArrayList<Possibility> possibilities;
@@ -18,6 +19,12 @@ public class Possibility {
 		this.weight = 1;
 	}
 
+	public Possibility() {
+		this.father = new String("NIL");
+		this.possibilities = new ArrayList<Possibility>();
+		this.weight = 0;
+	}
+	
 	public void addPossibility(Possibility possibility) {
 		possibility.setFather(this.key);
 		possibilities.add(possibility);
@@ -93,5 +100,13 @@ public class Possibility {
 		this.father = father;
 	}
 
+	public String getDrawnValue() {
+		return drawnValue;
+	}
 
+	public void setDrawnValue(String drawnValue) {
+		this.drawnValue = drawnValue;
+	}
+
+	
 }

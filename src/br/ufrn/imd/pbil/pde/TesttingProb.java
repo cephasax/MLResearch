@@ -10,12 +10,11 @@ public class TesttingProb {
 	public static void main(String[] args) throws InvalidParameterTypeException {
 
 		Factory f = new Factory();
-
-	 	for(int i = 0; i < 100; i++) {
-			PossibilityKeySet s = new PossibilityKeySet(f.buildSolutionFromRandom());
+		
+	 	for(int i = 0; i < 10; i++) {
+			PossibilityKeySet s = f.buildSolutionFromWeightedDraw();
 			System.out.println(s.toString());
 		}
-
 	}
 
 }
