@@ -17,7 +17,6 @@ public class J48Builder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new J48();
-		classifier.setName("J48");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter o = new Parameter("O",ParameterType.BOOLEAN);
 		o.setValue("false");
@@ -56,7 +55,6 @@ public class J48Builder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new J48();
-		classifier.setName("J48");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter o = new Parameter("O",ParameterType.BOOLEAN);
 		o.setValue(randomValueForParameter(o));

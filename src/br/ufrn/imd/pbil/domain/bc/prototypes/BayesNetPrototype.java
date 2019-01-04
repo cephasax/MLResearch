@@ -11,8 +11,13 @@ import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 public class BayesNetPrototype extends ClassifierPrototype{
 	public BayesNetPrototype() throws InvalidParameterTypeException {
 		ParameterPrototype q = new ParameterPrototype("Q", ParameterType.STRING);
-		List<String> possibilities = Arrays.asList("K2", "HillClimber", "LAGDHillClimber",
-				"SimulatedAnnealing", "TabuSearch", "TAN");
+		List<String> possibilities = Arrays.asList(
+				"weka.classifiers.bayes.net.search.local.K2 -P1 -S BAYES",
+				"weka.classifiers.bayes.net.search.local.HillClimber -P 1 -S BAYES", 
+				"weka.classifiers.bayes.net.search.local.LAGDHillClimber -L 2 -G 5 -P 1 -S BAYES",
+				"weka.classifiers.bayes.net.search.local.SimulatedAnnealing -A 10.0 U 10000 -D 0.999 -R 1 -S BAYES", 
+				"weka.classifiers.bayes.net.search.local.TabuSearch -L 5 -U 10 -P 1 -S BAYES", 
+				"weka.classifiers.bayes.net.search.local.TAN -S BAYES");
 		q.setPossibilities(possibilities);
 		parameters.put(q.getName(), q);
 		

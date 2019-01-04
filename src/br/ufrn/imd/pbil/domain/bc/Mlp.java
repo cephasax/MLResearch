@@ -6,6 +6,6 @@ public class Mlp extends Classifier{
 
 	public Mlp(){
 		super();
-		this.name = "MLP";
+		this.name = "weka.classifiers.functions.MultilayerPerceptron";
 	}
 }

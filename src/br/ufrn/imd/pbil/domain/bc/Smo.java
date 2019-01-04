@@ -6,7 +6,7 @@ public class Smo extends Classifier {
 	
 	public Smo(){
 		super();
-		this.name = "SMO";
+		this.name = "weka.classifiers.functions.SMO";
 	}
 
 }

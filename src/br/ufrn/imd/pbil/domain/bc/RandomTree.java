@@ -5,7 +5,7 @@ import br.ufrn.imd.pbil.domain.Classifier;
 public class RandomTree extends Classifier{
 	public RandomTree() {
 		super();
-		this.name = "RandomTree";
+		this.name = "weka.classifiers.trees.RandomTree";
 	}
 
 }

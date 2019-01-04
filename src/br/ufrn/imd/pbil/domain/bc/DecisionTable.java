@@ -6,7 +6,7 @@ public class DecisionTable extends Classifier{
 
 	public DecisionTable(){
 		super();
-		this.name = "DecisionTable";
+		this.name = "weka.classifiers.rules.DecisionTable";
 	}
 	
 }

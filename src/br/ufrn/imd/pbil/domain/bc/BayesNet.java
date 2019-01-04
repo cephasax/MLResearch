@@ -6,7 +6,7 @@ public class BayesNet extends Classifier{
 	public BayesNet() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.name  ="BayesNet";
+		this.name  ="weka.classifiers.bayes.BayesNet";
 	}
 	
 

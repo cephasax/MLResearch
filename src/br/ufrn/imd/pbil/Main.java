@@ -36,7 +36,6 @@ public class Main {
 			} catch (Exception e) {
 				e.printStackTrace();
 				sh++;
-				population.add(temp);
 			}
 		}
 		System.out.println(sh);

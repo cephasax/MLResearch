@@ -17,7 +17,6 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier =new BayesNet();
-		classifier.setName("BayesNet");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter q = new Parameter("Q",ParameterType.STRING);
 		q.setValue("K2");
@@ -33,7 +32,7 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new BayesNet();
-		classifier.setName("BayesNet");
+
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter q = new Parameter("Q", ParameterType.STRING);
 		q.setValue(randomValueForParameter(q));
