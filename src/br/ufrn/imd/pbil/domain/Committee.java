@@ -11,6 +11,15 @@ public class Committee extends Classifier {
 
 	private CommitteeType committeeType;
 	private List<Classifier> classifiers;
+	private String parameterClassifier;
+	
+	public String getParameterClassifier() {
+		return parameterClassifier;
+	}
+
+	public void setParameterClassifier(String parameterClassifier) {
+		this.parameterClassifier = parameterClassifier;
+	}
 
 	public Committee() {
 		super();

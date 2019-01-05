@@ -43,13 +43,13 @@ public class Factory {
 	}
 	
 	public Classifier buildSolutionFromRandom() {
-		int i = 6;
+		int i =  random.nextInt(this.firstLevel.getPossibilities().size());
 		String name = this.firstLevel.getPossibilities().get(i).getKey();
 
 		if (i <= 5) {
 			return committeeFactory.buildClassifierRandomly(name);
 		} else {
-			int ii = random.nextInt(baseClassifierPossibilities.getPossibilities().size());
+			int ii = 7; //random.nextInt(baseClassifierPossibilities.getPossibilities().size());
 			String nameBase = this.baseClassifierPossibilities.getPossibilities().get(ii).getKey();
 			return baseclassifierFactory.buildClassifierRandomly(nameBase);
 		}

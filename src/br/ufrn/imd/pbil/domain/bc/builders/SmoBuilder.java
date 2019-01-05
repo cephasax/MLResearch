@@ -20,7 +20,6 @@ public class SmoBuilder extends ClassifierBuilder{
 	
 	public Classifier defaultBuild() {
 		classifier = new Smo();
-		classifier.setName("SMO");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter u = new Parameter("SEL",ParameterType.STRING);
 		u.setValue("Defaut");

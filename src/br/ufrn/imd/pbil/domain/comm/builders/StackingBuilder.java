@@ -47,6 +47,7 @@ public class StackingBuilder extends CommitteeBuilder{
 	@Override
 	public Committee randomBuild() {
 		committee = new Stacking();
+		committee.setParameterClassifier("M");
 		
 		Parameter x = new Parameter("X",ParameterType.INT);
 		x.setValue(randomValueForParameter(x));

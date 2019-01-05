@@ -45,6 +45,7 @@ public class VoteBuilder extends CommitteeBuilder{
 	@Override
 	public Committee randomBuild() {
 		committee = new Vote();
+		committee.setParameterClassifier("B");
 		Parameter s = new Parameter("S", ParameterType.INT);
 		s.setValue(randomValueForParameter(s));
 		committee.addParameter(s);
