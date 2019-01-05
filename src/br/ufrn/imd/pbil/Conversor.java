@@ -7,6 +7,8 @@ import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Individual;
 import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
+import weka.attributeSelection.ASSearch;
+import weka.attributeSelection.GreedyStepwise;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.MultilayerPerceptron;
