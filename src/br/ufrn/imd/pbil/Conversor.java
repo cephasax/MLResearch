@@ -4,6 +4,8 @@ import java.util.Set;
 
 import br.ufrn.imd.pbil.domain.Individual;
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
+import weka.attributeSelection.ASSearch;
+import weka.attributeSelection.GreedyStepwise;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.MultilayerPerceptron;
@@ -225,7 +227,7 @@ public class Conversor {
 			if(pks.getKeyValuesPairs().get(key).equals("BestFirst")) {
 				i+=6;
 			}
-			else if(pks.getKeyValuesPairs().get(key).equals("GreedyStepWise")){
+			else if(pks.getKeyValuesPairs().get(key).equals("GreedyStepwise")){
 				i+=8;
 			}
 			else if(pks.getKeyValuesPairs().get(key).equals("true")) {
