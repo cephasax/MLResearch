@@ -44,6 +44,7 @@ public class RandomCommitteeBuilder extends CommitteeBuilder {
 		s.setValue(randomValueForParameter(s));
 		committee.addParameter(s);
 		
+		committee.setParameterClassifier("W");
 		try {
 			committee.setClassifiers(buildClassifiers(1));
 		} catch (InvalidParameterTypeException e) {

@@ -7,6 +7,7 @@ import java.util.List;
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Factory;
 import br.ufrn.imd.pbil.domain.Individual;
+
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class Main {
@@ -14,29 +15,39 @@ public class Main {
 	public static void main(String[] args) throws InvalidParameterTypeException, IOException {
 		List<Individual> population = new ArrayList<Individual>();
 		Factory factory = new Factory();
+		
+		
 		Conversor con = null;
 		
+		CommitteeFactory cf = new CommitteeFactory();
+		Classifier c = cf.buildClassifierRandomly("Vote");
+		
+		//BaseClassifierFactory bcf = new BaseClassifierFactory();
+		//Classifier c = bcf.buildClassifierRandomly("SMO");
+						
 		try {
-			con = new Conversor("/home/douglas/x.arff");
+			con = new Conversor("C:\\Users\\JCX\\Documents\\x.arff");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		int sh = 0;
 		double acc = 0;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 200; i++) {
+			Classifier c = factory.buildSolutionFromRandom();
 			Individual temp = new Individual();
-			Classifier a = factory.buildSolutionFromRandom();
-			temp.setName(a.getName());
-			temp.setRootMethod(a);
+
+			//factory.buildSolutionFromRandom();
+			temp.setName(c.getName());
+			temp.setRootMethod(c);
 			try {
 				acc = con.runSolution(temp);
 				temp.setAccuracy(acc);
 				population.add(temp);
+				System.out.println(temp.getName()+" : "+temp.getAccuracy());
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				sh++;
-				population.add(temp);
 			}
 		}
 		System.out.println(sh);

@@ -29,7 +29,7 @@ public class RandomForestBuilder extends CommitteeBuilder{
 		w.setValue("2");
 		committee.addParameter(w);
 		try {
-			committee.setClassifiers(buildClassifiers(1));
+			committee.setClassifiers(buildClassifiers(0));
 		} catch (InvalidParameterTypeException e) {
 			e.printStackTrace();
 		}
@@ -55,7 +55,7 @@ public class RandomForestBuilder extends CommitteeBuilder{
 		committee.addParameter(w);
 		
 		try {
-			committee.setClassifiers(buildClassifiers(1));
+			committee.setClassifiers(buildClassifiers(0));
 		} catch (InvalidParameterTypeException e) {
 			e.printStackTrace();
 		}

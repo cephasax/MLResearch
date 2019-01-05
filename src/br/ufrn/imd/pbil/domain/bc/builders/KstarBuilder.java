@@ -18,7 +18,6 @@ public class KstarBuilder extends ClassifierBuilder{
 	public Classifier defaultBuild() {
 		// TODO Auto-generated method stub
 		classifier = new Kstar();
-		classifier.setName("Kstar");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter b = new Parameter("B",ParameterType.INT);
 		b.setValue("20");
@@ -37,7 +36,6 @@ public class KstarBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Kstar();
-		classifier.setName("Kstar");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter b = new Parameter("B", ParameterType.INT);
 		b.setValue(randomValueForParameter(b));

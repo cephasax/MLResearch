@@ -17,7 +17,6 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new RandomTree();
-		classifier.setName("RandomTree");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter m = new Parameter("M",ParameterType.INT);
 		m.setValue("1");
@@ -45,7 +44,6 @@ public class RandomTreeBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new RandomTree();
-		classifier.setName("RandomTree");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter m = new Parameter("M",ParameterType.INT);
 		m.setValue(randomValueForParameter(m));

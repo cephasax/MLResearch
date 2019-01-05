@@ -17,7 +17,6 @@ public class IbkBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier defaultBuild() {
 		classifier = new Ibk();
-		classifier.setName("IBK");
 		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
 		e.setValue("false");
 		classifier.addParameter(e);
@@ -44,7 +43,6 @@ public class IbkBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new Ibk();
-		classifier.setName("IBK");
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
 		Parameter e = new Parameter("E", ParameterType.BOOLEAN);
 		e.setValue(randomValueForParameter(e));
