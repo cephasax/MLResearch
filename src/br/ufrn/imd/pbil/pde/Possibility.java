@@ -2,6 +2,8 @@ package br.ufrn.imd.pbil.pde;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 public class Possibility {
 
 	private String father;
@@ -44,11 +46,16 @@ public class Possibility {
 	
 	public String possibilityAsString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("{" + this.father + ", " + this.key + ", " + this.weight + ", " + this.totalWeight + "}" +"\n");
+		sb.append("{" + this.father + ", " + this.key + ", " + this.weight + ", " + this.totalWeight + "}" +" @ ");
 		for(Possibility p : possibilities) {
 			sb.append(p.possibilityAsString());
 		}
 		return sb.toString();
+	}
+	
+	public String possibilityAsGsonString() {
+		Gson gson = new Gson();
+		return gson.toJson(this, Possibility.class);
 	}
 
 	public Possibility findChildPossibility(String name) {

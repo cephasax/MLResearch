@@ -20,11 +20,13 @@ public class Conversor {
 	private String base;
 	DataSource data ;
 	Instances dataset;
-	Conversor(String base) throws Exception{
+	
+	public Conversor(String base) throws Exception{
 		this.base = base;
 		data = new DataSource(this.base);
 		dataset = data.getDataSet();
 	}
+	
 	public double runSolution(Individual individual) throws Exception {
 		dataset.setClassIndex(dataset.numAttributes() - 1);
 		String[] options = builOptios(individual);

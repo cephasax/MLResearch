@@ -1,6 +1,7 @@
 package br.ufrn.imd.pbil.domain;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.bc.BaseClassifierFactory;
@@ -143,22 +144,56 @@ public class Factory {
 		return drawed;
 	}
 	
-
-	public PossibilityKeySet getPossibilitykeySetFromWeightedDraw(String classifierName, Possibility possibility) {
-		Possibility drawed = new Possibility(classifierName);
-		
-		Possibility p = possibility.findChildPossibility(classifierName);
-		if(p != null) {
+	public void updatePossibilities(PossibilityKeySet possibilityKeySet) {
+		if(possibilityKeySet.getBranchClassifiers().size() > 0) {
 			
-			for(Possibility poss: p.getPossibilities()) {
-				Possibility s = drawPossibility(poss);
-				drawed.addPossibility(s);
+			Possibility first = findChildPossibility(possibilityKeySet.getKey(), this.firstLevel);
+			first.increaseWeight(learningRate);
+			this.firstLevel.updateWeights();
+			
+			Possibility method = findChildPossibility(possibilityKeySet.getKey(), this.committeePossibilities);
+			method.increaseWeight(learningRate);
+			this.committeePossibilities.updateWeights();
+			for(Map.Entry<String, String> s: possibilityKeySet.getKeyValuesPairs().entrySet()) {
+				Possibility param = findChildPossibility(s.getKey(), method);
+				Possibility value = findChildPossibility(s.getValue(), param);
+				value.increaseWeight(learningRate);
+				param.updateWeights();
 			}
-			return new PossibilityKeySet(drawed); 
+			
+			for(PossibilityKeySet pks: possibilityKeySet.getBranchClassifiers()) {
+				Possibility branchMethod = findChildPossibility(pks.getKey(), this.branchClassifierPossibilities);
+				branchMethod.increaseWeight(learningRate);
+				this.branchClassifierPossibilities.updateWeights();
+				
+				for(Map.Entry<String, String> s: pks.getKeyValuesPairs().entrySet()) {
+					Possibility branchParam = findChildPossibility(s.getKey(), branchMethod);
+					Possibility branchParamValue = findChildPossibility(s.getValue(), branchParam);
+					branchParamValue.increaseWeight(learningRate);
+					branchParam.updateWeights();
+				}
+			}
 		}
 		else {
-			return null;
+			
+			Possibility first = findChildPossibility("BaseClassifier", this.firstLevel);
+			first.increaseWeight(learningRate);
+			this.firstLevel.updateWeights();
+			
+			Possibility method = findChildPossibility(possibilityKeySet.getKey(), this.baseClassifierPossibilities);
+			method.increaseWeight(learningRate);
+			this.baseClassifierPossibilities.updateWeights();
+			for(Map.Entry<String, String> s: possibilityKeySet.getKeyValuesPairs().entrySet()) {
+				Possibility param = findChildPossibility(s.getKey(), method);
+				Possibility value = findChildPossibility(s.getValue(), param);
+				value.increaseWeight(learningRate);
+				param.updateWeights();
+			}
 		}
+	}
+	
+	private Possibility findChildPossibility(String MethodName, Possibility possibility) {
+		return possibility.findChildPossibility(MethodName);
 	}
 	
 	public ClassifierFactory getBaseclassifierFactory() {
