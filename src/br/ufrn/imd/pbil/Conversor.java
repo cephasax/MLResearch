@@ -293,16 +293,7 @@ public class Conversor {
 			else if (key.equals("num")) {
 				continue;
 			}
-			else if (pks.getKeyValuesPairs().get(key).split(" ").length>1) {
-				String[] opcs = pks.getKeyValuesPairs().get(key).split(" ");
-				options[i] = "-"+key;
-				i++;
-				int j =0;
-				for(; j<opcs.length;j++) {
-					options[i+j] = opcs[j];
-				}
-				i+=j;
-			}
+
 			else {				
 				options[i] = "-"+key;
 				options[i+1] = pks.getKeyValuesPairs().get(key);
@@ -314,10 +305,10 @@ public class Conversor {
 			committee = (Committee) classifier;
 		}
 		for (PossibilityKeySet pk : pks.getBranchClassifiers()) {
-			options[i] = committee.getParameterClassifier();
+			options[i] = "-"+committee.getParameterClassifier();
 			options[i+1] = pk.getKey();
 			i+=2;
-			for (String key: pk.getKeyValuesPairs().keySet()) {
+			/*for (String key: pk.getKeyValuesPairs().keySet()) {
 				if(pk.getKeyValuesPairs().get(key).equals("true") 
 						||pk.getKeyValuesPairs().get(key).equals("false")) {
 					if(pk.getKeyValuesPairs().get(key).equals("true")) {
@@ -329,7 +320,7 @@ public class Conversor {
 					options[i+1] = pk.getKeyValuesPairs().get(key);
 					i+=2;
 				}
-			}
+			}*/
 		}
 		return options;
 	}
@@ -343,32 +334,12 @@ public class Conversor {
 			else if (key.equals("num")) {
 				continue;
 			}
-			else if (pks.getKeyValuesPairs().get(key).split(" ").length>1) {
-				i+= pks.getKeyValuesPairs().get(key).split(" ").length+1;
-			}
 			else if (!pks.getKeyValuesPairs().get(key).equals("false")) {
 				i+=2;
 			}
 		}
 		for (PossibilityKeySet pk : pks.getBranchClassifiers()) {
 			i+=2;
-			for (String key: pk.getKeyValuesPairs().keySet()) {
-				if(pk.getKeyValuesPairs().get(key).equals("true") 
-						||pk.getKeyValuesPairs().get(key).equals("false")) {
-					if(pk.getKeyValuesPairs().get(key).equals("true")) {					
-						i++;
-					}
-				}
-				else if (key.equals("num")) {
-					continue;
-				}
-				else if (pk.getKeyValuesPairs().get(key).split(" ")!=null) {
-					i+= pk.getKeyValuesPairs().get(key).split(" ").length;
-				}
-				else {
-					i+=2;
-				}
-			}
 		}
 		return i;
 	}

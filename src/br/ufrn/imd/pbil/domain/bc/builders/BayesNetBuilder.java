@@ -18,13 +18,15 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	public Classifier defaultBuild() {
 		classifier =new BayesNet();
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
-		Parameter q = new Parameter("Q",ParameterType.STRING);
-		q.setValue("K2");
-		classifier.addParameter(q);
 		
 		Parameter d = new Parameter("D", ParameterType.BOOLEAN);
 		d.setValue("false");
 		classifier.addParameter(d);
+
+		Parameter q = new Parameter("Q",ParameterType.STRING);
+		q.setValue("weka.classifiers.bayes.net.search.local.K2");
+		classifier.addParameter(q);
+		
 		
 		return classifier;
 	}
@@ -32,15 +34,16 @@ public class BayesNetBuilder extends ClassifierBuilder{
 	@Override
 	public Classifier randomBuild() {
 		classifier = new BayesNet();
-
 		classifier.setClassifierType(ClassifierType.BASE_CLASSIFIER);
-		Parameter q = new Parameter("Q", ParameterType.STRING);
-		q.setValue(randomValueForParameter(q));
-		classifier.addParameter(q);
 		
 		Parameter d = new Parameter("D", ParameterType.BOOLEAN);
 		d.setValue(randomValueForParameter(d));
 		classifier.addParameter(d);
+
+		Parameter q = new Parameter("Q", ParameterType.STRING);
+		q.setValue(randomValueForParameter(q));
+		classifier.addParameter(q);
+		
 		
 		return classifier;
 	}
