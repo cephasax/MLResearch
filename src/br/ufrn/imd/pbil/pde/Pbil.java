@@ -11,14 +11,14 @@ public class Pbil {
 
 	
 	private static int populationSize = 50;										// population
-	private int maxMinutes = 15;										// tempo de execução
-	private int generations = 20;										// no. gerações
-	private int numBestSolves = 1;										// no. de soluções
-	private int numSamplesUpdate = 25;									// tamanho do vetor de melhores individuos
-	private int numFolds = 10;											// no. de folds do CV
-	private boolean stratify = false;									// estratificação da base (false - defaut)
-	private int maxSecondsBySolveEvaluation = (maxMinutes * 60) / 12; 	// quantidade máxima de segundos para avaliação de uma única solução
-	private String log = "pbil-log.txt";
+	private static int maxMinutes = 15;											// tempo de execução
+	private static int generations = 20;										// no. gerações
+	private static int numBestSolves = 1;										// no. de soluções
+	private static int numSamplesUpdate = 25;									// tamanho do vetor de melhores individuos
+	private static int numFolds = 10;											// no. de folds do CV
+	private static boolean stratify = false;									// estratificação da base (false - defaut)
+	private static int maxSecondsBySolveEvaluation = (maxMinutes * 60) / 12; 	// quantidade máxima de segundos para avaliação de uma única solução
+	private static String log = "pbil-log.txt";									// saida de texto para log
 	
 	public static float learningRate = (float) 0.5;
 	
@@ -26,25 +26,42 @@ public class Pbil {
 	private static Factory f;
 	private static ArrayList<Solution> population;
 	private static ArrayList<Solution> auxPopulation;
-	private static int wrongSolutions;
-	
-	
-	
+		
 	public static void main(String[] args) throws InvalidParameterTypeException {
 
+		buildVariables();
 		
-		f = new Factory();
-		f.setLearningRate(learningRate);
-		population = new ArrayList<Solution>();
-		auxPopulation = new ArrayList<Solution>();
-		wrongSolutions = 0;
+		buildDatasetPaths();
 		
-		try {
-			conversor = new Conversor("/resources/x.arff");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for(int i = 0 to number of datasets) {
+			for(int j to generations) {
+				
+				criarSolucoes();
+				
+				Logar Solucoes();
+				
+				converter populacao para o weka();
+				
+				exexecutar todas sobre a base();
+				
+				ordenar soluções();
+				
+				logar resultados();
+				
+				guardar n melhores soluções();
+				
+				logar resultados();
+				
+				atualizar pvs();
+				
+				guardar melhor solução();
+				
+				limpar população()
+				
+			}	
 		}
+		
+		
 		
 		PossibilityKeySet s;
 		//CREATE POPULATION - populationSize Solutions
@@ -61,6 +78,23 @@ public class Pbil {
 		
 	}
 
+	public static void buildVariables() throws InvalidParameterTypeException {
+		f = new Factory();
+		f.setLearningRate(learningRate);
+		population = new ArrayList<Solution>();
+		auxPopulation = new ArrayList<Solution>();
+		wrongSolutions = 0;
+	}
+	
+	public static void buildDatasetPaths(){
+		try {
+			conversor = new Conversor("/resources/x.arff");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void buildWekaSolutions(ArrayList<Solution> pop) {
 		for(Solution solution: pop) {
 			try {
