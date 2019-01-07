@@ -13,13 +13,7 @@ public class Committee extends Classifier {
 	private List<Classifier> classifiers;
 	private String branchClassifierParameter;
 
-	public String getBranchClassifierParameter() {
-		return branchClassifierParameter;
-	}
-
-	public void setBranchClassifierParameter(String branchClassifierParameter) {
-		this.branchClassifierParameter = branchClassifierParameter;
-	}
+	
 
 	public Committee() {
 		super();
@@ -30,6 +24,14 @@ public class Committee extends Classifier {
 		return this.classifiers.size();
 	}
 
+	public String getBranchClassifierParameter() {
+		return branchClassifierParameter;
+	}
+
+	public void setBranchClassifierParameter(String branchClassifierParameter) {
+		this.branchClassifierParameter = branchClassifierParameter;
+	}
+	
 	public CommitteeType getCommitteeType() {
 		return committeeType;
 	}

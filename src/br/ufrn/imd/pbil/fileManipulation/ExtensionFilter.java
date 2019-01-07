@@ -3,7 +3,7 @@ package br.ufrn.imd.pbil.fileManipulation;
 import java.io.File;
 import javax.swing.filechooser.*;
 
-public class FiltraExtensoes extends FileFilter {
+public class ExtensionFilter extends FileFilter {
 
 	// Accept all directories, ARFF and MODEL files.
 	public boolean accept(File f) {
@@ -13,7 +13,7 @@ public class FiltraExtensoes extends FileFilter {
 
 		String extension = Utils.getExtension(f);
 		if (extension != null) {
-			if (extension.equals(Utils.arff) || extension.equals(Utils.model)) {
+			if (extension.equals(Utils.arff)) {
 				return true;
 			} 
 			else {

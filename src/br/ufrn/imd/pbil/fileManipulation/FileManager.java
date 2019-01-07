@@ -28,7 +28,7 @@ public class FileManager {
 		JFileChooser chooser = null;
 		chooser = new JFileChooser(urlBase);
 		chooser.setDialogTitle(windowTitle);
-		chooser.addChoosableFileFilter(new FiltraExtensoes());
+		chooser.addChoosableFileFilter(new ExtensionFilter());
 		chooser.setMultiSelectionEnabled(false);
 		File file = new File("");
 		
@@ -46,7 +46,7 @@ public class FileManager {
 		JFileChooser chooser = null;
 		chooser = new JFileChooser(urlBase);
 		chooser.setDialogTitle(windowTitle);
-		chooser.addChoosableFileFilter(new FiltraExtensoes());
+		chooser.addChoosableFileFilter(new ExtensionFilter());
 		chooser.setMultiSelectionEnabled(true);
 
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -61,7 +61,7 @@ public class FileManager {
 		JFileChooser chooser = null;
 		chooser = new JFileChooser(urlBase);
 		chooser.setDialogTitle(windowTitle);
-		chooser.addChoosableFileFilter(new FiltraExtensoes());
+		chooser.addChoosableFileFilter(new ExtensionFilter());
 		chooser.setMultiSelectionEnabled(false);
 		File file = new File("");
 		

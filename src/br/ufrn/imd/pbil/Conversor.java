@@ -309,7 +309,7 @@ public class Conversor {
 			committee = (Committee) classifier;
 		}
 		for (PossibilityKeySet pk : pks.getBranchClassifiers()) {
-			options[i] = "-"+committee.getParameterClassifier();
+			options[i] = "-"+committee.getBranchClassifierParameter();
 			options[i+1] = pk.getKey();
 			i+=2;
 			/*for (String key: pk.getKeyValuesPairs().keySet()) {

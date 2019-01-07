@@ -53,6 +53,7 @@ public class Solution implements Comparable<Solution>{
         public Solution getBestSolutionFromAccuracy(Solution s1, Solution s2) {
            
         	double dif = s1.getAccuracy() - s2.getAccuracy();
+        	
         	if(dif >= 0) {
         	   return s1;
         	}
@@ -62,4 +63,9 @@ public class Solution implements Comparable<Solution>{
         }
     };
 
+	
+	public String toStringOnlyKey() {
+		return "Solution [" + possibilityKeySet.toString() + "]";
+	}
+ 
 }
