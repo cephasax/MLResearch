@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MED, B=6, S=213, num=1}, branchClassifiers=[PossibilityKeySet [key=RandomTree, keyValuesPairs={depth=7, U=false, K=6, M=60, N=4}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Stacking, keyValuesPairs={B=2, S=30, num=3, X=2}, branchClassifiers=[PossibilityKeySet [key=RandomTree, keyValuesPairs={depth=10, U=true, K=11, M=64, N=4}, branchClassifiers=[]], PossibilityKeySet [key=MLP, keyValuesPairs={B=false, R=true, C=false, S=14, D=true, H=i, L=0.9, M=0.5}, branchClassifiers=[]], PossibilityKeySet [key=IBK, keyValuesPairs={E=true, F=false, X=true, I=true, K=6}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=10, I=160, K=13}, branchClassifiers=[PossibilityKeySet [key=SMO, keyValuesPairs={SEL=Default}, branchClassifiers=[]]]]]

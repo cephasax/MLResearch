@@ -1,4 +1,4 @@
-package br.ufrn.imd.pbil.pde;
+package br.ufrn.imd.pbil.douglas;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,19 +9,21 @@ import br.ufrn.imd.pbil.domain.Factory;
 import br.ufrn.imd.pbil.domain.Individual;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 import br.ufrn.imd.pbil.fileManipulation.PbilOutputWriter;
+import br.ufrn.imd.pbil.pde.PossibilityKeySet;
+import br.ufrn.imd.pbil.pde.Solution;
 import weka.classifiers.Classifier;
 
 public class Pbil {
 
 	
 	private static int populationSize = 2;										// population
-	private static int maxMinutes = 15;											// tempo de execução
-	private static int generations = 20;										// no. gerações
-	private static int numBestSolves = 1;										// no. de soluções
+	private static int maxMinutes = 15;											// tempo de execuï¿½ï¿½o
+	private static int generations = 20;										// no. geraï¿½ï¿½es
+	private static int numBestSolves = 1;										// no. de soluï¿½ï¿½es
 	private static int numSamplesUpdate = 25;									// tamanho do vetor de melhores individuos
 	private static int numFolds = 10;											// no. de folds do CV
-	private static boolean stratify = false;									// estratificação da base (false - defaut)
-	private static int maxSecondsBySolveEvaluation = (maxMinutes * 60) / 12; 	// quantidade máxima de segundos para avaliação de uma única solução
+	private static boolean stratify = false;									// estratificaï¿½ï¿½o da base (false - defaut)
+	private static int maxSecondsBySolveEvaluation = (maxMinutes * 60) / 12; 	// quantidade mï¿½xima de segundos para avaliaï¿½ï¿½o de uma ï¿½nica soluï¿½ï¿½o
 	private static String log = "PBIL-";									// saida de texto para log
 	
 	public static float learningRate = (float) 0.5;
@@ -36,8 +38,7 @@ public class Pbil {
 	private static ArrayList<Classifier> classifiers;
 	
 	
-	
-	public static void main(String[] args) throws InvalidParameterTypeException {
+	public static void main(String[] args) throws Exception {
 
 		buildVariables();
 		
@@ -55,7 +56,7 @@ public class Pbil {
 				
 				logPopulation();
 				
-				
+				buildWekaSolutions();
 				
 				
 				
@@ -116,11 +117,11 @@ public class Pbil {
 			s = f.buildSolutionFromWeightedDraw();
 			population.add(new Solution(s));
 		}
-		
+		pww.setSolutions(population);
 	}
 	
-	public static void buildWekaSolutions() {
-		
+	public static void buildWekaSolutions() throws Exception {
+		pww.convertSolutionsToWekaClassifiers();
 	}
 	
 	public static void outputStuffAboutRunning(String dataset, int generation) {

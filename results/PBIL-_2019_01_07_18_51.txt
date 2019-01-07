@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=41, S=221, I=32, O=true}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.J48, keyValuesPairs={A=true, B=false, S=true, C=1.0, U=true, J=true, M=39, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=243, I=42}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.J48, keyValuesPairs={A=false, B=true, S=false, C=0.35, U=false, J=true, M=5, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=weka.classifiers.functions.SMO, keyValuesPairs={SEL=weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007}, branchClassifiers=[]]]

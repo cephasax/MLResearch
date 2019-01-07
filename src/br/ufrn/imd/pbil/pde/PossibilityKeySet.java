@@ -14,25 +14,25 @@ public class PossibilityKeySet {
 	private String key;
 	private Map<String, String> keyValuesPairs;
 	private ArrayList<PossibilityKeySet> branchClassifiers;
-
+	
 	public PossibilityKeySet(Classifier classifier) {
 
 		this.keyValuesPairs = new HashMap<String, String>();
 		this.key = classifier.getName();
 		this.branchClassifiers = new ArrayList<PossibilityKeySet>();
-
+		
 		for (Parameter param : classifier.getParameters()) {
 			keyValuesPairs.put(param.getName(), param.getValue());
 		}
 
 		if (classifier.getClassifierType() == ClassifierType.COMMITTEE) {
 			Committee committee = (Committee) classifier;
-
 			for (Classifier c : committee.getClassifiers()) {
 				this.branchClassifiers.add(buildBranchClassifier(c));
 			}
 		}
 	}
+
 
 	public PossibilityKeySet(Possibility possibility) {
 		this.keyValuesPairs = new HashMap<String, String>();

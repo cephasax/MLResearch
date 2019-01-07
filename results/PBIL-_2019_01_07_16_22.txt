@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=32, I=4}, branchClassifiers=[PossibilityKeySet [key=BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.TabuSearch, D=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MAX, B=5, S=46, num=3}, branchClassifiers=[PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=true, X=true, I=true, K=57}, branchClassifiers=[]], PossibilityKeySet [key=BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.TabuSearch, D=false}, branchClassifiers=[]], PossibilityKeySet [key=J48, keyValuesPairs={A=true, B=true, S=true, C=0.1, U=true, J=false, M=55, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=21, I=13}, branchClassifiers=[PossibilityKeySet [key=Kstar, keyValuesPairs={B=14, E=false, M=a}, branchClassifiers=[]]]]]

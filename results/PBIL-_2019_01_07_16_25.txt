@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=11, I=147, K=30}, branchClassifiers=[PossibilityKeySet [key=IBK, keyValuesPairs={E=true, F=true, X=false, I=true, K=55}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=16, I=154, K=17}, branchClassifiers=[PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=true, S=false, C=0.65, U=false, J=false, M=14, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MAJ, B=6, S=146, num=1}, branchClassifiers=[PossibilityKeySet [key=RandomTree, keyValuesPairs={depth=14, U=false, K=12, M=45, N=1}, branchClassifiers=[]]]]]

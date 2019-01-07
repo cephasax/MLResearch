@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=acc, X=4, I=true}, branchClassifiers=[]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=13, I=208, K=18}, branchClassifiers=[PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=false, S=false, C=0.25, U=true, J=true, M=58, O=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=100, S=17, I=121, O=false}, branchClassifiers=[PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=false, X=false, I=true, K=56}, branchClassifiers=[]]]]]

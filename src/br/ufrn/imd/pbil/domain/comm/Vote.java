@@ -8,5 +8,6 @@ public class Vote extends Committee{
 		super();
 		this.name = "Vote";
 		this.classifierType =ClassifierType.COMMITTEE;
+		this.setBranchClassifierParameter("-B");
 	}
 }

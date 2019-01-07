@@ -7,7 +7,7 @@ import java.util.List;
 import br.ufrn.imd.pbil.domain.Classifier;
 import br.ufrn.imd.pbil.domain.Factory;
 import br.ufrn.imd.pbil.domain.Individual;
-
+import br.ufrn.imd.pbil.domain.comm.CommitteeFactory;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class Main {
@@ -26,7 +26,7 @@ public class Main {
 		//Classifier c = bcf.buildClassifierRandomly("SMO");
 						
 		try {
-			con = new Conversor("C:\\Users\\JCX\\Documents\\x.arff");
+			con = new Conversor("/datasets/x.arff");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -34,7 +34,6 @@ public class Main {
 		int sh = 0;
 		double acc = 0;
 		for (int i = 0; i < 200; i++) {
-			Classifier c = factory.buildSolutionFromRandom();
 			Individual temp = new Individual();
 
 			//factory.buildSolutionFromRandom();

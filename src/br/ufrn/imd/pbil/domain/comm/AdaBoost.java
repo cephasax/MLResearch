@@ -8,5 +8,6 @@ public class AdaBoost extends Committee{
 		super();
 		this.name = "AdaBoost";
 		this.classifierType =ClassifierType.COMMITTEE;
+		this.setBranchClassifierParameter("-W");
 	}
 }

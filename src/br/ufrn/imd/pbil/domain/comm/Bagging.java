@@ -8,5 +8,6 @@ public class Bagging extends Committee{
 		super();
 		this.name = "Bagging";
 		this.classifierType =ClassifierType.COMMITTEE;
+		this.setBranchClassifierParameter("-W");
 	}
 }

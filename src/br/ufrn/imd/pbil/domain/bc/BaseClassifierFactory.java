@@ -33,44 +33,44 @@ public class BaseClassifierFactory extends ClassifierFactory{
 		buildNames();
 		
 		BayesNetBuilder bn = new BayesNetBuilder(new BayesNetPrototype());
-		builders.put("BayesNet", bn);
+		builders.put("weka.classifiers.bayes.BayesNet", bn);
 
 		DecisionTableBuilder dt = new DecisionTableBuilder(new DecisionTablePrototype());
-		builders.put("DecisionTable", dt);
+		builders.put("weka.classifiers.rules.DecisionTable", dt);
 		
 		IbkBuilder ibk = new IbkBuilder(new IbkPrototype());
-		builders.put("IBK", ibk);
+		builders.put("weka.classifiers.lazy.IBk", ibk);
 
 		J48Builder j48 = new J48Builder(new J48Prototype());
-		builders.put("J48", j48);
+		builders.put("weka.classifiers.trees.J48", j48);
 		
 		KstarBuilder kstar = new KstarBuilder(new KstarPrototype());
-		builders.put("Kstar", kstar);
+		builders.put("weka.classifiers.lazy.KStar", kstar);
 		
 		MlpBuilder mlp = new MlpBuilder(new MlpPrototype());
-		builders.put("MLP", mlp);
+		builders.put("weka.classifiers.functions.MultilayerPerceptron", mlp);
 		
 		NaiveBayesBuilder nb = new NaiveBayesBuilder(new NaiveBayesPrototype());
-		builders.put("NaiveBayes", nb);
+		builders.put("weka.classifiers.bayes.NaiveBayes", nb);
 		
 		RandomTreeBuilder rt = new RandomTreeBuilder(new RandomTreePrototype());
-		builders.put("RandomTree", rt);
+		builders.put("weka.classifiers.trees.RandomTree", rt);
 		
 		SmoBuilder smo = new SmoBuilder(new SmoPrototype());
-		builders.put("SMO", smo);
+		builders.put("weka.classifiers.functions.SMO", smo);
 	}
 	
 	private void buildNames() {
 		classifierNames = new ArrayList<String>();
-		classifierNames.add("BayesNet");
-		classifierNames.add("DecisionTable");
-		classifierNames.add("IBK");
-		classifierNames.add("J48");
-		classifierNames.add("Kstar");
-		classifierNames.add("MLP");
-		classifierNames.add("NaiveBayes");
-		classifierNames.add("RandomTree");
-		classifierNames.add("SMO");
+		classifierNames.add("weka.classifiers.bayes.BayesNet");
+		classifierNames.add("weka.classifiers.rules.DecisionTable");
+		classifierNames.add("weka.classifiers.lazy.IBk");
+		classifierNames.add("weka.classifiers.trees.J48");
+		classifierNames.add("weka.classifiers.lazy.Kstar");
+		classifierNames.add("weka.classifiers.functions.MultilayerPerceptron");
+		classifierNames.add("weka.classifiers.bayes.NaiveBaye");
+		classifierNames.add("weka.classifiers.trees.RandomTree");
+		classifierNames.add("weka.classifiers.functions.SMO");
 	}
 	
 }

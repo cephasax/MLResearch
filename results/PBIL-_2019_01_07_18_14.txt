@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=139, I=40}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.J48, keyValuesPairs={A=true, B=false, S=true, C=0.2, U=false, J=true, M=22, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=weka.classifiers.bayes.BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.HillClimber, D=false}, branchClassifiers=[]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=2, I=138, K=17}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.functions.MultilayerPerceptron, keyValuesPairs={B=false, R=true, C=true, S=111, D=false, H=a, L=0.4, M=0.3}, branchClassifiers=[]]]]]

@@ -9,6 +9,7 @@ public class RandomCommittee extends Committee{
 		super();
 		this.name = "RandomCommittee";
 		this.classifierType =ClassifierType.COMMITTEE;
+		this.setBranchClassifierParameter("-W");
 	}
 	
 }

@@ -8,5 +8,6 @@ public class Stacking extends Committee{
 		super();
 		this.name = "Stacking";
 		this.classifierType =ClassifierType.COMMITTEE;
+		this.setBranchClassifierParameter("-M");
 	}
 }

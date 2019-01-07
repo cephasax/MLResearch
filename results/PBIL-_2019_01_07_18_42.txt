@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+Generation: 1 for dataset: datasets/x.arff
+------------------------------------------------------------------------
+
+Solution [PossibilityKeySet [key=Stacking, keyValuesPairs={B=8, S=139, num=2, X=4}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=rmse, X=4, I=false}, branchClassifiers=[]], PossibilityKeySet [key=weka.classifiers.bayes.BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.HillClimber, D=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=79, Q=true, S=208, I=113}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.lazy.IBk, keyValuesPairs={E=false, F=false, X=false, I=false, K=56}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=76, Q=false, S=221, I=36}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.bayes.NaiveBayes, keyValuesPairs={D=false, K=true}, branchClassifiers=[]]]]]
