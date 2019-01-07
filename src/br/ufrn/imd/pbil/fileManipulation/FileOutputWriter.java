@@ -1,6 +1,5 @@
 package br.ufrn.imd.pbil.fileManipulation;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;

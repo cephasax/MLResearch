@@ -1,0 +1,33 @@
+
+------------------------------------------------------------------------
+Generation: 1 for dataset: x.arff
+------------------------------------------------------------------------
+
+Population 
+ 
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=36, I=64}, branchClassifiers=[PossibilityKeySet [key=MLP, keyValuesPairs={B=true, R=false, C=false, S=26, D=true, H=t, L=0.1, M=0.3}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MED, B=2, S=15, num=1}, branchClassifiers=[PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=false, S=false, C=0.25, U=false, J=true, M=44, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=204, I=30}, branchClassifiers=[PossibilityKeySet [key=DecisionTable, keyValuesPairs={S=GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1, E=rmse, X=3, I=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=66, S=254, I=109, O=true}, branchClassifiers=[PossibilityKeySet [key=Kstar, keyValuesPairs={B=31, E=true, M=d}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=99, S=44, I=116, O=false}, branchClassifiers=[PossibilityKeySet [key=BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.LAGDHillClimber, D=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=7, I=106, K=6}, branchClassifiers=[PossibilityKeySet [key=DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=acc, X=2, I=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=true, X=false, I=true, K=11}, branchClassifiers=[]]]
+
+ Ordered Population - accoding accuracy 
+ 
+Solution [accuracy=0.8720322506245227, name=PossibilityKeySet [key=Vote, keyValuesPairs={R=MED, B=2, S=15, num=1}, branchClassifiers=[PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=false, S=false, C=0.25, U=false, J=true, M=44, O=false}, branchClassifiers=[]]]]]
+Solution [accuracy=0.780253680674949, name=PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=36, I=64}, branchClassifiers=[PossibilityKeySet [key=MLP, keyValuesPairs={B=true, R=false, C=false, S=26, D=true, H=t, L=0.1, M=0.3}, branchClassifiers=[]]]]]
+Solution [accuracy=0.7439593796190601, name=PossibilityKeySet [key=Bagging, keyValuesPairs={P=66, S=254, I=109, O=true}, branchClassifiers=[PossibilityKeySet [key=Kstar, keyValuesPairs={B=31, E=true, M=d}, branchClassifiers=[]]]]]
+Solution [accuracy=0.7156187684242958, name=PossibilityKeySet [key=Bagging, keyValuesPairs={P=99, S=44, I=116, O=false}, branchClassifiers=[PossibilityKeySet [key=BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.LAGDHillClimber, D=false}, branchClassifiers=[]]]]]
+Solution [accuracy=0.5971676642558601, name=PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=204, I=30}, branchClassifiers=[PossibilityKeySet [key=DecisionTable, keyValuesPairs={S=GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1, E=rmse, X=3, I=true}, branchClassifiers=[]]]]]
+Solution [accuracy=0.5174267915522448, name=PossibilityKeySet [key=RandomForest, keyValuesPairs={W=7, I=106, K=6}, branchClassifiers=[PossibilityKeySet [key=DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=acc, X=2, I=true}, branchClassifiers=[]]]]]
+Solution [accuracy=0.4718849858287181, name=PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=true, X=false, I=true, K=11}, branchClassifiers=[]]]
+
+ Best Solution for x.arff - accoding accuracy 
+ 
+Solution [accuracy=0.8720322506245227, name=PossibilityKeySet [key=Vote, keyValuesPairs={R=MED, B=2, S=15, num=1}, branchClassifiers=[PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=false, S=false, C=0.25, U=false, J=true, M=44, O=false}, branchClassifiers=[]]]]]
+
+ Best Solutions stored and used to increase pvs 
+ 
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=36, I=64}, branchClassifiers=[PossibilityKeySet [key=MLP, keyValuesPairs={B=true, R=false, C=false, S=26, D=true, H=t, L=0.1, M=0.3}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=66, S=254, I=109, O=true}, branchClassifiers=[PossibilityKeySet [key=Kstar, keyValuesPairs={B=31, E=true, M=d}, branchClassifiers=[]]]]]

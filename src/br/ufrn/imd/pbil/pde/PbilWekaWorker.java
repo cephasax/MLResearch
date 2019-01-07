@@ -19,11 +19,11 @@ public class PbilWekaWorker {
 		dataset.setClassIndex(dataset.numAttributes() - 1);
 	}
 		
-	public double runSolution(PossibilityKeySet possibilityKeySet) throws Exception {
+	/*public double runSolution(PossibilityKeySet possibilityKeySet) throws Exception {
 		
 		String[] options = builOptios(possibilityKeySet);
 		float right = 0;
 		float []accuracy = new float[5];
 		
-	}
+	}*/
 }

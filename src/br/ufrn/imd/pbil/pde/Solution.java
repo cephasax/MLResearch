@@ -14,6 +14,12 @@ public class Solution implements Comparable<Solution>{
 		this.accuracy = new Double(0.0);
 	}
 	
+	public Solution() {
+		this.possibilityKeySet = null;
+		this.name = null;
+		this.accuracy = new Double(0.0);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -47,19 +53,7 @@ public class Solution implements Comparable<Solution>{
 
         @Override
         public int compare(Solution s1, Solution s2) {
-            return (int) (s1.getAccuracy() - s2.getAccuracy());
-        }
-        
-        public Solution getBestSolutionFromAccuracy(Solution s1, Solution s2) {
-           
-        	double dif = s1.getAccuracy() - s2.getAccuracy();
-        	
-        	if(dif >= 0) {
-        	   return s1;
-        	}
-        	else {
-        	   return s2;
-        	}
+            return (int) ((s2.getAccuracy()*100) - (s1.getAccuracy()*100));
         }
     };
 
@@ -67,5 +61,11 @@ public class Solution implements Comparable<Solution>{
 	public String toStringOnlyKey() {
 		return "Solution [" + possibilityKeySet.toString() + "]";
 	}
+
+	@Override
+	public String toString() {
+		return "Solution [accuracy=" + accuracy + ", name=" + name + "]";
+	}
  
+	
 }
