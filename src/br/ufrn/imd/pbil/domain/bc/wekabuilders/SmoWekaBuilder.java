@@ -1,42 +1,42 @@
 package br.ufrn.imd.pbil.domain.bc.wekabuilders;
 
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
-import weka.attributeSelection.ASSearch;
-import weka.attributeSelection.BestFirst;
-import weka.attributeSelection.GreedyStepwise;
-import weka.classifiers.rules.DecisionTable;
-import weka.core.SelectedTag;
-import weka.core.Tag;
+import weka.classifiers.functions.SMO;
+import weka.classifiers.functions.supportVector.Kernel;
+import weka.classifiers.functions.supportVector.NormalizedPolyKernel;
+import weka.classifiers.functions.supportVector.PolyKernel;
+import weka.classifiers.functions.supportVector.Puk;
+import weka.classifiers.functions.supportVector.RBFKernel;
 
 public class SmoWekaBuilder {
 
-	public static DecisionTable buildWekaDecisionTable(PossibilityKeySet pks) {
-		DecisionTable dt = new DecisionTable();
-	
-		Tag tag = new Tag();
-		tag.setReadable(pks.getKeyValuesPairs().get("E"));
-		Tag tags[] = new Tag[1];
-		tags[0] = tag;
-		dt.setEvaluationMeasure(new SelectedTag(0, tags));
+	public static SMO buildWekaSMO(PossibilityKeySet pks) {
+		SMO smo = new SMO();
 		
-		dt.setUseIBk(Boolean.valueOf(pks.getKeyValuesPairs().get("I")));
-		dt.setSearch(buildASSearch(pks.getKeyValuesPairs().get("S")));
-		dt.setCrossVal(Integer.valueOf(pks.getKeyValuesPairs().get("X")));
+		smo.setKernel(buildKernel(
+				pks.getKeyValuesPairs().get("SEL")));
 		
-		return dt;
+		return smo;
 	}
-	
-	private static ASSearch buildASSearch(String s) {
-		switch (s) {
-			case "BestFirst -D 1 -N 5":{
-				return new BestFirst();
-			}
-			case "GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1":{
-				return new GreedyStepwise();
-			}
+
+	private static Kernel buildKernel(String kernel) {
+		switch (kernel) {
+			
+			case "weka.classifiers.functions.supportVector.NormalizedPolyKernel -E 2.0 -C 250007":
+				return new NormalizedPolyKernel();
+				
+			case "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007":
+				return new PolyKernel();
+			
+			case "weka.classifiers.functions.supportVector.Puk -O 1.0 -S 1.0 -C 250007":
+				return new Puk();
+			
+			case "weka.classifiers.functions.supportVector.RBFKernel -C 250007 -G 0.01":
+				return new RBFKernel();
+			
 			default:
-				return new BestFirst();
-			}
+				return new PolyKernel();
+		}
 	}
 	
 }

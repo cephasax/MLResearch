@@ -4,26 +4,20 @@ import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import weka.attributeSelection.ASSearch;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.GreedyStepwise;
-import weka.classifiers.rules.DecisionTable;
-import weka.core.SelectedTag;
-import weka.core.Tag;
+import weka.classifiers.trees.RandomTree;
 
 public class RandomTreeWekaBuilder {
 
-	public static DecisionTable buildWekaDecisionTable(PossibilityKeySet pks) {
-		DecisionTable dt = new DecisionTable();
-	
-		Tag tag = new Tag();
-		tag.setReadable(pks.getKeyValuesPairs().get("E"));
-		Tag tags[] = new Tag[1];
-		tags[0] = tag;
-		dt.setEvaluationMeasure(new SelectedTag(0, tags));
+	public static RandomTree buildWekaRandomTree(PossibilityKeySet pks) {
+		RandomTree rt = new RandomTree();
 		
-		dt.setUseIBk(Boolean.valueOf(pks.getKeyValuesPairs().get("I")));
-		dt.setSearch(buildASSearch(pks.getKeyValuesPairs().get("S")));
-		dt.setCrossVal(Integer.valueOf(pks.getKeyValuesPairs().get("X")));
+		rt.setKValue(Integer.parseInt(pks.getKeyValuesPairs().get("K")));
+		rt.setMaxDepth(Integer.parseInt(pks.getKeyValuesPairs().get("depth")));
+		rt.setMinNum(Integer.parseInt(pks.getKeyValuesPairs().get("M")));
+		rt.setAllowUnclassifiedInstances(Boolean.parseBoolean(pks.getKeyValuesPairs().get("U")));
+		rt.setNumFolds(Integer.parseInt(pks.getKeyValuesPairs().get("N")));
 		
-		return dt;
+		return rt;
 	}
 	
 	private static ASSearch buildASSearch(String s) {
