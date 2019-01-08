@@ -5,7 +5,7 @@ import weka.classifiers.trees.J48;
 
 public class J48WekaBuilder {
 
-	public static J48 buildWekaJ48(PossibilityKeySet pks) {
+	public static J48 buildForWeka(PossibilityKeySet pks) {
 		J48 j48 = new J48();
 		
 		j48.setUnpruned(Boolean.parseBoolean(pks.getKeyValuesPairs().get("U")));

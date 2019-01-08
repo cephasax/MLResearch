@@ -7,7 +7,7 @@ import weka.core.Tag;
 
 public class KstarWekaBuilder {
 
-	public static KStar buildWekaKStar(PossibilityKeySet pks) {
+	public static KStar buildForWeka(PossibilityKeySet pks) {
 		KStar kstar = new KStar();
 		
 		Tag tag = new Tag();

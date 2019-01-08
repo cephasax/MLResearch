@@ -6,16 +6,15 @@ import weka.core.SelectedTag;
 
 public class IbkWekaBuilder {
 
-	public static IBk buildWekaDecisionTable(PossibilityKeySet pks) {
+	public static IBk buildForWeka(PossibilityKeySet pks) {
 		
-		IBk ibk = new IBk();
+  IBk ibk = new IBk();
 		ibk.setKNN(Integer.valueOf(pks.getKeyValuesPairs().get("K")));
 		ibk.setMeanSquared(Boolean.valueOf(pks.getKeyValuesPairs().get("E")));
 		ibk.setCrossValidate(Boolean.valueOf(pks.getKeyValuesPairs().get("X")));
 		ibk.setDistanceWeighting(setF(pks));
 		
 		return ibk;
-		
 	}
 	
 	private static SelectedTag setF(PossibilityKeySet pks) {

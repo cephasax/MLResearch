@@ -11,7 +11,7 @@ import weka.core.Tag;
 
 public class NaiveBayesWekaBuilder {
 
-	public static NaiveBayes buildWekaNaiveBayes(PossibilityKeySet pks) {
+	public static NaiveBayes buildForWeka(PossibilityKeySet pks) {
 		NaiveBayes nb = new NaiveBayes();
 		
 		nb.setUseKernelEstimator(Boolean.parseBoolean(pks.getKeyValuesPairs().get("K")));
