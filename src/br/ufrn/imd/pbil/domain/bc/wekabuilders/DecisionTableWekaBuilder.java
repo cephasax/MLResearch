@@ -8,9 +8,9 @@ import weka.classifiers.rules.DecisionTable;
 import weka.core.SelectedTag;
 import weka.core.Tag;
 
-public class DecisionTableWekaBuilder {
+public class DecisionTableWekaBuilder{
 
-	public static DecisionTable buildWekaDecisionTable(PossibilityKeySet pks) {
+	public static DecisionTable buildForWeka(PossibilityKeySet pks) {
 		DecisionTable dt = new DecisionTable();
 	
 		Tag tag = new Tag();
