@@ -4,7 +4,7 @@ public enum BaseClassifierType {
 
 	DECISION_TABLE("weka.classifiers.rules.DecisionTable"),
 	IBK("weka.classifiers.lazy.IBk"),
-	J48("weka.classifiers.treesJ48"),
+	J48("weka.classifiers.trees.J48"),
 	K_STAR("KStar"),
 	MULTI_LAYER_PECEPTRON("weka.classifiers.functions.MultilayerPerceptron"),
 	NAIVE_BAYES("weka.classifiers.bayes.NaiveBayes"),
