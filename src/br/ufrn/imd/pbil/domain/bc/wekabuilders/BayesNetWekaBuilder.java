@@ -4,39 +4,53 @@ import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import weka.attributeSelection.ASSearch;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.GreedyStepwise;
+import weka.classifiers.bayes.BayesNet;
+import weka.classifiers.bayes.net.search.local.HillClimber;
+import weka.classifiers.bayes.net.search.local.K2;
+import weka.classifiers.bayes.net.search.local.LAGDHillClimber;
+import weka.classifiers.bayes.net.search.local.SimulatedAnnealing;
+import weka.classifiers.bayes.net.search.local.TAN;
+import weka.classifiers.bayes.net.search.local.TabuSearch;
 import weka.classifiers.rules.DecisionTable;
 import weka.core.SelectedTag;
 import weka.core.Tag;
 
 public class BayesNetWekaBuilder {
 
-	public static DecisionTable buildWekaDecisionTable(PossibilityKeySet pks) {
-		DecisionTable dt = new DecisionTable();
-	
-		Tag tag = new Tag();
-		tag.setReadable(pks.getKeyValuesPairs().get("E"));
-		Tag tags[] = new Tag[1];
-		tags[0] = tag;
-		dt.setEvaluationMeasure(new SelectedTag(0, tags));
+	public static BayesNet buildWekaBayesNet(PossibilityKeySet pks) {
+		BayesNet bn = new BayesNet();
 		
-		dt.setUseIBk(Boolean.valueOf(pks.getKeyValuesPairs().get("I")));
-		dt.setSearch(buildASSearch(pks.getKeyValuesPairs().get("S")));
-		dt.setCrossVal(Integer.valueOf(pks.getKeyValuesPairs().get("X")));
+		String sh = pks.getKeyValuesPairs().get("Q");
+		bn.setUseADTree(Boolean.parseBoolean(pks.getKeyValuesPairs().get("D")));
+		if(sh.equals("weka.classifiers.bayes.net.search.local.K2")) {
+			bn.setSearchAlgorithm(new K2());
+		}
 		
-		return dt;
-	}
-	
-	private static ASSearch buildASSearch(String s) {
-		switch (s) {
-			case "BestFirst -D 1 -N 5":{
-				return new BestFirst();
-			}
-			case "GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1":{
-				return new GreedyStepwise();
-			}
-			default:
-				return new BestFirst();
-			}
+		else if (sh.equals("weka.classifiers.bayes.net.search.local.HillClimber")) {
+			bn.setSearchAlgorithm(new HillClimber());
+		}
+		
+		else if (sh.equals("weka.classifiers.bayes.net.search.local.LAGDHillClimber")) {
+			bn.setSearchAlgorithm(new LAGDHillClimber());
+		}
+		
+		else if (sh.equals("weka.classifiers.bayes.net.search.local.SimulatedAnnealing")) {
+			bn.setSearchAlgorithm(new SimulatedAnnealing());
+		}
+		
+		else if (sh.equals("weka.classifiers.bayes.net.search.local.TabuSearch")) {
+			bn.setSearchAlgorithm(new TabuSearch());
+		}
+		
+		else if (sh.equals("weka.classifiers.bayes.net.search.local.TAN")) {
+			bn.setSearchAlgorithm(new TAN());
+		}
+		
+		else {
+			bn.setSearchAlgorithm(new K2());
+		}
+		
+		return bn;
 	}
 	
 }

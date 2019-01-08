@@ -311,35 +311,5 @@ public class Conversor{
 		return nb;
 	}
 	
-	public static BayesNet buildWekaBayesNet(PossibilityKeySet pks) {
-		BayesNet bn = new BayesNet();
-		
-		String sh = pks.getKeyValuesPairs().get("Q");
-		bn.setUseADTree(Boolean.parseBoolean(pks.getKeyValuesPairs().get("D")));
-		if(sh.contains("K2")) {
-			bn.setSearchAlgorithm(new K2());
-		}
-		else if (sh.contains("HillClimber")) {
-			HillClimber hc = new HillClimber();
-			bn.setSearchAlgorithm(hc);
-		}
-		else if (sh.contains("LAGDHillClimber")) {
-			LAGDHillClimber lhc = new LAGDHillClimber();
-			bn.setSearchAlgorithm(lhc);
-		}
-		else if (sh.contains("SimulatedAnnealing")) {
-			SimulatedAnnealing sa = new SimulatedAnnealing();
-			bn.setSearchAlgorithm(sa);
-		}
-		else if (sh.contains("TabuSearch")) {
-			TabuSearch tabu = new TabuSearch();
-			bn.setSearchAlgorithm(tabu);
-		} 
-		else if (sh.contains("TAN")) {
-			TAN tan = new TAN();
-			bn.setSearchAlgorithm(tan);
-		} 
-		
-		return bn;
-	}
+
 }
