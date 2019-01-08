@@ -8,12 +8,13 @@ import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import weka.classifiers.functions.SMO;
 
 public class Main {
-	public static void main(String[] args) throws InvalidParameterTypeException {
+	public static void main(String[] args) throws Exception {
 		Factory f = new Factory();
 		
 		Classifier c = f.buildSolutionFromRandom();
 		PossibilityKeySet pks = new PossibilityKeySet(c);
 		
 		SMO rt =  SmoWekaBuilder.buildWekaSMO(pks);
+		rt.buildClassifier(null);
 	}
 }

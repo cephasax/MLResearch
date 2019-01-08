@@ -8,7 +8,7 @@ import weka.classifiers.trees.RandomTree;
 
 public class RandomTreeWekaBuilder {
 
-	public static RandomTree buildWekaRandomTree(PossibilityKeySet pks) {
+	public static RandomTree buildForWeka(PossibilityKeySet pks) {
 		RandomTree rt = new RandomTree();
 		
 		rt.setKValue(Integer.parseInt(pks.getKeyValuesPairs().get("K")));

@@ -10,7 +10,7 @@ import weka.classifiers.functions.supportVector.RBFKernel;
 
 public class SmoWekaBuilder {
 
-	public static SMO buildWekaSMO(PossibilityKeySet pks) {
+	public static SMO buildForWeka(PossibilityKeySet pks) {
 		SMO smo = new SMO();
 		
 		smo.setKernel(buildKernel(

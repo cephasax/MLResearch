@@ -17,7 +17,7 @@ import weka.core.Tag;
 
 public class BayesNetWekaBuilder {
 
-	public static BayesNet buildWekaBayesNet(PossibilityKeySet pks) {
+	public static BayesNet buildFoWeka(PossibilityKeySet pks) {
 		BayesNet bn = new BayesNet();
 		
 		String sh = pks.getKeyValuesPairs().get("Q");

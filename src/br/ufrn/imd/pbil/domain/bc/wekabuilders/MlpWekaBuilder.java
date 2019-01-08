@@ -5,7 +5,7 @@ import weka.classifiers.functions.MultilayerPerceptron;
 
 public class MlpWekaBuilder {
 
-	public static MultilayerPerceptron buildWekaMlp(PossibilityKeySet pks) {
+	public static MultilayerPerceptron buildForWeka(PossibilityKeySet pks) {
 		MultilayerPerceptron mlp = new MultilayerPerceptron();
 		
 		mlp.setLearningRate(Float.parseFloat(pks.getKeyValuesPairs().get("L")));
