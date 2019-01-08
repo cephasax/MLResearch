@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=73, Q=true, S=51, I=84}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1, E=auc, X=2, I=true}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=6, I=51, K=32}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.J48, keyValuesPairs={A=true, B=true, S=false, C=0.25, U=true, J=true, M=48, O=true}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=118, I=21}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.functions.SMO, keyValuesPairs={SEL=Default}, branchClassifiers=[]]]]]

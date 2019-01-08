@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=acc, X=2, I=true}, branchClassifiers=[]]]
-Solution [PossibilityKeySet [key=weka.classifiers.functions.MultilayerPerceptron, keyValuesPairs={B=true, R=false, C=true, S=190, D=true, H=o, L=0.1, M=0.5}, branchClassifiers=[]]]
-Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=15, I=150, K=23}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1, E=rmse, X=1, I=false}, branchClassifiers=[]]]]]

@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MAJ, B=6, S=206, num=7}, branchClassifiers=[PossibilityKeySet [key=RandomTree, keyValuesPairs={depth=16, U=true, K=15, M=40, N=5}, branchClassifiers=[]], PossibilityKeySet [key=Kstar, keyValuesPairs={B=73, E=false, M=a}, branchClassifiers=[]], PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=true, X=false, I=true, K=44}, branchClassifiers=[]], PossibilityKeySet [key=DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=acc, X=3, I=true}, branchClassifiers=[]], PossibilityKeySet [key=RandomTree, keyValuesPairs={depth=8, U=false, K=1, M=35, N=4}, branchClassifiers=[]], PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=false, X=false, I=true, K=44}, branchClassifiers=[]], PossibilityKeySet [key=BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.K2, D=false}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=SMO, keyValuesPairs={SEL=Default}, branchClassifiers=[]]]
-Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=2, I=250, K=19}, branchClassifiers=[PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=true, S=true, C=0.95, U=false, J=false, M=24, O=false}, branchClassifiers=[]]]]]

@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=84, Q=true, S=116, I=69}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.functions.MultilayerPerceptron, keyValuesPairs={B=false, R=false, C=true, S=245, D=true, H=i, L=0.4, M=0.8}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=75, Q=true, S=142, I=89}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.lazy.KStar, keyValuesPairs={B=9, E=true, M=d}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=173, I=14}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.bayes.NaiveBayes, keyValuesPairs={D=true, K=false}, branchClassifiers=[]]]]]

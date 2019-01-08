@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=AVG, B=6, S=219, num=4}, branchClassifiers=[PossibilityKeySet [key=Kstar, keyValuesPairs={B=49, E=true, M=n}, branchClassifiers=[]], PossibilityKeySet [key=NaiveBayes, keyValuesPairs={D=false, K=true}, branchClassifiers=[]], PossibilityKeySet [key=IBK, keyValuesPairs={E=true, F=false, X=true, I=false, K=6}, branchClassifiers=[]], PossibilityKeySet [key=RandomTree, keyValuesPairs={depth=11, U=false, K=24, M=30, N=0}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=Kstar, keyValuesPairs={B=32, E=true, M=n}, branchClassifiers=[]]]
-Solution [PossibilityKeySet [key=Stacking, keyValuesPairs={B=9, S=198, num=1, X=9}, branchClassifiers=[PossibilityKeySet [key=BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.HillClimber, D=true}, branchClassifiers=[]]]]]

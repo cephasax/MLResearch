@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=229, I=16}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.RandomTree, keyValuesPairs={depth=19, U=true, K=32, M=17, N=3}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=188, I=38}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.bayes.BayesNet, keyValuesPairs={Q=weka.classifiers.bayes.net.search.local.LAGDHillClimber, D=true}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=42, I=4}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.bayes.NaiveBayes, keyValuesPairs={D=true, K=false}, branchClassifiers=[]]]]]

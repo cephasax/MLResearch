@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=86, Q=false, S=73, I=54}, branchClassifiers=[PossibilityKeySet [key=MLP, keyValuesPairs={B=true, R=false, C=true, S=241, D=true, H=a, L=1.0, M=1.0}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=224, I=51}, branchClassifiers=[PossibilityKeySet [key=IBK, keyValuesPairs={E=false, F=false, X=false, I=true, K=38}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MIN, B=9, S=84, num=2}, branchClassifiers=[PossibilityKeySet [key=NaiveBayes, keyValuesPairs={D=false, K=true}, branchClassifiers=[]], PossibilityKeySet [key=J48, keyValuesPairs={A=false, B=false, S=false, C=0.8, U=false, J=true, M=38, O=false}, branchClassifiers=[]]]]]

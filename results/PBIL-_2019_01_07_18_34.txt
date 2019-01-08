@@ -1,7 +1,0 @@
-------------------------------------------------------------------------
-Generation: 1 for dataset: datasets/x.arff
-------------------------------------------------------------------------
-
-Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=61, S=29, I=74, O=true}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=rmse, X=1, I=true}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=15, I=11, K=11}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.functions.SMO, keyValuesPairs={SEL=weka.classifiers.functions.supportVector.Puk -O 1.0 -S 1.0 -C 250007}, branchClassifiers=[]]]]]
-Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=23, S=193, I=46, O=false}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.RandomTree, keyValuesPairs={depth=6, U=false, K=7, M=17, N=3}, branchClassifiers=[]]]]]

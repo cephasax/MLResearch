@@ -1,9 +1,6 @@
 package br.ufrn.imd.pbil.domain.bc.wekabuilders;
 
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
-import weka.attributeSelection.ASSearch;
-import weka.attributeSelection.BestFirst;
-import weka.attributeSelection.GreedyStepwise;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.net.search.local.HillClimber;
 import weka.classifiers.bayes.net.search.local.K2;
@@ -11,13 +8,10 @@ import weka.classifiers.bayes.net.search.local.LAGDHillClimber;
 import weka.classifiers.bayes.net.search.local.SimulatedAnnealing;
 import weka.classifiers.bayes.net.search.local.TAN;
 import weka.classifiers.bayes.net.search.local.TabuSearch;
-import weka.classifiers.rules.DecisionTable;
-import weka.core.SelectedTag;
-import weka.core.Tag;
 
 public class BayesNetWekaBuilder {
 
-	public static BayesNet buildFoWeka(PossibilityKeySet pks) {
+	public static BayesNet buildForWeka(PossibilityKeySet pks) {
 		BayesNet bn = new BayesNet();
 		
 		String sh = pks.getKeyValuesPairs().get("Q");
