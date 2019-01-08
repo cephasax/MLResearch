@@ -6,6 +6,9 @@ import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.bc.BaseClassifierFactory;
 import br.ufrn.imd.pbil.domain.comm.CommitteeFactory;
+import br.ufrn.imd.pbil.enums.BaseClassifierType;
+import br.ufrn.imd.pbil.enums.ClassifierType;
+import br.ufrn.imd.pbil.enums.CommitteeType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 import br.ufrn.imd.pbil.pde.Possibility;
 import br.ufrn.imd.pbil.pde.PossibilityFactory;
@@ -66,9 +69,9 @@ public class Factory {
 		String name = new String(rootMethod.getKey());
 		
 		//IF WAS DRAWN A BASE CLASSIFIER
-		if(name.equals("BaseClassifier")){
+		if(name.equals(ClassifierType.BASE_CLASSIFIER.getInfo())){
 			baseClassifier = drawOneMethod(this.baseClassifierPossibilities);
-			p = drawPossibility(baseClassifier);
+			p = drawPossibility(baseClassifier);			
 			return new PossibilityKeySet(p);
 		}
 		//IF WAS A COMMITTEE
@@ -82,31 +85,34 @@ public class Factory {
 					nBranch = Integer.valueOf(pNum.getDrawnValue());
 				}
 			}
-			if(nBranch != 0) {
-				ArrayList<PossibilityKeySet> pkss = new ArrayList<PossibilityKeySet>();
+			ArrayList<PossibilityKeySet> pkss = new ArrayList<PossibilityKeySet>();
+			
+			if(nBranch != 0 && !name.equals(CommitteeType.RANDOM_FOREST.getInfo())) {
 				for(int i = 0; i < nBranch; i++) {
 					PossibilityKeySet pksTemp = new PossibilityKeySet(drawOneMethod(branchClassifierPossibilities));
 					Possibility pTemp = branchClassifierPossibilities.findChildPossibility(pksTemp.getKey());
 					pkss.add(new PossibilityKeySet(drawPossibility(pTemp)));
 				}
-				
-				ready.setBranchClassifiers(pkss);
 			}
+			else {
+				Possibility rt = findChildPossibility(BaseClassifierType.RANDOM_TREE.getInfo(), branchClassifierPossibilities);
+				pkss.add(new PossibilityKeySet(drawPossibility(rt)));
+			}
+			ready.setBranchClassifiers(pkss);
 			return ready;
 		}
-
-	}
+}
 	
 	private void buildFirstLevelPossibility() {
 		this.firstLevel = new Possibility("firstLevel");
 
-		this.firstLevel.addPossibility(new Possibility("AdaBoost"));
-		this.firstLevel.addPossibility(new Possibility("Bagging"));
-		this.firstLevel.addPossibility(new Possibility("RandomCommittee"));
-		this.firstLevel.addPossibility(new Possibility("RandomForest"));
-		this.firstLevel.addPossibility(new Possibility("Stacking"));
-		this.firstLevel.addPossibility(new Possibility("Vote"));
-		this.firstLevel.addPossibility(new Possibility("BaseClassifier"));
+		this.firstLevel.addPossibility(new Possibility(CommitteeType.ADA_BOOST.getInfo()));
+		this.firstLevel.addPossibility(new Possibility(CommitteeType.BAGGING.getInfo()));
+		this.firstLevel.addPossibility(new Possibility(CommitteeType.RANDOM_COMMITTEE.getInfo()));
+		this.firstLevel.addPossibility(new Possibility(CommitteeType.RANDOM_FOREST.getInfo()));
+		this.firstLevel.addPossibility(new Possibility(CommitteeType.STACKING.getInfo()));
+		this.firstLevel.addPossibility(new Possibility(CommitteeType.VOTE.getInfo()));
+		this.firstLevel.addPossibility(new Possibility(ClassifierType.BASE_CLASSIFIER.getInfo()));
 	}
 	
 	private Possibility drawPossibility(Possibility possibility) {
@@ -176,7 +182,7 @@ public class Factory {
 		}
 		else {
 			
-			Possibility first = findChildPossibility("BaseClassifier", this.firstLevel);
+			Possibility first = findChildPossibility(ClassifierType.BASE_CLASSIFIER.getInfo(), this.firstLevel);
 			first.increaseWeight(learningRate);
 			this.firstLevel.updateWeights();
 			

@@ -2,7 +2,7 @@ package br.ufrn.imd.pbil.enums;
 
 public enum ClassifierType {
 	
-	BASE_CLASSIFIER("base classifier"),
+	BASE_CLASSIFIER("baseClassifier"),
 	COMMITTEE("committee");
 	
 	private String info;

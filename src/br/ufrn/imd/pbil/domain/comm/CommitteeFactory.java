@@ -17,6 +17,7 @@ import br.ufrn.imd.pbil.domain.comm.prototypes.RandomCommitteePrototype;
 import br.ufrn.imd.pbil.domain.comm.prototypes.RandomForestPrototype;
 import br.ufrn.imd.pbil.domain.comm.prototypes.StackingPrototype;
 import br.ufrn.imd.pbil.domain.comm.prototypes.VotePrototype;
+import br.ufrn.imd.pbil.enums.CommitteeType;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
 
 public class CommitteeFactory extends ClassifierFactory{
@@ -26,31 +27,31 @@ public class CommitteeFactory extends ClassifierFactory{
 		builders = new HashMap<String, ClassifierBuilder>();
 		buildNames();
 		AdaBoostBuilder adaBuilder = new AdaBoostBuilder(new AdaBoostPrototype());
-		builders.put("AdaBoost",adaBuilder);
-		
-		RandomCommitteeBuilder rcbuilder = new RandomCommitteeBuilder(new RandomCommitteePrototype());
-		builders.put("RandomCommittee",rcbuilder);
+		builders.put(CommitteeType.ADA_BOOST.getInfo(),adaBuilder);
 		
 		BaggingBuilder baggignbuilder = new BaggingBuilder(new BaggingPrototype());
-		builders.put("Bagging",baggignbuilder);
+		builders.put(CommitteeType.BAGGING.getInfo(),baggignbuilder);
+		
+		RandomCommitteeBuilder rcbuilder = new RandomCommitteeBuilder(new RandomCommitteePrototype());
+		builders.put(CommitteeType.RANDOM_COMMITTEE.getInfo(),rcbuilder);
 		
 		RandomForestBuilder rfbuilder = new RandomForestBuilder(new RandomForestPrototype());
-		builders.put("RandomForest",rfbuilder);
+		builders.put(CommitteeType.RANDOM_FOREST.getInfo(),rfbuilder);
 
-		VoteBuilder votebuilder = new VoteBuilder(new VotePrototype());
-		builders.put("Vote",votebuilder);
-		
 		StackingBuilder stbuilder = new StackingBuilder(new StackingPrototype());
-		builders.put("Stacking",stbuilder);
+		builders.put(CommitteeType.STACKING.getInfo(),stbuilder);
+		
+		VoteBuilder votebuilder = new VoteBuilder(new VotePrototype());
+		builders.put(CommitteeType.VOTE.getInfo(),votebuilder);
 	}
 	
 	private void buildNames() {
 		classifierNames = new ArrayList<String>();
-		classifierNames.add("AdaBoost");
-		classifierNames.add("Bagging");
-		classifierNames.add("RandomCommittee");
-		classifierNames.add("RandomForest");
-		classifierNames.add("Stacking");
-		classifierNames.add("Vote");
+		classifierNames.add(CommitteeType.ADA_BOOST.getInfo());
+		classifierNames.add(CommitteeType.BAGGING.getInfo());
+		classifierNames.add(CommitteeType.RANDOM_COMMITTEE.getInfo());
+		classifierNames.add(CommitteeType.RANDOM_FOREST.getInfo());
+		classifierNames.add(CommitteeType.STACKING.getInfo());
+		classifierNames.add(CommitteeType.VOTE.getInfo());
 	}
 }

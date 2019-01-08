@@ -2,12 +2,12 @@ package br.ufrn.imd.pbil.domain.comm;
 
 import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.enums.ClassifierType;
+import br.ufrn.imd.pbil.enums.CommitteeType;
 
 public class AdaBoost extends Committee{
 	public AdaBoost() {
 		super();
-		this.name = "AdaBoost";
-		this.classifierType =ClassifierType.COMMITTEE;
-		this.setBranchClassifierParameter("-W");
+		this.name = CommitteeType.ADA_BOOST.getInfo();
+		this.classifierType = ClassifierType.COMMITTEE;
 	}
 }

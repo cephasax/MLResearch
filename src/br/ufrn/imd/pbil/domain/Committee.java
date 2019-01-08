@@ -11,9 +11,6 @@ public class Committee extends Classifier {
 
 	private CommitteeType committeeType;
 	private List<Classifier> classifiers;
-	private String branchClassifierParameter;
-
-	
 
 	public Committee() {
 		super();
@@ -22,14 +19,6 @@ public class Committee extends Classifier {
 
 	public int numberOfBaseClassifiers() {
 		return this.classifiers.size();
-	}
-
-	public String getBranchClassifierParameter() {
-		return branchClassifierParameter;
-	}
-
-	public void setBranchClassifierParameter(String branchClassifierParameter) {
-		this.branchClassifierParameter = branchClassifierParameter;
 	}
 	
 	public CommitteeType getCommitteeType() {

@@ -2,10 +2,10 @@ package br.ufrn.imd.pbil.enums;
 
 public enum CommitteeType {
 
-	ADA_BOOST("Ada Boost"), 
+	ADA_BOOST("AdaBoost"), 
 	BAGGING("Bagging"), 
-	RANDOM_COMMITTEE("Random Committee"), 
-	RANDOM_FOREST("Random Forest"), 
+	RANDOM_COMMITTEE("RandomCommittee"), 
+	RANDOM_FOREST("RandomForest"), 
 	STACKING("Stacking"), 
 	VOTE("Vote");
 
