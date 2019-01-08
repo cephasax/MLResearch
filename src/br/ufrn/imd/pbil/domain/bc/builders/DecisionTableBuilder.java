@@ -24,7 +24,7 @@ public class DecisionTableBuilder extends ClassifierBuilder {
 		classifier.addParameter(e);
 		
 		Parameter s = new Parameter("S", ParameterType.STRING);
-		s.setValue("GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1");
+		s.setValue("BestFirst -D 1 -N 5");
 		classifier.addParameter(s);
 		
 		Parameter i = new Parameter("I", ParameterType.BOOLEAN);

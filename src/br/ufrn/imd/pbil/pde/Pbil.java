@@ -1,4 +1,4 @@
-package br.ufrn.imd.pbil.douglas;
+package br.ufrn.imd.pbil.pde;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import br.ufrn.imd.pbil.pde.Solution;
 import weka.classifiers.Classifier;
 
 public class Pbil {
-
 	
 	private static int populationSize = 2;										// population
 	private static int maxMinutes = 15;											// tempo de execu��o
@@ -63,7 +62,6 @@ public class Pbil {
 				
 				buildWekaSolutions();
 
-				
 				orderSolutions();
 				
 				logAfterOrdering();
@@ -125,7 +123,6 @@ public class Pbil {
 	}
 	
 	public static void buildSolutions() {
-	
 		int extraSolutions = (int) populationSize / 2;
 		int total = populationSize + extraSolutions;
 		PossibilityKeySet s;
@@ -138,7 +135,6 @@ public class Pbil {
 	}
 	
 	public static void buildWekaSolutions() throws Exception {
-		pww.convertSolutionsToWekaClassifiers();
 	}
 	
 	public static void outputStuffAboutRunning(String dataset, int generation) {

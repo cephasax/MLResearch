@@ -5,28 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ufrn.imd.pbil.fileManipulation.FileOutputWriter;
+import weka.classifiers.rules.DecisionTable;
 
 public class Teste {
 
 	public static void main(String[] args) throws IOException {
-		ArrayList<String> nomes = new ArrayList<String>();
-		nomes.add("jose");
-		nomes.add("cephas");
-		
-		FileOutputWriter fow;
-		
-		fow = new FileOutputWriter("testando");
+		DecisionTable dt = new DecisionTable();
 
-		fow.addContentLines(nomes);
-		fow.writeInFile();
+		System.out.println(dt.listOptions().);
 		
-		nomes.clear();
-		nomes.add("marquito");
-		fow.addContentLines(nomes);
-		
-		fow.writeInFile();
-		fow.saveAndClose();
-
 	}
 	
 }
