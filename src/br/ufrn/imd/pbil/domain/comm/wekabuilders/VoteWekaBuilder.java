@@ -1,73 +1,32 @@
 package br.ufrn.imd.pbil.domain.comm.wekabuilders;
 
-import br.ufrn.imd.pbil.domain.ClassifierPrototype;
-import br.ufrn.imd.pbil.domain.Committee;
-import br.ufrn.imd.pbil.domain.Parameter;
-import br.ufrn.imd.pbil.domain.comm.Vote;
-import br.ufrn.imd.pbil.enums.ParameterType;
-import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
+import br.ufrn.imd.pbil.douglas.ClassifierBuilder;
+import br.ufrn.imd.pbil.pde.PossibilityKeySet;
+import weka.classifiers.Classifier;
+import weka.classifiers.meta.Vote;
+import weka.core.SelectedTag;
+import weka.core.Tag;
 
-public class VoteWekaBuilder extends CommitteeWekaBuilder{
-
-	public VoteWekaBuilder(ClassifierPrototype committeePrototype) {
-		super(committeePrototype);
-
-	}
-
-	@Override
-	public Committee defaultBuild() {
-		committee = new Vote();
-		Parameter s = new Parameter("S", ParameterType.INT);
-		s.setValue("10");
-		committee.addParameter(s);
+public class VoteWekaBuilder {
+	public static Vote buildForWeka(PossibilityKeySet pks) {
+		Vote vote = new Vote();
+		Classifier [] classifiers = new Classifier[pks.getBranchClassifiers().size()];
 		
-		Parameter r = new Parameter("R", ParameterType.STRING);
-		r.setValue("AVG");
-		committee.addParameter(r);
+		Tag tag = new Tag();
+		tag.setReadable(pks.getKeyValuesPairs().get("R"));
+		Tag []tags = new Tag[1];
+		tags[0] = tag;
 		
-		Parameter b = new Parameter("B", ParameterType.INT);
-		b.setValue("2");
-		committee.addParameter(b);
-		
-		Parameter num = new Parameter("num",ParameterType.INT);
-		String value = "1";
-		num.setValue(value);
-		committee.addParameter(num);
-		
-		try {
-			committee.setClassifiers(buildClassifiers(Integer.parseInt(value)));
-		} catch (InvalidParameterTypeException e) {
-			e.printStackTrace();
+		for(int i = 0; i<classifiers.length;i++) {
+			classifiers[i] = ClassifierBuilder.buildClassifier(pks.getBranchClassifiers().get(i));
 		}
-		return committee;
-	}
-
-	@Override
-	public Committee randomBuild() {
-		committee = new Vote();
-		committee.setBranchClassifierParameter("B");
-		Parameter s = new Parameter("S", ParameterType.INT);
-		s.setValue(randomValueForParameter(s));
-		committee.addParameter(s);
 		
-		Parameter r = new Parameter("R", ParameterType.STRING);
-		r.setValue(randomValueForParameter(r));
-		committee.addParameter(r);
+		vote.setClassifiers(classifiers);
 		
-		Parameter b = new Parameter("B", ParameterType.INT);
-		b.setValue(randomValueForParameter(b));
-		committee.addParameter(b);
+		vote.setSeed(Integer.parseInt(pks.getKeyValuesPairs().get("S")));
+		vote.setCombinationRule(new SelectedTag(0,tags));
 		
-		Parameter num = new Parameter("num",ParameterType.INT);
-		String value = randomValueForParameter(num);
-		num.setValue(value);
-		committee.addParameter(num);
 		
-		try {
-			committee.setClassifiers(buildClassifiers(Integer.parseInt(value)));
-		} catch (InvalidParameterTypeException e) {
-			e.printStackTrace();
-		}
-		return committee;
+		return vote;
 	}
 }
