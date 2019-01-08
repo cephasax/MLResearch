@@ -2,14 +2,17 @@ package br.ufrn.imd.pbil.douglas;
 
 import java.util.Set;
 
-import br.ufrn.imd.pbil.annotations.ToFix;
-import br.ufrn.imd.pbil.domain.Committee;
-import br.ufrn.imd.pbil.enums.ClassifierType;
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import br.ufrn.imd.pbil.pde.Solution;
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.bayes.net.search.local.HillClimber;
+import weka.classifiers.bayes.net.search.local.K2;
+import weka.classifiers.bayes.net.search.local.LAGDHillClimber;
+import weka.classifiers.bayes.net.search.local.SimulatedAnnealing;
+import weka.classifiers.bayes.net.search.local.TAN;
+import weka.classifiers.bayes.net.search.local.TabuSearch;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.classifiers.functions.SMO;
 import weka.classifiers.lazy.IBk;
@@ -23,7 +26,8 @@ import weka.classifiers.rules.DecisionTable;
 import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
 import weka.classifiers.trees.RandomTree;
-import weka.core.Instances;
+import weka.core.SelectedTag;
+import weka.core.Tag;
 
 public class Conversor{
 	
@@ -53,8 +57,7 @@ public class Conversor{
 		switch(individualName) {
 
 			case "weka.classifiers.trees.J48": {
-				j48 = new J48();
-				j48.setOptions(options);
+				j48 = buildWekaJ48(solution.getPossibilityKeySet());
 				return j48;
 			}
 				
@@ -147,7 +150,7 @@ public class Conversor{
 	}
 	
 
-	
+
 	private static int sizeOfOptions(PossibilityKeySet pks) {
 		
 		Set<String> keys = pks.getKeyValuesPairs().keySet();
@@ -249,5 +252,94 @@ public class Conversor{
 			return "B";
 		}
 		return "W";
+	}
+	
+	public static J48 buildWekaJ48(PossibilityKeySet pks) {
+		J48 j48 = new J48();
+		
+		j48.setUnpruned(Boolean.parseBoolean(pks.getKeyValuesPairs().get("U")));
+		j48.setCollapseTree(Boolean.parseBoolean(pks.getKeyValuesPairs().get("O")));
+		j48.setMinNumObj(Integer.parseInt(pks.getKeyValuesPairs().get("M")));
+		j48.setConfidenceFactor(Float.parseFloat(pks.getKeyValuesPairs().get("C")));
+		j48.setSubtreeRaising(Boolean.parseBoolean(pks.getKeyValuesPairs().get("S")));
+		j48.setUseLaplace(Boolean.parseBoolean(pks.getKeyValuesPairs().get("A")));
+		j48.setBinarySplits(Boolean.parseBoolean(pks.getKeyValuesPairs().get("B")));
+		j48.setUseMDLcorrection(Boolean.parseBoolean(pks.getKeyValuesPairs().get("J")));
+		
+		
+		return j48;
+	}
+
+
+
+	public static KStar buildWekaKStar(PossibilityKeySet pks) {
+		KStar kstar = new KStar();
+		
+		Tag tag = new Tag();
+		tag.setReadable(pks.getKeyValuesPairs().get("M"));
+		Tag tags[] = new Tag[1];
+		tags[0] = tag;
+		kstar.setGlobalBlend(Integer.parseInt(pks.getKeyValuesPairs().get("B")));
+		kstar.setEntropicAutoBlend(Boolean.parseBoolean(pks.getKeyValuesPairs().get("E")));
+		kstar.setMissingMode(new SelectedTag(0, tags));
+		
+		return kstar;
+	}
+	
+	public static MultilayerPerceptron buildWekaMlp(PossibilityKeySet pks) {
+		MultilayerPerceptron mlp = new MultilayerPerceptron();
+		
+		mlp.setLearningRate(Float.parseFloat(pks.getKeyValuesPairs().get("L")));
+		mlp.setMomentum(Float.parseFloat(pks.getKeyValuesPairs().get("M")));
+		mlp.setNominalToBinaryFilter(Boolean.parseBoolean(pks.getKeyValuesPairs().get("B")));
+		mlp.setHiddenLayers(pks.getKeyValuesPairs().get("H"));
+		mlp.setNormalizeNumericClass(Boolean.parseBoolean(pks.getKeyValuesPairs().get("C")));
+		mlp.setReset(Boolean.parseBoolean(pks.getKeyValuesPairs().get("R")));
+		mlp.setDecay(Boolean.parseBoolean(pks.getKeyValuesPairs().get("D")));
+		mlp.setSeed(Integer.parseInt(pks.getKeyValuesPairs().get("S")));
+		
+		
+		return mlp;
+	}
+	
+	public static NaiveBayes buildWekaNaiveBayes(PossibilityKeySet pks) {
+		NaiveBayes nb = new NaiveBayes();
+		
+		nb.setUseKernelEstimator(Boolean.parseBoolean(pks.getKeyValuesPairs().get("K")));
+		nb.setUseSupervisedDiscretization(Boolean.parseBoolean(pks.getKeyValuesPairs().get("D")));
+		
+		return nb;
+	}
+	
+	public static BayesNet buildWekaBayesNet(PossibilityKeySet pks) {
+		BayesNet bn = new BayesNet();
+		
+		String sh = pks.getKeyValuesPairs().get("Q");
+		bn.setUseADTree(Boolean.parseBoolean(pks.getKeyValuesPairs().get("D")));
+		if(sh.contains("K2")) {
+			bn.setSearchAlgorithm(new K2());
+		}
+		else if (sh.contains("HillClimber")) {
+			HillClimber hc = new HillClimber();
+			bn.setSearchAlgorithm(hc);
+		}
+		else if (sh.contains("LAGDHillClimber")) {
+			LAGDHillClimber lhc = new LAGDHillClimber();
+			bn.setSearchAlgorithm(lhc);
+		}
+		else if (sh.contains("SimulatedAnnealing")) {
+			SimulatedAnnealing sa = new SimulatedAnnealing();
+			bn.setSearchAlgorithm(sa);
+		}
+		else if (sh.contains("TabuSearch")) {
+			TabuSearch tabu = new TabuSearch();
+			bn.setSearchAlgorithm(tabu);
+		} 
+		else if (sh.contains("TAN")) {
+			TAN tan = new TAN();
+			bn.setSearchAlgorithm(tan);
+		} 
+		
+		return bn;
 	}
 }
