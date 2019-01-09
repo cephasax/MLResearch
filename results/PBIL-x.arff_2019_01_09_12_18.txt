@@ -1,0 +1,22 @@
+
+------------------------------------------------------------------------
+Generation: 1 for dataset: x.arff
+------------------------------------------------------------------------
+
+ >>> Population 
+ 
+Solution [PossibilityKeySet [key=Bagging, keyValuesPairs={P=71, S=74, I=48, O=false}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.J48, keyValuesPairs={A=true, B=true, S=true, C=0.6, U=false, J=true, M=43, O=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=99, Q=false, S=50, I=33}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1, E=rmse, X=1, I=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=73, Q=true, S=45, I=112}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=BestFirst -D 1 -N 5, E=rmse, X=4, I=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=240, I=12}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.functions.SMO, keyValuesPairs={SEL=Default}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=weka.classifiers.lazy.IBk, keyValuesPairs={E=true, F=false, X=false, I=false, K=60}, branchClassifiers=[]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=10, I=149, K=15}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.RandomTree, keyValuesPairs={depth=3, U=true, K=10, M=46, N=3}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=160, I=24}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.rules.DecisionTable, keyValuesPairs={S=GreedyStepwise -T -1.7976931348623157E308 -N 1 -num-slots 1, E=auc, X=4, I=true}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=10, I=254, K=12}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.RandomTree, keyValuesPairs={depth=17, U=false, K=8, M=64, N=1}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=KStar, keyValuesPairs={B=93, E=false, M=n}, branchClassifiers=[]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=12, I=37}, branchClassifiers=[PossibilityKeySet [key=KStar, keyValuesPairs={B=81, E=false, M=d}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomForest, keyValuesPairs={W=13, I=144, K=7}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.RandomTree, keyValuesPairs={depth=12, U=true, K=6, M=50, N=0}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=242, I=31}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.bayes.NaiveBayes, keyValuesPairs={D=false, K=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=RandomCommittee, keyValuesPairs={S=223, I=5}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.functions.MultilayerPerceptron, keyValuesPairs={B=false, R=false, C=true, S=141, D=false, H=i, L=0.7, M=0.6}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=AdaBoost, keyValuesPairs={P=76, Q=true, S=13, I=92}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.trees.J48, keyValuesPairs={A=true, B=true, S=false, C=0.4, U=false, J=true, M=52, O=false}, branchClassifiers=[]]]]]
+Solution [PossibilityKeySet [key=Vote, keyValuesPairs={R=MAJ, B=4, S=226, num=3}, branchClassifiers=[PossibilityKeySet [key=weka.classifiers.lazy.IBk, keyValuesPairs={E=true, F=false, X=false, I=true, K=15}, branchClassifiers=[]], PossibilityKeySet [key=KStar, keyValuesPairs={B=50, E=false, M=m}, branchClassifiers=[]], PossibilityKeySet [key=KStar, keyValuesPairs={B=60, E=true, M=m}, branchClassifiers=[]]]]]

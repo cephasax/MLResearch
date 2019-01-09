@@ -63,7 +63,6 @@ public class BaggingBuilder extends CommitteeBuilder{
 		o.setValue(randomValueForParameter(o));
 		committee.addParameter(o);
 		
-		committee.setBranchClassifierParameter("W");
 		try {
 			committee.setClassifiers(buildClassifiers(1));
 		} catch (InvalidParameterTypeException e) {
