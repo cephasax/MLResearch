@@ -1,14 +1,16 @@
 package br.ufrn.imd.pbil.pde;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import weka.classifiers.Classifier;
 import weka.core.Instances;
 
 public class Executor {
 	
-	public static float runSolution (Instances dataset, Classifier classifier, int numFolds) throws Exception{
-		float []foldAcc = new float[numFolds];
+	public static List<Float> runSolution (Instances dataset, Classifier classifier, int numFolds) throws Exception{
+		List<Float>foldMinError = new ArrayList<Float>();
 		float wrongClassified = 0;
-		float accuracySum=0;
 		for (int fold =0; fold<numFolds;fold++) {
 			classifier.buildClassifier(dataset.trainCV(numFolds, fold));
 			Instances test = dataset.testCV(numFolds, fold);
@@ -17,11 +19,10 @@ public class Executor {
 					wrongClassified++;
 				}
 			}
-			foldAcc[fold] = wrongClassified/test.size();
-			accuracySum	+= wrongClassified/test.size();
+			foldMinError.add(wrongClassified/test.size());
 			wrongClassified =0;
 		}
 		
-		return accuracySum /numFolds;
+		return foldMinError;
 	}
 }

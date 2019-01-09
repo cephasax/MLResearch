@@ -27,6 +27,12 @@ public class Solution implements Comparable<Solution> {
 	}
 
 	public void setMinErrorPerFold(List<Float> minErrorPerFold) {
+		float qtdFolds =0, sum=0;
+		for (Float foldMinError : minErrorPerFold) {
+			sum+=foldMinError;
+			qtdFolds++;
+		}
+		this.accuracy = sum/(float)qtdFolds; 
 		this.minErrorPerFold = minErrorPerFold;
 	}
 

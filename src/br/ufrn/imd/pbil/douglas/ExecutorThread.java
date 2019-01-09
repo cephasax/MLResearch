@@ -36,7 +36,8 @@ public class ExecutorThread extends Thread {
 
 	public void run() {
 		try {
-			s.setAccuracy(Executor.runSolution(dataset, s.getClassifier(), folds));
+			s.setMinErrorPerFold((Executor.runSolution(dataset, s.getClassifier(), folds)));
+			
 			System.out.println(s.getAccuracy() + " : " + s.getPossibilityKeySet().toString());
 		} catch (Exception e) {
 			PbilWekaWorker.printErrorMessage(e, s.getPossibilityKeySet());
