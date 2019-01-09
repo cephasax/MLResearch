@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import br.ufrn.imd.pbil.domain.Factory;
 import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
+import br.ufrn.imd.pbil.exception.InvalidSolutionExeption;
 import br.ufrn.imd.pbil.fileManipulation.PbilOutputWriter;
 
 public class Pbil {
@@ -15,7 +16,7 @@ public class Pbil {
 	private static int generations = 5;										
 																			
 	private static int numFolds = 10;																				
-	private static int maxSecondsPerSolution = (maxMinutes * 60) / 12; 	
+	private static int maxSecondsPerSolution = 10; //(maxMinutes * 60) / 12; 	
 	private static String log = "PBIL-";									
 	
 	public static float learningRate = (float) 0.5;
@@ -50,9 +51,10 @@ public class Pbil {
 				
 				logPopulation();
 				
-					buildAndRunWekaSolutions();
+				buildAndRunWekaSolutions();
 
 				run();
+				
 				orderSolutions();
 				
 				logAfterOrdering();

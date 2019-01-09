@@ -1,6 +1,8 @@
 package br.ufrn.imd.pbil.pde;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import weka.classifiers.Classifier;
 
@@ -10,11 +12,28 @@ public class Solution implements Comparable<Solution> {
 	private PossibilityKeySet possibilityKeySet;
 	private float accuracy;
 	private Classifier classifier;
+	private List<Float> minErrorPerFold;
 
 	public Solution(PossibilityKeySet possibilityKeySet) {
 		this.possibilityKeySet = possibilityKeySet;
 		this.name = possibilityKeySet.toString();
 		this.accuracy = new Float(0.0);
+		minErrorPerFold = new ArrayList<Float>();
+		
+	}
+
+	public List<Float> getMinErrorPerFold() {
+		return minErrorPerFold;
+	}
+
+	public void setMinErrorPerFold(List<Float> minErrorPerFold) {
+		float qtdFolds =0, sum=0;
+		for (Float foldMinError : minErrorPerFold) {
+			sum+=foldMinError;
+			qtdFolds++;
+		}
+		this.accuracy = sum/(float)qtdFolds; 
+		this.minErrorPerFold = minErrorPerFold;
 	}
 
 	public Solution() {

@@ -3,20 +3,23 @@ package br.ufrn.imd.pbil.pde;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Iterator;
+
 import br.ufrn.imd.pbil.domain.bc.wekabuilders.WekaBuilder;
+import br.ufrn.imd.pbil.douglas.ExecutorThread;
 import weka.classifiers.Classifier;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class PbilWekaWorker{
-
+	private static final int maxNumThreads = 5;
 	private String base;
 	private DataSource data;
 	private Instances dataset;
 	private ArrayList<Solution> correctSolutions;
 	private ArrayList<Solution> solutions;
 	private int fold;
-	private int solutionTime;
+	private int solutionTimeInSeconds;
 	private int totalTime;
 	private int populationSize;
 
@@ -34,20 +37,58 @@ public class PbilWekaWorker{
 		this.solutions = solutions;
 	}
 	
-	public void runSolutions(){
-		for(Solution s: correctSolutions) {
-			try {
-				s.setAccuracy(Executor.runSolution(dataset, s.getClassifier(), fold));
-				System.out.println(s.getAccuracy() + " : " +s.getPossibilityKeySet().toString());
-			} catch (Exception e) {
-				printErrorMessage(e, s.getPossibilityKeySet());
+	@SuppressWarnings("deprecation")
+	public void runSolutions() {
+		int success = 0;
+		
+		List<ExecutorThread> threads = new ArrayList<ExecutorThread>();
+		
+		List<ExecutorThread> running = new ArrayList<ExecutorThread>();
+		for(Solution s: solutions) {
+			ExecutorThread executorThread =  new ExecutorThread(s, fold, dataset);
+			threads.add(executorThread);
+		}
+		
+		while(!(threads.isEmpty() && running.isEmpty()) && success < populationSize ) {
+			if(running.size()<maxNumThreads ) {
+				ExecutorThread ex = threads.get(0);
+				ex.start();
+				ex.setInitTime(System.currentTimeMillis());
+				running.add(ex);
+				threads.remove(0);
 			}
+			
+			Iterator<ExecutorThread> it = running.iterator();
+			while(it.hasNext() ) {
+				ExecutorThread e = it.next();
+				boolean val = System.currentTimeMillis() - e.getInitTime() >= solutionTimeInSeconds * 1000 && !e.isFinish();
+				if(val) {
+					e.stop();
+					it.remove();
+					//System.out.println("Error for " + e.getSolution());
+				}
+				else if(e.isFinish()){
+					it.remove();
+					success++;
+					//System.out.println("Success for " + e.getSolution());
+				}
+			}
+			
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}		
+		}
+		for(int j =0; j<running.size();j++) {
+			running.get(j).stop();
 		}
 	}
 
 	public void convertSolutionsToWekaClassifiers() throws Exception {
 		for (int i = 0; i < solutions.size(); i++) {
 			Classifier c = WekaBuilder.buildClassifier(solutions.get(i).getPossibilityKeySet());
+			solutions.get(i).setClassifier(c);
 		}
 	}
 	
@@ -92,11 +133,11 @@ public class PbilWekaWorker{
 	}
 
 	public int getSolutionTime() {
-		return solutionTime;
+		return solutionTimeInSeconds;
 	}
 
 	public void setSolutionTime(int solutionTime) {
-		this.solutionTime = solutionTime;
+		this.solutionTimeInSeconds = solutionTime;
 	}
 
 	public int getTotalTime() {
@@ -119,7 +160,7 @@ public class PbilWekaWorker{
 		return solutions;
 	}
 
-	private void printErrorMessage(Exception e, PossibilityKeySet pks) {
+	public static void printErrorMessage(Exception e, PossibilityKeySet pks) {
 		System.out.println("     -----     ");
 		System.out.println(pks.toString());
 		System.out.println(e.getMessage());

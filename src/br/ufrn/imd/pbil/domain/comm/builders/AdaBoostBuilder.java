@@ -61,7 +61,6 @@ public class AdaBoostBuilder extends CommitteeBuilder {
 		Parameter s = new Parameter("S",ParameterType.INT);
 		s.setValue(randomValueForParameter(s));
 		committee.addParameter(s);
-		committee.setBranchClassifierParameter("W");
 		try {
 			committee.setClassifiers(buildClassifiers(1));
 		} catch (InvalidParameterTypeException e) {
