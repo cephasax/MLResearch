@@ -53,6 +53,17 @@ public class Possibility {
 		return sb.toString();
 	}
 	
+	public String possibilityToString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{" + this.father + ", " + this.key + ", " + this.weight + ", " + this.totalWeight + "}" +" --> \n");
+		for(Possibility p : possibilities) {
+			sb.append("\t");
+			sb.append(p.possibilityToString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+	
 	public String possibilityAsGsonString() {
 		Gson gson = new Gson();
 		return gson.toJson(this, Possibility.class);
