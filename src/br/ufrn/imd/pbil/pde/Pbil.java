@@ -6,53 +6,36 @@ import java.util.Collections;
 
 import br.ufrn.imd.pbil.domain.Factory;
 import br.ufrn.imd.pbil.fileManipulation.PbilOutputWriter;
+import weka.core.Instances;
 
 public class Pbil {
 	
-	private static int populationSize = 50;									
-	private static int maxMinutes = 15;											
-	private static int generations = 20;										
+	private int populationSize = 50;									
+	private int maxMinutes = 15;											
+	private int generations = 20;										
 																			
-	private static int numFolds = 10;																				
-	private static int maxSecondsPerSolution = (maxMinutes * 60) / 12; 	
-	private static String log = "PBIL-";									
+	private int numFolds = 10;																				
+	private int maxSecondsPerSolution = (maxMinutes * 60) / 12; 	
+	private String log = "PBIL-";									
 	
-	public static float learningRate = (float) 0.5;
+	public float learningRate = (float) 0.5;
 	
-	private static Factory f;		
-	private static ArrayList<Solution> population;
-	private static ArrayList<Solution> auxPopulation;
-	private static int updateReason = 2;					// best solutions size to improve pv (2 = 1/2, n = 1/n, where 1=population size)
+	private Factory f;		
+	private ArrayList<Solution> population;
+	private ArrayList<Solution> auxPopulation;
+	private int updateReason = 2;					// best solutions size to improve pv (2 = 1/2, n = 1/n, where 1=population size)
 	
-	private static Solution bestSolution;
-	private static ArrayList<String> dataSets;
-	private static PbilOutputWriter pow;
-	private static PbilWekaWorker pww;
-	private static String baseDatasetPath;
+	private Solution bestSolution;
 	
-	private static String actualDataset;
+	private Instances instances;
+	private PbilOutputWriter pow;
+	private PbilWekaWorker pww;
 	
-	public static void main(String[] args) throws Exception {
+	private String actualDataset;
+	
+	public void run() throws Exception {
 		
-		baseDatasetPath = new String("datasets/");
 		
-		//---- BuildDatasetPaths();
-		dataSets = new ArrayList<String>();
-		
-		dataSets.add("diabetes.arff");
-		dataSets.add("glass.arff");
-		dataSets.add("ionospehre.arff");
-		dataSets.add("iris.arff");
-		dataSets.add("labor.arff");
-		dataSets.add("segment-challenge.arff");
-		dataSets.add("segment-test.arff");
-		dataSets.add("soybean.arff");
-		dataSets.add("weather.arff");
-		dataSets.add("weather.nominal.arff");
-		
-		for(String dataset: dataSets) {
-			
-			actualDataset = dataset;
 			
 			//---- BuildVariables();
 		
@@ -70,7 +53,7 @@ public class Pbil {
 			
 			//---- BuildPbilWorker(dataset);
 			try {
-				pww = new PbilWekaWorker(baseDatasetPath + dataset);
+				pww = new PbilWekaWorker(instances);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -83,7 +66,7 @@ public class Pbil {
 				
 				//---- OutputStuffAboutRunning(dataset, j);
 				try {
-					pow.logDetailsAboutStep(dataset, j);
+					pow.logDetailsAboutStep(instances.relationName(), j);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -133,12 +116,14 @@ public class Pbil {
 				}
 				
 				//---- keepBestSolution();
-				if(bestSolution.getAccuracy() <= population.get(0).getAccuracy()) {
+				// TODO como é o erro, então devemos manter a solução com menor erro
+				if(bestSolution.getAccuracy() > population.get(0).getAccuracy()) {
 					bestSolution = population.get(0);
 				}
 				
 				//---- darwinLaw();
-				for(int i = 1; i <= ((int)(populationSize/ updateReason));i++) {
+				// TODO pode ocorrer que a quantidade de soluções válidas seja menor que essa quantidade
+				for(int i = 0; i < Math.min(((int)(populationSize/ updateReason)), population.size());i++) {
 					auxPopulation.add(population.get(i));
 				}
 				population.clear();
@@ -186,9 +171,41 @@ public class Pbil {
 				e.printStackTrace();
 			}
 			pow.saveAndClose();
-		}
+		
 	}
 	
+	public void setInstances (Instances instances) {
+		this.instances = instances;
+	}
+	
+	public Solution getBestSolution() {
+		return bestSolution;
+	}
+
+	public void setPopulationSize(int populationSize) {
+		this.populationSize = populationSize;
+	}
+
+	public void setGenerations(int generations) {
+		this.generations = generations;
+	}
+
+	public void setNumFolds(int numFolds) {
+		this.numFolds = numFolds;
+	}
+
+	public void setMaxSecondsPerSolution(int maxSecondsPerSolution) {
+		this.maxSecondsPerSolution = maxSecondsPerSolution;
+	}
+
+	public void setLearningRate(float learningRate) {
+		this.learningRate = learningRate;
+	}
+
+	public void setUpdateReason(int updateReason) {
+		this.updateReason = updateReason;
+	}
+
 	public void logBadSolutions() {
 		
 	/*	String badSolutionsLogPath = "results/badSolutions/";;
