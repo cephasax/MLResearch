@@ -1,13 +1,14 @@
 package br.ufrn.imd.pbil.pde;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.bc.wekabuilders.WekaBuilder;
 import br.ufrn.imd.pbil.douglas.ExecutorThread;
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
@@ -44,6 +45,7 @@ public class PbilWekaWorker{
 		List<ExecutorThread> threads = new ArrayList<ExecutorThread>();
 		
 		List<ExecutorThread> running = new ArrayList<ExecutorThread>();
+		
 		for(Solution s: solutions) {
 			ExecutorThread executorThread =  new ExecutorThread(s, fold, dataset);
 			threads.add(executorThread);
@@ -63,6 +65,7 @@ public class PbilWekaWorker{
 				ExecutorThread e = it.next();
 				boolean val = System.currentTimeMillis() - e.getInitTime() >= solutionTimeInSeconds * 1000 && !e.isFinish();
 				if(val) {
+					e.getSolution().setGoodSolution(false);
 					e.stop();
 					it.remove();
 					//System.out.println("Error for " + e.getSolution());
@@ -70,12 +73,13 @@ public class PbilWekaWorker{
 				else if(e.isFinish()){
 					it.remove();
 					success++;
+					correctSolutions.add(e.getSolution());
 					//System.out.println("Success for " + e.getSolution());
 				}
 			}
 			
 			try {
-				Thread.sleep(1500);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}		
@@ -161,10 +165,27 @@ public class PbilWekaWorker{
 	}
 
 	public static void printErrorMessage(Exception e, PossibilityKeySet pks) {
-		System.out.println("     -----     ");
-		System.out.println(pks.toString());
+		System.out.println("ERROR on " + pks.toString());
 		System.out.println(e.getMessage());
-		System.out.println("     -----     ");
+		System.out.println();
+	}
+	
+	public String bestResultWekaFormatAsString(Solution s) {
+		Classifier c = WekaBuilder.buildClassifier(s.getPossibilityKeySet());
+		Evaluation eval = null;
+		try {
+			eval = new Evaluation(dataset);
+			eval.crossValidateModel(c, dataset, fold, new Random(0));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String result = eval.toSummaryString();
+		return result;
+	}
+	
+	public void clearSolutionLists() {
+		solutions = new ArrayList<Solution>();
+		correctSolutions = new ArrayList<Solution>();
 	}
 	
 }

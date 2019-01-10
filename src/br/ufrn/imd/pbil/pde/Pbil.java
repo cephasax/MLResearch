@@ -5,18 +5,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import br.ufrn.imd.pbil.domain.Factory;
-import br.ufrn.imd.pbil.exception.InvalidParameterTypeException;
-import br.ufrn.imd.pbil.exception.InvalidSolutionExeption;
 import br.ufrn.imd.pbil.fileManipulation.PbilOutputWriter;
 
 public class Pbil {
 	
-	private static int populationSize = 10;									
+	private static int populationSize = 50;									
 	private static int maxMinutes = 15;											
-	private static int generations = 5;										
+	private static int generations = 20;										
 																			
 	private static int numFolds = 10;																				
-	private static int maxSecondsPerSolution = 10; //(maxMinutes * 60) / 12; 	
+	private static int maxSecondsPerSolution = (maxMinutes * 60) / 12; 	
 	private static String log = "PBIL-";									
 	
 	public static float learningRate = (float) 0.5;
@@ -33,194 +31,178 @@ public class Pbil {
 	private static String baseDatasetPath;
 	
 	private static String actualDataset;
-		
+	
 	public static void main(String[] args) throws Exception {
-
-		buildDatasetPaths();
+		
+		baseDatasetPath = new String("datasets/");
+		
+		//---- BuildDatasetPaths();
+		dataSets = new ArrayList<String>();
+		
+		dataSets.add("diabetes.arff");
+		dataSets.add("glass.arff");
+		dataSets.add("ionospehre.arff");
+		dataSets.add("iris.arff");
+		dataSets.add("labor.arff");
+		dataSets.add("segment-challenge.arff");
+		dataSets.add("segment-test.arff");
+		dataSets.add("soybean.arff");
+		dataSets.add("weather.arff");
+		dataSets.add("weather.nominal.arff");
 		
 		for(String dataset: dataSets) {
+			
 			actualDataset = dataset;
-			buildVariables();
-			buildPbilWorker(dataset);
+			
+			//---- BuildVariables();
+		
+			f = new Factory();
+			f.setLearningRate(learningRate);
+			population = new ArrayList<Solution>();
+			auxPopulation = new ArrayList<Solution>();
+			bestSolution = new Solution();
+			try {
+				pow = new PbilOutputWriter("results/" + log + actualDataset);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			//---- BuildPbilWorker(dataset);
+			try {
+				pww = new PbilWekaWorker(baseDatasetPath + dataset);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			pww.setFold(numFolds);
+			pww.setSolutionTime(maxSecondsPerSolution);
+			pww.setTotalTime(maxMinutes);
+			pww.setPopulationSize(populationSize);
 			
 			for(int j = 1; j <= generations; j++) {
 				
-				outputStuffAboutRunning(dataset, j);
+				//---- OutputStuffAboutRunning(dataset, j);
+				try {
+					pow.logDetailsAboutStep(dataset, j);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
-				buildSolutions();
+				//---- BuildSolutions();
+				int extraSolutions = populationSize;
+				int total = populationSize + extraSolutions;
+				for(int i = 0; i < total;i++) {
+					PossibilityKeySet s = f.buildSolutionFromWeightedDraw();
+					population.add(new Solution(s));
+				}
+								
+				//---- logPopulation();
+				pow.addContentline(" --->>>> Population <<<<---\n");
+				for(Solution s: population) {
+					pow.logSolution(s);
+				}
+				try {
+					pow.writeInFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}		
 				
-				logPopulation();
+				//---- buildAndRunWekaSolutions();
+				pww.setSolutions(population);
+				pww.convertSolutionsToWekaClassifiers();
 				
-				buildAndRunWekaSolutions();
-
-				run();
+				//---- run();
+				pww.runSolutions();
+				population = (ArrayList<Solution>) pww.getCorrectSolutions();
+								
+				//---- orderSolutions();
+				Collections.sort(population, Solution.meanErrorComparator);
 				
-				orderSolutions();
+				//---- logBadSolutions 
+				//---- to do
 				
-				logAfterOrdering();
+				//---- logAfterOrdering();
+				pow.addContentline("\n --->>>> Ordered Population - according mean Error <<<<---\n");
+				for(int i = 0; i < population.size();i++) {
+					pow.logSolutionAccuracyFirst(population.get(i));
+				}
+				try {
+					pow.writeInFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
-				keepBestSolution();
+				//---- keepBestSolution();
+				if(bestSolution.getAccuracy() <= population.get(0).getAccuracy()) {
+					bestSolution = population.get(0);
+				}
 				
-				darwinLaw();
+				//---- darwinLaw();
+				for(int i = 1; i <= ((int)(populationSize/ updateReason));i++) {
+					auxPopulation.add(population.get(i));
+				}
+				population.clear();
 				
-				logAuxPopulation();
+				//---- logAuxPopulation();
+				pow.addContentline("\n --->>>> Best Solutions stored and used to increase pvs <<<<---\n");
+				for(Solution s: auxPopulation) {
+					pow.logSolution(s);
+				}
+				try {
+					pow.writeInFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
-				updateProbabilities();
+				//---- updateProbabilities();
+				for(Solution s: auxPopulation) {
+					f.updatePossibilities(s.getPossibilityKeySet());
+				}
+				auxPopulation.clear();
 				
-				logBestSolution();
+				//---- logBestSolution();
+				pow.addContentline("\n --->>>> Best Solution for " + actualDataset + " - according mean error <<<<---\n");
+				pow.logSolutionAccuracyFirst(bestSolution);
+				try {
+					pow.writeInFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}				
 				
-				outputSave();
+				//---- outputSave();
+				try {
+					pow.saveAndClose();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				pww.clearSolutionLists();
 			}	
-		}
-
-	}
-
-	private static void run() {
-		pww.runSolutions();
-		population = (ArrayList<Solution>) pww.getCorrectSolutions();
-		
-	}
-
-	public static void buildVariables() throws InvalidParameterTypeException{
-		
-		f = new Factory();
-		f.setLearningRate(learningRate);
-		baseDatasetPath = new String("datasets/");
-		population = new ArrayList<Solution>();
-		auxPopulation = new ArrayList<Solution>();
-		bestSolution = new Solution();
-		
-		try {
-			pow = new PbilOutputWriter("results/" + log + actualDataset);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void buildPbilWorker(String dataset) {
-		try {
-			pww = new PbilWekaWorker(baseDatasetPath + dataset);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		pww.setFold(numFolds);
-		pww.setSolutionTime(maxSecondsPerSolution);
-		pww.setTotalTime(maxMinutes);
-		pww.setPopulationSize(populationSize);
-	}
-	
-	public static void buildDatasetPaths(){
-		dataSets = new ArrayList<String>();
-		dataSets.add("x.arff");
-		dataSets.add("iris.arff");
-	}
-	
-	public static void buildSolutions() {
-		int extraSolutions = (int) populationSize / 2;
-		int total = populationSize + extraSolutions;
-		PossibilityKeySet s;
-		
-		for(int i = 0; i < total;i++) {
-			s = f.buildSolutionFromWeightedDraw();
-			population.add(new Solution(s));
-		}
-	}
-	
-	public static void buildAndRunWekaSolutions() throws Exception {
-		pww.setSolutions(population);
-		pww.convertSolutionsToWekaClassifiers();
-		
-	}
-	
-	public static void outputStuffAboutRunning(String dataset, int generation) {
-		try {
-			pow.logDetailsAboutStep(dataset, generation);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void logPopulation() {
-		pow.addContentline(" >>> Population \n ");
-		
-		for(Solution s: population) {
-			pow.logSolution(s);
-		}
-
-		try {
-			pow.writeInFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-	}
-	
-	public static void outputSave() {
-		try {
+			String result = pww.bestResultWekaFormatAsString(bestSolution);
+			System.out.println(result);
+			pow.addContentline(result);
+			try {
+				pow.writeInFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			pow.saveAndClose();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 	
-	public static void orderSolutions() {
-		Collections.sort(population, Solution.AccuracyComparator);
-	}
-
-	public static void keepBestSolution() {
-		if(bestSolution.getAccuracy() <= population.get(0).getAccuracy()) {
-			bestSolution = population.get(0);
-		}
-	}
-	
-	public static void darwinLaw() {
-		for(int i = 1; i <= ((int)(populationSize/ updateReason));i++) {
-			auxPopulation.add(population.get(i));
-		}
-		population.clear();
-	}
-	
-	private static void updateProbabilities() {
-		for(Solution s: auxPopulation) {
-			f.updatePossibilities(s.getPossibilityKeySet());
-		}
-		auxPopulation.clear();
-	}
-
-	private static void logAuxPopulation() {
-		pow.addContentline("\n >>> Best Solutions stored and used to increase pvs \n ");
-		for(Solution s: auxPopulation) {
-			pow.logSolution(s);
-		}
-
-		try {
-			pow.writeInFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void logBestSolution() {
-		pow.addContentline("\n >>> Best Solution for " + actualDataset + " - accoding accuracy \n ");
-		pow.logSolutionAccuracyFirst(bestSolution);
-
-		try {
-			pow.writeInFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-	}
-	
-	public static void logAfterOrdering() {
-		pow.addContentline("\n >>> Ordered Population - according accuracy \n ");
+	public void logBadSolutions() {
 		
-		for(int i = 0; i < population.size();i++) {
-			pow.logSolutionAccuracyFirst(population.get(i));
+	/*	String badSolutionsLogPath = "results/badSolutions/";;
+		FileOutputWriter badSolutionsLogger = new FileOutputWriter(badSolutionsLogPath + "badSolutions_"+ dataset);
+		badSolutionsLogger.addContentline("------------------------------------------------------------------------");
+		badSolutionsLogger.addContentline("\n --->>>> Bad Solutions at generation: " + j);
+		badSolutionsLogger.addContentline("------------------------------------------------------------------------");
+		for(Solution s: pww.getSolutions()) {
+			if(!s.isGoodSolution()) {
+				badSolutionsLogger.addContentline(s.getPossibilityKeySet().toString());
+			}
 		}
-
-		try {
-			pow.writeInFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+		badSolutionsLogger.writeInFile();
+		badSolutionsLogger.saveAndClose();*/
 	}
+	
 }

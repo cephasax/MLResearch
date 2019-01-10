@@ -10,36 +10,38 @@ public class Solution implements Comparable<Solution> {
 
 	private String name;
 	private PossibilityKeySet possibilityKeySet;
-	private float accuracy;
+	private float meanError;
 	private Classifier classifier;
 	private List<Float> minErrorPerFold;
+	private boolean goodSolution;
 
 	public Solution(PossibilityKeySet possibilityKeySet) {
 		this.possibilityKeySet = possibilityKeySet;
 		this.name = possibilityKeySet.toString();
-		this.accuracy = new Float(0.0);
+		this.meanError = new Float(0.0);
 		minErrorPerFold = new ArrayList<Float>();
-		
+		this.goodSolution = true;
 	}
 
 	public List<Float> getMinErrorPerFold() {
 		return minErrorPerFold;
 	}
 
-	public void setMinErrorPerFold(List<Float> minErrorPerFold) {
+	public void setMeanErrorPerFold(List<Float> minErrorPerFold) {
 		float qtdFolds =0, sum=0;
 		for (Float foldMinError : minErrorPerFold) {
 			sum+=foldMinError;
 			qtdFolds++;
 		}
-		this.accuracy = sum/(float)qtdFolds; 
+		this.meanError = sum/(float)qtdFolds; 
 		this.minErrorPerFold = minErrorPerFold;
 	}
 
 	public Solution() {
 		this.possibilityKeySet = null;
 		this.name = null;
-		this.accuracy = new Float(0.0);
+		this.meanError = new Float(0.0);
+		this.goodSolution = true;
 	}
 
 	public String getName() {
@@ -59,11 +61,11 @@ public class Solution implements Comparable<Solution> {
 	}
 
 	public float getAccuracy() {
-		return accuracy;
+		return meanError;
 	}
 
-	public void setAccuracy(float accuracy) {
-		this.accuracy = accuracy;
+	public void setAccuracy(float meanError) {
+		this.meanError = meanError;
 	}
 
 	public Classifier getClassifier() {
@@ -74,16 +76,37 @@ public class Solution implements Comparable<Solution> {
 		this.classifier = classifier;
 	}
 
-	@Override
-	public int compareTo(Solution solution) {
-		return (int) (this.accuracy - solution.getAccuracy());
+	
+	public float getMeanError() {
+		return meanError;
 	}
 
-	public static Comparator<Solution> AccuracyComparator = new Comparator<Solution>() {
+	public void setMeanError(float meanError) {
+		this.meanError = meanError;
+	}
+
+	public boolean isGoodSolution() {
+		return goodSolution;
+	}
+
+	public void setGoodSolution(boolean goodSolution) {
+		this.goodSolution = goodSolution;
+	}
+
+	public void setMinErrorPerFold(List<Float> minErrorPerFold) {
+		this.minErrorPerFold = minErrorPerFold;
+	}
+
+	@Override
+	public int compareTo(Solution solution) {
+		return (int) (this.meanError - solution.getAccuracy());
+	}
+
+	public static Comparator<Solution> meanErrorComparator = new Comparator<Solution>() {
 
 		@Override
 		public int compare(Solution s1, Solution s2) {
-			return (int) ((s2.getAccuracy() * 100) - (s1.getAccuracy() * 100));
+			return (int) ((s1.getAccuracy() * 100) - (s2.getAccuracy() * 100));
 		}
 	};
 
@@ -93,7 +116,7 @@ public class Solution implements Comparable<Solution> {
 
 	@Override
 	public String toString() {
-		return "Solution [accuracy=" + accuracy + ", name=" + name + "]";
+		return "Solution [meanError=" + meanError + ", name=" + name + "]";
 	}
 
 }

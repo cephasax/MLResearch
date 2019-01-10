@@ -36,7 +36,7 @@ public class ExecutorThread extends Thread {
 
 	public void run() {
 		try {
-			s.setMinErrorPerFold((Executor.runSolution(dataset, s.getClassifier(), folds)));
+			s.setMeanErrorPerFold((Executor.runSolution(dataset, s.getClassifier(), folds)));
 			
 			System.out.println(s.getAccuracy() + " : " + s.getPossibilityKeySet().toString());
 		} catch (Exception e) {
