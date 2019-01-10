@@ -108,6 +108,7 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
+
 		if (stratify) {
 			data.stratify(numFolds);
 		}

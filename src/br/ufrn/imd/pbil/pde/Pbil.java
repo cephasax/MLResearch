@@ -117,7 +117,7 @@ public class Pbil {
 				
 				//---- keepBestSolution();
 				// TODO como é o erro, então devemos manter a solução com menor erro
-				if(bestSolution.getAccuracy() > population.get(0).getAccuracy()) {
+				if(population.get(0).getMeanError() < bestSolution.getMeanError()) {
 					bestSolution = population.get(0);
 				}
 				
@@ -162,16 +162,6 @@ public class Pbil {
 				}
 				pww.clearSolutionLists();
 			}	
-			String result = pww.bestResultWekaFormatAsString(bestSolution);
-			System.out.println(result);
-			pow.addContentline(result);
-			try {
-				pow.writeInFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			pow.saveAndClose();
-		
 	}
 	
 	public void setInstances (Instances instances) {

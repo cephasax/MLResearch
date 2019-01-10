@@ -1,5 +1,6 @@
 package br.ufrn.imd.pbil.pde;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +10,9 @@ import br.ufrn.imd.pbil.domain.Committee;
 import br.ufrn.imd.pbil.domain.Parameter;
 import br.ufrn.imd.pbil.enums.ClassifierType;
 
-public class PossibilityKeySet {
+public class PossibilityKeySet implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String key;
 	private Map<String, String> keyValuesPairs;
 	private ArrayList<PossibilityKeySet> branchClassifiers;
@@ -84,7 +86,7 @@ public class PossibilityKeySet {
 
 	@Override
 	public String toString() {
-		return "PossibilityKeySet [key=" + key + ", keyValuesPairs=" + keyValuesPairs + ", branchClassifiers="
+		return "[key=" + key + ", keyValuesPairs=" + keyValuesPairs + ", branchClassifiers="
 				+ branchClassifiers + "]";
 	}
 

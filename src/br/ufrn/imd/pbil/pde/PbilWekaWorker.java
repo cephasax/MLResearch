@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Random;
 
 import br.ufrn.imd.pbil.domain.bc.wekabuilders.WekaBuilder;
-import br.ufrn.imd.pbil.douglas.ExecutorThread;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
 
 public class PbilWekaWorker{
+	
 	private static final int maxNumThreads = 5;
 	private String base;
 	private Instances dataset;
@@ -147,8 +146,6 @@ public class PbilWekaWorker{
 
 	public static void printErrorMessage(Exception e, PossibilityKeySet pks) {
 		System.out.println("ERROR on " + pks.toString());
-		System.out.println(e.getMessage());
-		System.out.println();
 	}
 	
 	public String bestResultWekaFormatAsString(Solution s) {
