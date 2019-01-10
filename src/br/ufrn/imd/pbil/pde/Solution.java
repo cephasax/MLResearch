@@ -18,7 +18,7 @@ public class Solution implements Comparable<Solution> {
 	public Solution(PossibilityKeySet possibilityKeySet) {
 		this.possibilityKeySet = possibilityKeySet;
 		this.name = possibilityKeySet.toString();
-		this.meanError = new Float(0.0);
+		this.meanError = 1.0f;
 		minErrorPerFold = new ArrayList<Float>();
 		this.goodSolution = true;
 	}
@@ -40,7 +40,7 @@ public class Solution implements Comparable<Solution> {
 	public Solution() {
 		this.possibilityKeySet = null;
 		this.name = null;
-		this.meanError = new Float(0.0);
+		this.meanError = 1.0f;
 		this.goodSolution = true;
 	}
 

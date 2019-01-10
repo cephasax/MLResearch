@@ -15,7 +15,6 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class PbilWekaWorker{
 	private static final int maxNumThreads = 5;
 	private String base;
-	private DataSource data;
 	private Instances dataset;
 	private ArrayList<Solution> correctSolutions;
 	private ArrayList<Solution> solutions;
@@ -24,14 +23,10 @@ public class PbilWekaWorker{
 	private int totalTime;
 	private int populationSize;
 
-	public PbilWekaWorker(String base) throws Exception {
+	public PbilWekaWorker(Instances instances) throws Exception {
 		correctSolutions = new ArrayList<Solution>();
 		solutions = new ArrayList<Solution>();
-
-		this.base = base;
-		data = new DataSource(this.base);
-		dataset = data.getDataSet();
-		dataset.setClassIndex(dataset.numAttributes() - 1);
+		dataset = instances;
 	}
 
 	public void setSolutions(ArrayList<Solution> solutions) {
@@ -52,7 +47,7 @@ public class PbilWekaWorker{
 		}
 		
 		while(!(threads.isEmpty() && running.isEmpty()) && success < populationSize ) {
-			if(running.size()<maxNumThreads ) {
+			if(running.size()<maxNumThreads && !threads.isEmpty()) {
 				ExecutorThread ex = threads.get(0);
 				ex.start();
 				ex.setInitTime(System.currentTimeMillis());
@@ -72,14 +67,16 @@ public class PbilWekaWorker{
 				}
 				else if(e.isFinish()){
 					it.remove();
-					success++;
-					correctSolutions.add(e.getSolution());
+					if(e.isValid()) {
+						success++;
+						correctSolutions.add(e.getSolution());
+					}
 					//System.out.println("Success for " + e.getSolution());
 				}
 			}
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(150);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}		
@@ -102,22 +99,6 @@ public class PbilWekaWorker{
 
 	public void setCorrectSolutions(ArrayList<Solution> correctSolutions) {
 		this.correctSolutions = correctSolutions;
-	}
-
-	public String getBase() {
-		return base;
-	}
-
-	public void setBase(String base) {
-		this.base = base;
-	}
-
-	public DataSource getData() {
-		return data;
-	}
-
-	public void setData(DataSource data) {
-		this.data = data;
 	}
 
 	public Instances getDataset() {
