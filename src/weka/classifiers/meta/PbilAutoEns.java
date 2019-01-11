@@ -170,6 +170,8 @@ public class PbilAutoEns extends AbstractClassifier {
 		System.setOut(out);
 
 		System.out.println();
+		
+		pbil.logInfo(this.toString());
 		System.out.println(this);
 	}
 

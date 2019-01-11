@@ -64,15 +64,18 @@ public class Pbil {
 		pww.setTotalTime(maxMinutes);
 		pww.setPopulationSize(populationSize);
 
+		//TERMINAL - DETAILS ABOUT DATASET
+		outputDatasetInfo();
+		
 		for (performedSteps = 1; performedSteps <= generations; performedSteps++) {
-
+			
 			// ---- OutputStuffAboutRunning(dataset, j);
 			try {
 				pow.logDetailsAboutStep(instances.relationName(), performedSteps);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			
 			// ---- BuildSolutions();
 			int extraSolutions = populationSize;
 			int total = populationSize + extraSolutions;
@@ -80,6 +83,8 @@ public class Pbil {
 				PossibilityKeySet s = f.buildSolutionFromWeightedDraw();
 				population.add(new Solution(s));
 			}
+			//TERMINAL - DETAILS ABOUT POPULATION
+			outPutGenerationInfo();
 
 			// ---- logPopulation();
 			pow.addContentline(" --->>>> Population <<<<---\n");
@@ -95,14 +100,21 @@ public class Pbil {
 			// ---- buildAndRunWekaSolutions();
 			pww.setSolutions(population);
 			pww.convertSolutionsToWekaClassifiers();
-
+			
+			//TERMINAL - RUNNING INFO
+			outputRunningInfo();
+			
 			// ---- run();
 			pww.runSolutions();
 			population = (ArrayList<Solution>) pww.getCorrectSolutions();
 
 			// ---- orderSolutions();
 			Collections.sort(population, Solution.meanErrorComparator);
-
+			
+			//TERMINAL - ORDERING INFO
+			outputInfo("\nORDERING SOLUTIONS ACCORDING FITNESS \n");
+			
+			
 			// ---- logBadSolutions
 			// ---- TODO
 
@@ -121,13 +133,19 @@ public class Pbil {
 			if (population.get(0).getMeanError() < bestSolution.getMeanError()) {
 				bestSolution = population.get(0);
 			}
-
+			
+			//TERMINAL - ORDERING INFO
+			outputInfo("GETTING ONLY BEST SOLUTION ACCORDING FITNESS \n");
+			
 			// ---- darwinLaw();
 			for (int i = 0; i < Math.min(((int) (populationSize / updateReason)), population.size()); i++) {
 				auxPopulation.add(population.get(i));
 			}
 			population.clear();
 
+			//TERMINAL - DARWIN LAW
+			outputInfo("APPLYING THE DARWIN'S LAW \n");
+			
 			// ---- logAuxPopulation();
 			pow.addContentline("\n --->>>> Best Solutions kept and used to increase pvs <<<<---\n");
 			for (Solution s : auxPopulation) {
@@ -144,6 +162,10 @@ public class Pbil {
 				f.updatePossibilities(s.getPossibilityKeySet());
 			}
 			auxPopulation.clear();
+			
+			//TERMINAL - UPDATE PVs
+			outputInfo("UPDATING POSSIBILITIES WEIGHTS \n");
+			
 
 			// ---- logBestSolution();
 			pow.addContentline("\n --->>>> Best Solution for " + actualDataset + " - according mean error <<<<---\n");
@@ -153,7 +175,10 @@ public class Pbil {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+			
+			//TERMINAL - BEST SOLUTION
+			outputBestSolutionInfo();
+			
 			// ---- outputSave();
 			try {
 				pow.saveAndClose();
@@ -161,6 +186,20 @@ public class Pbil {
 				e.printStackTrace();
 			}
 			pww.clearSolutionLists();
+		}
+		
+		// ---- log PVs
+		pow.addContentline("\n --->>>> Final Probabilities dataStructure for" + actualDataset);
+		pow.addContentline(f.getFirstLevel().possibilityAsGsonString());
+		pow.addContentline(f.getBaseClassifierPossibilities().possibilityAsGsonString());
+		pow.addContentline(f.getCommitteePossibilities().possibilityAsGsonString());
+		pow.addContentline(f.getBranchClassifierPossibilities().possibilityAsGsonString());
+		
+		try {
+			pow.writeInFile();
+			pow.saveAndClose();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -204,6 +243,40 @@ public class Pbil {
 		this.pbilRandom = new PbilRandom(seed);
 	}
 
+	public void logInfo(String string) {
+		pow.addContentline(string);
+		pow.write();
+		try {
+			pow.saveAndClose();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void outputInfo(String ... strings ) {
+		for(String s: strings) {
+			pow.appendContent(s);
+		}
+		pow.write();
+	}
+	
+	public void outputDatasetInfo() {
+		pow.outputDatasetInfo(actualDataset);
+	}
+	
+	public void outPutGenerationInfo() {
+		outputInfo("POPULATION", String.valueOf(performedSteps), "BUILT", "\n");
+	}
+	
+	public void outputRunningInfo() {
+		outputInfo("RUNING POPULATION", String.valueOf(performedSteps), "OVER DATASET", "\n");
+	}
+	
+	public void outputBestSolutionInfo() {
+		pow.outputBestSolutionInfo(performedSteps, bestSolution.getPossibilityKeySet().toString());
+	}
+	
 	public void logBadSolutions() {
 		/*
 		 * String badSolutionsLogPath = "results/badSolutions/";; FileOutputWriter
