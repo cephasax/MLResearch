@@ -1,6 +1,6 @@
 package br.ufrn.imd.pbil.domain.comm.wekabuilders;
 
-import br.ufrn.imd.pbil.douglas.ClassifierBuilder;
+import br.ufrn.imd.pbil.domain.bc.wekabuilders.WekaBuilder;
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.Vote;
@@ -19,7 +19,7 @@ public class VoteWekaBuilder {
 		tags[0] = tag;
 
 		for (int i = 0; i < classifiers.length; i++) {
-			classifiers[i] = ClassifierBuilder.buildClassifier(pks.getBranchClassifiers().get(i));
+			classifiers[i] = WekaBuilder.buildClassifier(pks.getBranchClassifiers().get(i));
 		}
 
 		vote.setClassifiers(classifiers);

@@ -1,6 +1,6 @@
 package br.ufrn.imd.pbil.domain.comm.wekabuilders;
 
-import br.ufrn.imd.pbil.douglas.ClassifierBuilder;
+import br.ufrn.imd.pbil.domain.bc.wekabuilders.WekaBuilder;
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import weka.classifiers.trees.RandomForest;
 
@@ -12,7 +12,7 @@ public class RandomForestWekaBuilder {
 
 		rf.setNumIterations(Integer.parseInt(pks.getKeyValuesPairs().get("I")));
 		rf.setNumFeatures(Integer.parseInt(pks.getKeyValuesPairs().get("K")));
-		rf.setClassifier(ClassifierBuilder.buildClassifier(pks.getBranchClassifiers().get(0)));
+		rf.setClassifier(WekaBuilder.buildClassifier(pks.getBranchClassifiers().get(0)));
 
 		return rf;
 	}

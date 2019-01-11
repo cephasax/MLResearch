@@ -6,6 +6,7 @@ import br.ufrn.imd.pbil.domain.comm.wekabuilders.RandomCommitteeWekaBuilder;
 import br.ufrn.imd.pbil.domain.comm.wekabuilders.RandomForestWekaBuilder;
 import br.ufrn.imd.pbil.domain.comm.wekabuilders.StackingWekaBuilder;
 import br.ufrn.imd.pbil.domain.comm.wekabuilders.VoteWekaBuilder;
+import br.ufrn.imd.pbil.pde.Executor;
 import br.ufrn.imd.pbil.pde.PossibilityKeySet;
 import weka.classifiers.Classifier;
 
@@ -13,39 +14,66 @@ public class WekaBuilder {
 
 	public static Classifier buildClassifier(PossibilityKeySet pks) {
 
-		switch (pks.getKey()) {
+		Classifier c = null;
+		
+		Executor.enablePrint(false);
+		try {
+
+			switch (pks.getKey()) {
 			case "weka.classifiers.trees.J48":
-				return J48WekaBuilder.buildForWeka(pks);
+				c = J48WekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.trees.RandomTree":
-				return RandomTreeWekaBuilder.buildForWeka(pks);
+				c = RandomTreeWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.rules.DecisionTable":
-				return DecisionTableWekaBuilder.buildForWeka(pks);
+				c = DecisionTableWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.functions.MultilayerPerceptron":
-				return MlpWekaBuilder.buildForWeka(pks);
+				c = MlpWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.functions.SMO":
-				return SmoWekaBuilder.buildForWeka(pks);
+				c = SmoWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.lazy.IBk":
-				return IbkWekaBuilder.buildForWeka(pks);
+				c = IbkWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.lazy.KStar":
-				return KstarWekaBuilder.buildForWeka(pks);
+				c = KstarWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.bayes.NaiveBayes":
-				return NaiveBayesWekaBuilder.buildForWeka(pks);
+				c = NaiveBayesWekaBuilder.buildForWeka(pks);
+				break;
 			case "weka.classifiers.bayes.BayesNet":
-				return BayesNetWekaBuilder.buildForWeka(pks);
-			
+				c = BayesNetWekaBuilder.buildForWeka(pks);
+				break;
+	
 			case "Vote":
-				return VoteWekaBuilder.buildForWeka(pks);
+				c = VoteWekaBuilder.buildForWeka(pks);
+				break;
 			case "Stacking":
-				return StackingWekaBuilder.buildForWeka(pks);
+				c = StackingWekaBuilder.buildForWeka(pks);
+				break;
 			case "RandomCommittee":
-				return RandomCommitteeWekaBuilder.buildForWeka(pks);
+				c = RandomCommitteeWekaBuilder.buildForWeka(pks);
+				break;
 			case "RandomForest":
-				return RandomForestWekaBuilder.buildForWeka(pks);
+				c = RandomForestWekaBuilder.buildForWeka(pks);
+				break;
 			case "AdaBoost":
-				return AdaBoostWekaBuilder.buildForWeka(pks);
+				c = AdaBoostWekaBuilder.buildForWeka(pks);
+				break;
 			case "Bagging":
-				return BaggingWekaBuilder.buildForWeka(pks);
-			default :
-				return null;
+				c = BaggingWekaBuilder.buildForWeka(pks);
+				break;
 			}
-}}
+		
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			Executor.enablePrint(true);
+		}
+		
+		return c;
+	}
+}

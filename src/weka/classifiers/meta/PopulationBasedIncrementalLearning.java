@@ -112,6 +112,12 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 		if (stratify) {
 			data.stratify(numFolds);
 		}
+		
+		// TODO remove
+		//population = 4;				// population
+		//maxMinutes = 1;				// tempo de execução
+		//numSamplesUpdate = 2;
+		
 
 		Pbil pbil = new Pbil();
 		pbil.setPopulationSize(population);
@@ -121,7 +127,7 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 		pbil.setUpdateReason(population / numSamplesUpdate);
 		pbil.setNumFolds(numFolds);
 		pbil.setInstances(data);
-
+		
 		boolean[] status = { true };
 		Thread run = new Thread() {
 			public void run() {
@@ -133,16 +139,18 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 				status[0] = false;
 			}
 		};
-		run.start();
-
+		
 		long maxMinutes = this.maxMinutes * 60000;
 		timeProcessed = System.currentTimeMillis();
+		run.start();
+
 		while (System.currentTimeMillis() - timeProcessed < maxMinutes && status[0]) {
 			Thread.sleep(100);
 		}
 		if (status[0]) {
 			run.stop();
 		}
+		performedSteps = pbil.getPerformedSteps();
 		bestSet.add(pbil.getBestSolution());
 
 		PrintStream out = System.out;

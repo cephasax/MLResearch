@@ -31,6 +31,8 @@ public class Pbil {
 	private PbilOutputWriter pow;
 	private PbilWekaWorker pww;
 	
+	private int performedSteps;
+	
 	private String actualDataset;
 	
 	public void run() throws Exception {
@@ -62,11 +64,11 @@ public class Pbil {
 			pww.setTotalTime(maxMinutes);
 			pww.setPopulationSize(populationSize);
 			
-			for(int j = 1; j <= generations; j++) {
+			for(performedSteps = 1; performedSteps <= generations; performedSteps++) {
 				
 				//---- OutputStuffAboutRunning(dataset, j);
 				try {
-					pow.logDetailsAboutStep(instances.relationName(), j);
+					pow.logDetailsAboutStep(instances.relationName(), performedSteps);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -164,6 +166,10 @@ public class Pbil {
 			}	
 	}
 	
+	public int getPerformedSteps() {
+		return performedSteps;
+	}
+
 	public void setInstances (Instances instances) {
 		this.instances = instances;
 	}

@@ -102,8 +102,6 @@ public class Solution implements Comparable<Solution>, Serializable {
 		public int compare(Solution s1, Solution s2) {
 			double x = s1.getMeanError() - s2.getMeanError();
 			x = x * 100000;
-			System.out.println("compare: s1.meanError=" + s1.getMeanError() + " - s2.meanError=" + s2.getMeanError() 
-			+ " result = " + x);
 			return (int)x;
 		}
 	};
