@@ -1,0 +1,166 @@
+#RandomForest, AdaBoostM1, Bagging, RandomCommittee, Stacking, Vote (6);
+#no segundo nível ficariam os base classifiers: BayesNet, NaiveBayes, MLP, SMO, IBK, kStar, J48, DecisionTable e RamdomTree (9);
+#no terceiro nível ficariam as configurações de cada algoritmo (meta/ensenbles): homogêneo/heterogêneo, no. classificadores, etc.
+#no último nível ficariam as configurações de cada classificador base a ser usado pelos classificadores meta/ensembles
+
+# PBIL parameters configuration
+# all values must be separed by space, only space
+# format:
+# @ensemble <class>
+# 		example: @ensemble weka.classifiers.trees.RandomForest
+# 		parameters to ensemble RandomForest
+# @parameter <name> <parameter key on weka> <default value> <type> | <interval>
+#		<name> : name of parameter used only in this configuration file, for instance k
+#		<parameter key on weka> : key to specify the parameter in the configuration string on weka format, for instance "-K" to specify the k on the k-NN
+#		<default value> : default value for the parameter used in the initial solve
+#		<type> : type of the parameter. Are supported the types integer, real, boolean, string and model. All types but boolean need a interval of the values.
+#				The model type specify what the parameter has options listed previosly. Ex. the classifiers of the ensemble.
+#		<interval> : specify the interval of values:
+#				[a,b] : for integer/real type "a" and "b" are integer/real values where "a" is the minimum value and "b" the maximum value for the parameter, i.e. k <= a and k >= b
+#				{a,b,c,d} : specify a set of possible values, for instance {1,3,10}: k == 1 or k == 3 or k == 10. Can be used for all types but boolean.
+# @sub-parameter <parameter-value> <parameter key on weka> <default value> <type> | <interval>
+#		Specify the parameters of the value of the previous parameter.
+# @parameter-num-classifiers <default-integer> <interval for integer type>
+#		Specify the number of base classifiers in ensembles like vote.
+# @conditional <relational and boolean expression>
+#		Specify a conditional that can not be true for the parameters
+#		The keys of the parameters are used as variables and are supported the operators: > < <= >= != == and
+
+# list of base classifiers, must be listed after the ensembles because the ensembles use these configurations as parameters
+
+@classifier weka.classifiers.bayes.BayesNet
+	@parameter useADTree -D false boolean
+	@parameter searchAlgorithm -Q weka.classifiers.bayes.net.search.local.K2 string {weka.classifiers.bayes.net.search.local.K2, weka.classifiers.bayes.net.search.local.HillClimber, weka.classifiers.bayes.net.search.local.LAGDHillClimber, weka.classifiers.bayes.net.search.local.SimulatedAnnealing, weka.classifiers.bayes.net.search.local.TabuSearch, weka.classifiers.bayes.net.search.local.TAN}
+@end
+
+@classifier weka.classifiers.bayes.NaiveBayes
+	@parameter useSupervisedDiscretization -D false boolean
+	@parameter useKernelEstimator -K false boolean
+	@conditional -D == true and -K == true
+@end
+
+@classifier weka.classifiers.functions.MultilayerPerceptron
+	@parameter learningRate -L 0.3 double [0.1,1]
+	@parameter momentum -M 0.2 double [0.1,1]
+	@parameter nominalToBinaryFilter -B false boolean
+	@parameter hiddenLayers -H a string {a, i, o, t}
+	@parameter normalizeNumericClass -C false boolean
+	@parameter reset -R false boolean
+	@parameter decay -D false boolean
+	@parameter seed -S 1 integer {1}
+@end
+
+@classifier weka.classifiers.functions.SMO
+	@parameter c -C 1.0 double [0.5,1.5]
+	@parameter filterType -N 0 integer {0,1,2}
+	@parameter buildCalibrationModels -M false boolean
+	@parameter kernel -K weka.classifiers.functions.supportVector.NormalizedPolyKernel string {weka.classifiers.functions.supportVector.NormalizedPolyKernel, weka.classifiers.functions.supportVector.PolyKernel, weka.classifiers.functions.supportVector.Puk, weka.classifiers.functions.supportVector.RBFKernel}
+		@sub-parameter -K weka.classifiers.functions.supportVector.NormalizedPolyKernel
+			@parameter exponent -E 1 double [0.2,5]
+			@parameter useLowerOrder -L false boolean
+		@end
+		@sub-parameter -K weka.classifiers.functions.supportVector.PolyKernel
+			@parameter exponent -E 1 double [0.2,5]
+			@parameter useLowerOrder -L false boolean
+		@end
+		@sub-parameter -K weka.classifiers.functions.supportVector.Puk
+			@parameter sigma -S 1 double [0.1,10]
+			@parameter omega -O 1 double [0.1,1]
+		@end
+		@sub-parameter -K weka.classifiers.functions.supportVector.RBFKernel
+			@parameter gamma -G 0.01 double [0.0001,1]
+		@end
+@end
+
+@classifier weka.classifiers.lazy.IBk
+	@parameter meanSquared -E false boolean
+	@parameter k -K 1 integer [1,64]
+	@parameter crossValidate -X false boolean
+	@parameter distanceWeightingOneMinus -F false boolean
+	@parameter distanceWeightingOneOver -I false boolean
+	@conditional -F == true and -I == true
+@end
+
+@classifier weka.classifiers.lazy.KStar
+	@parameter globalBlend -B 20 integer [1,100]
+	@parameter entropicAutoBlend -E false boolean
+	@parameter missingMode -M a string {a,d,m,n}
+@end
+
+@classifier weka.classifiers.trees.J48
+	@parameter collapseTree -O false boolean
+	@parameter unpruned -U false boolean
+	@parameter binarySplits -B false boolean
+	@parameter useMDLcorrection -J false boolean
+	@parameter useLaplace -A false boolean
+	@parameter subtreeRaising -S false boolean
+	@parameter minNumObj -M 2 integer [1,64]
+	@parameter confidenceFactor -C 0.25 double [0.01,0.5]
+	@conditional -U == true and -S == true
+	@conditional -U == true and -C >= 0.01
+@end
+
+@classifier weka.classifiers.rules.DecisionTable
+	@parameter evaluationMeasure -E acc string {acc, rmse, mae, auc}
+	@parameter useIbk -I false boolean
+	@parameter search -S weka.attributeSelection.BestFirst string {weka.attributeSelection.BestFirst,weka.attributeSelection.GreedyStepwise}
+	@parameter crossVal -X 1 integer {1,2,3,4}
+@end
+
+@classifier weka.classifiers.trees.RandomTree
+	@parameter minNumObj -M 1 integer [1,64]
+	@parameter KValue -K 2 integer [0,32]
+	@parameter depth -depth 2 integer [0,20]
+	@parameter numFolds -N 3 integer [0,5]
+	@parameter allowUnclassifiedInstances -U false boolean
+	@conditional -K == 1
+	@conditional -depth == 1
+	@conditional -N == 1
+@end
+
+@ensemble weka.classifiers.trees.RandomForest
+	@parameter numIterations -I 10 integer [2,256]
+	@parameter numFeatures -K 2 integer [1,32]
+	@parameter maxDepth -depth 1 integer [1,20]
+@end
+
+@ensemble weka.classifiers.meta.AdaBoostM1
+	@parameter useResampling -Q false boolean
+	@parameter wheightThreshold -P 100 integer [50,100]
+	@parameter numIterations -I 10 integer [2,128]
+	@parameter seed -S 1 integer {1}
+	@parameter classifier -W weka.classifiers.bayes.NaiveBayes classifier {weka.classifiers.bayes.BayesNet, weka.classifiers.bayes.NaiveBayes, weka.classifiers.functions.MultilayerPerceptron, weka.classifiers.functions.SMO, weka.classifiers.lazy.IBk, weka.classifiers.lazy.KStar, weka.classifiers.trees.J48, weka.classifiers.rules.DecisionTable, weka.classifiers.trees.RandomTree}
+	@conditional -Q == true and -P != 100
+@end
+
+@ensemble weka.classifiers.meta.Bagging
+	@parameter bagSizePercent -P 100 integer [10,100]
+	@parameter numIterations -I 10 integer [2,128]
+	@parameter seed -S 1 integer {1}
+	@parameter calcOutOfBag -O false boolean
+	@parameter classifier -W weka.classifiers.bayes.NaiveBayes classifier {weka.classifiers.bayes.BayesNet, weka.classifiers.bayes.NaiveBayes, weka.classifiers.functions.MultilayerPerceptron, weka.classifiers.functions.SMO, weka.classifiers.lazy.IBk, weka.classifiers.lazy.KStar, weka.classifiers.trees.J48, weka.classifiers.rules.DecisionTable, weka.classifiers.trees.RandomTree}
+	@conditional -O == true and -P != 100
+@end
+
+#Base learner must implement Randomizable
+@ensemble weka.classifiers.meta.RandomCommittee
+	@parameter numIterations -I 10 integer [2,64]
+	@parameter seed -S 1 integer {1}
+	@parameter classifier -W weka.classifiers.trees.RandomTree classifier {weka.classifiers.functions.MultilayerPerceptron, weka.classifiers.trees.RandomTree}
+@end
+
+@ensemble weka.classifiers.meta.Stacking
+	@parameter numFolds -X 10 integer {10}
+	@parameter seed -S 1 integer {1}
+	@parameter-num-classifiers 1 [1,10]
+	@parameter-percent-homogeneous 0 {1.0, 0.6, 0.4, 0}
+	@parameter classifier -B weka.classifiers.bayes.NaiveBayes classifier {weka.classifiers.bayes.BayesNet, weka.classifiers.bayes.NaiveBayes, weka.classifiers.functions.MultilayerPerceptron, weka.classifiers.functions.SMO, weka.classifiers.lazy.IBk, weka.classifiers.lazy.KStar, weka.classifiers.trees.J48, weka.classifiers.rules.DecisionTable, weka.classifiers.trees.RandomTree}
+@end
+
+@ensemble weka.classifiers.meta.Vote
+	@parameter seed -S 1 integer {1}
+	@parameter combinationRule -R AVG string {AVG, PROD, MAJ, MIN, MAX, MED}
+	@parameter-num-classifiers 3 [2,10]
+	@parameter-percent-homogeneous 0 {0.6}
+	@parameter classifier -B weka.classifiers.bayes.NaiveBayes classifier {weka.classifiers.bayes.BayesNet, weka.classifiers.bayes.NaiveBayes, weka.classifiers.functions.MultilayerPerceptron, weka.classifiers.functions.SMO, weka.classifiers.lazy.IBk, weka.classifiers.lazy.KStar, weka.classifiers.trees.J48, weka.classifiers.rules.DecisionTable, weka.classifiers.trees.RandomTree}
+@end

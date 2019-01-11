@@ -1,17 +1,20 @@
-
 package weka.classifiers.meta;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
-import br.ufrn.imd.pbil.pde.Pbil;
-import br.ufrn.imd.pbil.pde.Solution;
+import br.ufrn.imd.pbil.Configuration;
+import br.ufrn.imd.pbil.Model;
+import br.ufrn.imd.pbil.Solve;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.core.Capabilities;
@@ -22,7 +25,6 @@ import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
 import weka.core.Utils;
-import weka.gui.explorer.Explorer;
 
 /**
  * Representa um classificador que efetua a otimização de hyperparameters.<br>
@@ -32,50 +34,43 @@ import weka.gui.explorer.Explorer;
  * erro percentual médio de uma base de dados fornecida.
  * 
  * @author antonino
+ * @version 1.2
  *
  */
 public class PopulationBasedIncrementalLearning extends AbstractClassifier {
-
-	/**
-	 * Main method for testing this class.
-	 *
-	 * @param argv
-	 *             should contain command line options (see setOptions)
-	 */
-	public static void main(String[] argv) {
-		Explorer.main(argv);
-		// runClassifier(new PopulationBasedIncrementalLearning(), argv);
-	}
 
 	private static final long serialVersionUID = 1L;
 
 	protected int population;
 	protected int generations;
 	protected int maxMinutes;
-	protected int maxSecondsBySolve;
 	protected int seed;
 	protected int numBestSolves;
 	protected int numSamplesUpdate;
 	protected double learningRate;
 	protected int numFolds;
 	protected boolean stratify;
+	protected String configuration;
 	protected Classifier classifier;
-	protected List<Solution> bestSet;
+	protected List<Solve> bestSet;
+	protected int maxSecondsBySolveEvaluation;
 	private double timeProcessed;
 	private int performedSteps;
 
 	public PopulationBasedIncrementalLearning() {
-		seed = 0;						// seed
-		population = 30;				// population
-		maxMinutes = 15;				// tempo de execução
-		maxSecondsBySolve = 5;
-		generations = 100;				// no. gerações
-		numBestSolves = 1;				// no. de soluções
-		learningRate = 0.1;				// taxa de aprendizagem
-		numSamplesUpdate = 15;			// tamanho do vetor de melhores individuos
-		numFolds = 10;					// no. de folds do CV
-		stratify = false;				// estratificação da base (false - defaut)
-		bestSet = new ArrayList<>();
+		seed = 123;												// seed
+		population = 50;										// population
+		maxMinutes = 15;										// tempo de execução
+		generations = 20;										// no. gerações
+		numBestSolves = 1;										// no. de soluções
+		learningRate = 0.5;										// taxa de aprendizagem
+		numSamplesUpdate = 25;									// tamanho do vetor de melhores individuos
+		numFolds = 10;											// no. de folds do CV
+		stratify = false;										// estratificação da base (false - defaut)
+		bestSet = new ArrayList<>();							// melhor solução encontrada
+		maxSecondsBySolveEvaluation = (maxMinutes * 60) /12; 	// quantidade máxima de segundos para avaliação de uma única solução, 
+																// solução é inválida se ultrapssar esse limite
+		configuration = "resources/pbil-parameters.txt";
 	}
 
 	@Override
@@ -109,57 +104,97 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
 
-		if (stratify) {
-			data.stratify(numFolds);
-		}
-		
-		// TODO remove
-		//population = 4;				// population
-		//maxMinutes = 1;				// tempo de execução
-		//numSamplesUpdate = 2;
-		
-
-		Pbil pbil = new Pbil();
-		pbil.setPopulationSize(population);
-		pbil.setMaxSecondsPerSolution(maxSecondsBySolve);
-		pbil.setGenerations(generations);
-		pbil.setLearningRate((float) learningRate);
-		pbil.setUpdateReason(population / numSamplesUpdate);
-		pbil.setNumFolds(numFolds);
-		pbil.setInstances(data);
-		
-		boolean[] status = { true };
-		Thread run = new Thread() {
-			public void run() {
-				try {
-					pbil.run();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				status[0] = false;
-			}
-		};
-		
-		long maxMinutes = this.maxMinutes * 60000;
+		classifier = null;
+		bestSet.clear();
 		timeProcessed = System.currentTimeMillis();
-		run.start();
 
-		while (System.currentTimeMillis() - timeProcessed < maxMinutes && status[0]) {
-			Thread.sleep(100);
+		Random rand = new Random(seed);
+
+		Instances training = new Instances(data);
+		training.randomize(rand);
+		if(stratify)
+			training.stratify(numFolds);
+
+		File fileConfiguration = new File(getConfiguration());
+		if (!fileConfiguration.exists() || !fileConfiguration.canRead()) {
+			throw new IllegalArgumentException("File configuration \"" + getConfiguration() + "\" can not exists or can not be read.");
 		}
-		if (status[0]) {
-			run.stop();
+
+		Configuration configuration = new Configuration(fileConfiguration);
+
+		Solve model = new Solve(configuration);
+		double[] probabilities = new double[model.encode.length];
+		Arrays.fill(probabilities, 0.5);
+
+		bestSet = new ArrayList<>(getNumBestSolves() * 2);
+		bestSet.add(model);
+
+		Solve[] population = new Solve[getPopulation()];
+		// forma os indivíduos
+		// System.out.println("... " + getPopulation());
+		
+		for (int i = 0; i < getPopulation(); i++) {
+			population[i] = new Solve(configuration);
+			population[i].randomize(rand);
 		}
-		performedSteps = pbil.getPerformedSteps();
-		bestSet.add(pbil.getBestSolution());
+
+		long maxMinutes = this.maxMinutes * 60000;
+		
+		System.out.println("-------------------------------------------------------");
+		System.out.println("Dataset: " + data.relationName());
+		
+		for (performedSteps = 0; performedSteps < getGenerations() && (System.currentTimeMillis() - timeProcessed < maxMinutes); performedSteps++) {
+			System.out.println("-------------------------------------------------------");
+			System.out.println("Generation " + (performedSteps + 1)); // TODO
+			System.out.println("-------------------------------------------------------"); // TODO
+			
+			int num_evaluated_solves = 0;
+			while(num_evaluated_solves < population.length){
+				Solve solve = population[num_evaluated_solves];
+				for (int j = 0; j < solve.encode.length; j++) {
+					solve.encode[j] = rand.nextDouble() < probabilities[j];
+				}
+				// se solução inválida?
+				if (!solve.isValid()){
+					// repara solução no Solve
+					solve.repair(rand);
+				}	
+
+				assert solve.isValid() : solve.getParans();
+				evaluateSolveWithTimeout(solve, new Instances(training), numFolds);
+				
+				if(solve.evaluated){
+					num_evaluated_solves++;
+					System.out.println(num_evaluated_solves + ": " + solve); // TODO
+				}
+					
+				if ((System.currentTimeMillis() - timeProcessed >= maxMinutes)) {
+					break;
+				}
+			}
+
+			Arrays.sort(population);
+			updateBestSolves(population, bestSet);
+
+			for (int j = 0; j < getNumSamplesUpdate(); j++) {
+				Solve solve = population[j];
+				for (int k = 0; k < probabilities.length; k++) {
+					probabilities[k] = probabilities[k] * (1.0 - getLearningRate()) + (solve.encode[k] ? getLearningRate() : 0);
+				}
+			}
+
+			if (population[0].evaluated && population[population.length - 1].evaluated && population[0].equals(population[population.length - 1])) {
+				// if sorted array then all solves are equals
+				break;
+			}
+		}
 
 		PrintStream out = System.out;
 		System.setOut(new PrintStream(new OutputStream() {
-			public void write(int b) throws IOException {
-			}
+			public void write(int b) throws IOException {}
 		}));
 		try {
-			classifier = pbil.getBestSolution().getClassifier();
+			classifier = bestSet.get(0).getClassifier();
 			classifier.buildClassifier(data);
 			timeProcessed = (System.currentTimeMillis() - timeProcessed) / 60000.0;
 		} catch (Throwable e) {
@@ -167,15 +202,61 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 			throw e;
 		}
 		System.setOut(out);
-
+		
 		System.out.println();
 		System.out.println(this);
+	}
+
+	private void evaluateSolveWithTimeout(Solve solve, Instances train, int numFolds) {
+		PrintStream out = System.out;
+		System.setOut(new PrintStream(new OutputStream() {
+			public void write(int b) throws IOException {}
+		}));
+		
+		Thread thread = new Thread(){
+			public void run(){
+				try {
+					solve.evaluate(train, numFolds);
+				} catch(Throwable e){}
+			}
+		};
+		thread.start();
+		
+		long timeout = (long) Math.min(maxSecondsBySolveEvaluation * 1000, maxMinutes * 60000 - (System.currentTimeMillis() - timeProcessed));
+		timeout = Math.max(timeout, 0);
+		
+		try {
+			thread.join(timeout);
+		} catch (InterruptedException e) {}
+		
+		thread.stop();
+		
+		System.setOut(out);
+	}
+
+	// bestSet is not empty
+	private void updateBestSolves(Solve[] sortedPopulation, List<Solve> bestSet) {
+		int index = 0;
+		for (Solve solve : sortedPopulation) {
+			while (index < bestSet.size() && bestSet.get(index).compareTo(solve) <= 0) {
+				index++;
+			}
+			if (index < getNumBestSolves()) {
+				bestSet.add(index, solve.clone());
+				if (bestSet.size() > getNumBestSolves()) {
+					bestSet.remove(bestSet.size() - 1);
+				}
+			}
+		}
+	}
+	
+	public List<Solve> getBestSolves() {
+		return bestSet;
 	}
 
 	/**
 	 * Recupera o tempo total utilizado no processo de otimização mais o tempo necessário para treinar o modelo
 	 * escolhido.
-	 * 
 	 * @return O tempo utilziado em ms.
 	 */
 	public double getPerformedTime() {
@@ -184,7 +265,6 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 
 	/**
 	 * Recupera a quantiade de iterações utilizadas no processo de otimização.
-	 * 
 	 * @return A quantidade de iterações.
 	 */
 	public int getPerformedGenerations() {
@@ -227,6 +307,19 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 
 		return result1;
 	}
+	
+	public String maxSecondsBySolveEvaluationTipText() {
+		return "The maximum seconds to evaluate a single solve.";
+	}
+
+	public void setMaxSecondsBySolveEvaluation(int seconds) {
+		assert seconds >= 0;
+		this.maxSecondsBySolveEvaluation = seconds;
+	}
+
+	public int getMaxSecondsBySolveEvaluation() {
+		return maxSecondsBySolveEvaluation;
+	}
 
 	/**
 	 * Returns the tip text for this property.
@@ -256,18 +349,6 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 
 	public int getTimeLimit() {
 		return maxMinutes;
-	}
-
-	public String timeLimitBySolveTipText() {
-		return "The maximum time in seconds by solve evaluation. The execution may exceed that limit because of the training of the model selected by the PBIL.";
-	}
-
-	public void setTimeLimitBySolve(int seconds) {
-		this.maxSecondsBySolve = seconds;
-	}
-
-	public int getTimeLimitBySolve() {
-		return maxSecondsBySolve;
 	}
 
 	public String numSamplesUpdateTipText() {
@@ -309,15 +390,14 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 	public String numFoldsTipText() {
 		return "Number of folds used for cross validation applied in each model evaluation.";
 	}
-
+	
 	public void setNumFolds(int numFolds) {
 		this.numFolds = numFolds;
 	}
-
+	
 	public int getNumFolds() {
 		return numFolds;
 	}
-
 	public String stratifyInstancesTipText() {
 		return "Stratify the instances used in the model evaluation";
 	}
@@ -354,6 +434,18 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 		return generations;
 	}
 
+	public String configurationTipText() {
+		return "Path to file with configuration of allowed ensembles, classifiers and applicable parameters for each one.";
+	}
+
+	public void setConfiguration(String configuration) {
+		this.configuration = configuration;
+	}
+
+	public String getConfiguration() {
+		return configuration;
+	}
+
 	/**
 	 * All capabilities are enabled.
 	 * The capabilities are loaded dinamically to the current model in optimization process.
@@ -379,46 +471,45 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 
 		Vector<Option> newVector = new Vector<Option>(9);
 		// -N
-		newVector.addElement(new Option("\tThe population size, number of samples to produce per generation.\n"
-				+ "\t(Default = 30)", "N", 1, "-N <number of samples>"));
-
+		newVector.addElement(new Option("\tThe population size, number of samples to produce per generation.\n" 
+		+ "\t(Default = 30)", "N", 1, "-N <number of samples>"));
+		
 		// -U
-		newVector.addElement(new Option("\tThe number of vectors in the current population which are used to update the probability vector.\n"
-				+ "\t(Default = 15)", "U", 1, "-U <number of samples>"));
-
+		newVector.addElement(new Option("\tThe number of vectors in the current population which are used to update the probability vector.\n" 
+		+ "\t(Default = 15)", "U", 1, "-U <number of samples>"));
+		
 		// -L
 		newVector.addElement(new Option("\tThe learning rate.\n" + "\t(Default = 0.1)", "L", 1, "-L <learning rate>"));
-
+		
 		// -I
-		newVector.addElement(new Option("\tNumber of iterations to allow learning. Use 0 for ilimited iterations (in this case set the maximum minutes).\n"
-				+ "\t(Default = 500)", "I", 1, "-I <number of samples>"));
-
+		newVector.addElement(new Option("\tNumber of iterations to allow learning. Use 0 for ilimited iterations (in this case set the maximum minutes).\n" 
+		+ "\t(Default = 500)", "I", 1, "-I <number of samples>"));
+		
 		// -C
-		newVector.addElement(new Option("\tPath to file with configuration of allowed ensembles, classifiers and applicable parameters for each one.\n"
-				+ "\t(Default = ./pbil-parameters.txt)", "C", 1, "-C <file>"));
-
+		newVector.addElement(new Option("\tPath to file with configuration of allowed ensembles, classifiers and applicable parameters for each one.\n" 
+		+ "\t(Default = ./resources/pbil-parameters.txt)", "C", 1, "-C <file>"));
+		
 		// -P
 		newVector.addElement(new Option("\tThe percent of dataset used for training the PBIL. Value between 0 and 1 (exclusive values), i.e. the values "
-				+ "must be bigger than 0 and minor than 1.\n"
+				+ "must be bigger than 0 and minor than 1.\n" 
 				+ "\t(Default = 0.66 (If is 25% for validation then 0.66 results in 25% for test and 50% for training))", "P", 1, "-P <value>"));
-
+		
 		// -S
-		newVector.addElement(new Option("\tSeed for generation of pseudo-random numbers. Must be natural a value.\n"
-				+ "\t(Default = 0)", "S", 0, "-S <value>"));
-
+		newVector.addElement(new Option("\tSeed for generation of pseudo-random numbers. Must be natural a value.\n" 
+		+ "\t(Default = 0)", "S", 1, "-S <value>"));
+		
+		// -M
+		newVector.addElement(new Option("\tThe maximum seconds to evaluate a single solve. Must be natural a value.\n" 
+		+ "\t(Default = 75)", "M", 1, "-M <value>"));
+		
 		// -R
 		newVector.addElement(new Option("\tThe number of best solves to be reported. Must be bigger than 0. "
 				+ "The output will have util the specified number of best solves.\n" + "\t(Default = 1)", "R", 1, "-R <value>"));
-
+		
 		// -T
-		newVector.addElement(new Option("\tThe maximum time in minutes for execution of PBIL. The execution may exceed that limit because of "
-				+ "the training of the model selected by the PBIL. Use 0 for ilimited time (in this case set the generations).\n"
+		newVector.addElement(new Option("\tThe maximum time in ms for execution of PBIL. The execution may exceed that limit because of "
+				+ "the training of the model selected by the PBIL. Use 0 for ilimited time (in this case set the generations).\n" 
 				+ "\t(Default = 5 min)", "T", 1, "-T <minutes>"));
-
-		// -M
-		newVector.addElement(new Option("\tThe maximum time in seconds for solve evaluation. The execution may exceed that limit because of "
-				+ "the training of the model selected by the PBIL.\n"
-				+ "\t(Default = 5 seconds)", "T", 1, "-M <seconds>"));
 
 		newVector.addAll(Collections.list(super.listOptions()));
 
@@ -462,9 +553,15 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 	 * </pre>
 	 * 
 	 * <pre>
+	 *  -M
+	 *  The maximum seconds to evaluate a single solve. Must be natural a value.
+	 *  (default = 75 and -I &gt; 0)
+	 * </pre>
+	 * 
+	 * <pre>
 	 *  -C
 	 *  Path to file with configuration of allowed ensembles, classifiers and applicable parameters for each one
-	 *  (Default = ./pbil-parameters.txt and the file exists)
+	 *  (Default = ./resources/pbil-parameters.txt and the file exists)
 	 * </pre>
 	 * 
 	 * <pre>
@@ -494,9 +591,9 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 	 * <!-- options-end -->
 	 *
 	 * @param options
-	 *                the list of options as an array of strings
+	 *        the list of options as an array of strings
 	 * @throws Exception
-	 *                   if an option is not supported
+	 *         if an option is not supported
 	 */
 	public void setOptions(String[] options) throws Exception {
 
@@ -516,24 +613,12 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 		if (timeString.length() != 0) {
 			int time = Integer.parseInt(timeString);
 			if (time < 0) {
-				throw new Exception("Invalid maximum minutes " + time + ". Maximum minutes must be a natural value.");
+				throw new Exception("Invalid maximum minutes " + population + ". Maximum minutes must be a natural value.");
 			} else {
 				setTimeLimit(time);
 			}
 		} else {
 			setTimeLimit(15);
-		}
-
-		String timeStringBySolve = Utils.getOption('M', options);
-		if (timeStringBySolve.length() != 0) {
-			int time = Integer.parseInt(timeString);
-			if (time < 0) {
-				throw new Exception("Invalid maximum seconds " + time + ". Maximum seconds must be a natural value.");
-			} else {
-				setTimeLimitBySolve(time);
-			}
-		} else {
-			setTimeLimitBySolve(5);
 		}
 
 		String updateString = Utils.getOption('U', options);
@@ -572,18 +657,33 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 			setGenerations(500);
 		}
 
+		String configurationString = Utils.getOption('C', options);
+		if (configurationString.length() != 0) {
+			setConfiguration("");
+			File conf = new File(configurationString);
+			if (!conf.exists()) {
+				throw new Exception("The File " + configurationString + " does not exist.");
+			} else if (!conf.canRead()) {
+				throw new Exception("The File " + configurationString + " can not be read.");
+			} else {
+				setConfiguration(configurationString);
+			}
+		} else {
+			throw new Exception("Invalid Configuration File.");
+		}
+
 		String numFoldsString = Utils.getOption("cv", options);
 		if (numFoldsString.length() != 0) {
 			int numFolds = Integer.parseInt(numFoldsString);
 			if (numFolds <= 1) {
-				throw new Exception("Invalid number of folds " + numFolds + ". Must be greater than 1.");
+				throw new Exception("Invalid number of folds "+ numFolds +". Must be greater than 1.");
 			} else {
 				setNumFolds(numFolds);
 			}
 		} else {
 			setNumFolds(10);
 		}
-
+		
 		setStratify(Utils.getFlag("stratify", options));
 
 		String sampleSeed = Utils.getOption('S', options);
@@ -596,6 +696,18 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 			}
 		} else {
 			setSeed(0);
+		}
+		
+		String sampleMaxSecondsEvaluation = Utils.getOption('M', options);
+		if (sampleMaxSecondsEvaluation.length() != 0) {
+			int maxSeconds = Integer.parseInt(sampleMaxSecondsEvaluation);
+			if (maxSeconds < 0) {
+				throw new Exception("Invalid value of max seconds by solve evaluation " + maxSeconds + ". Value of seed must be a natural value (value >= 0).");
+			} else {
+				setMaxSecondsBySolveEvaluation(maxSeconds);
+			}
+		} else {
+			setMaxSecondsBySolveEvaluation(75);
 		}
 
 		String sampleOutput = Utils.getOption('R', options);
@@ -640,13 +752,19 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 		options.add(Integer.toString(getTimeLimit()));
 		options.add("-R");
 		options.add(Integer.toString(getNumBestSolves()));
+		if (configuration.length() > 0) {
+			options.add("-C");
+			options.add(configuration);
+		}
 		options.add("-cv");
 		options.add(Integer.toString(getNumFolds()));
-		if (getStratify()) {
+		if(getStratify()){
 			options.add("-stratify");
 		}
 		options.add("-S");
 		options.add(Integer.toString(getSeed()));
+		options.add("-M");
+		options.add(Integer.toString(getMaxSecondsBySolveEvaluation()));
 		Collections.addAll(options, super.getOptions());
 		return options.toArray(new String[0]);
 	}
@@ -662,18 +780,30 @@ public class PopulationBasedIncrementalLearning extends AbstractClassifier {
 		str.append("\tSamples Used for Update:        " + getNumSamplesUpdate() + "\n");
 		str.append("\tGenerations:                    " + getGenerations() + "\n");
 		str.append("\tMaximum Time (m):               " + getTimeLimit() + "\n");
+		str.append("\tMax Seconds By Sove Evaluation: " + getMaxSecondsBySolveEvaluation() + "\n");
 		str.append("\tSeed:                           " + getSeed() + "\n");
 		str.append("\tNum Folds for Cross-Validation: " + getNumFolds() + "\n");
 		str.append("\tStratify Instances:             " + getStratify() + "\n");
+		str.append("\tConfiguration File:             " + getConfiguration() + " \n");
 		str.append("\tNumber of Best Solves:          " + getNumBestSolves() + "\n");
 		str.append(String.format("\n\tTime Processed (m): %.4f", timeProcessed));
-		str.append("\n\tPerfomed Steps: " + performedSteps + " generations\n\n");
+		str.append("\n\tPerfomed Steps: " + (performedSteps + 1) + " generations\n\n");
 		str.append("\tBest Solves:\n");
-		for (Solution solve : bestSet) {
+		for (Solve solve : bestSet) {
 			str.append("\t\t" + solve + "\n");
 		}
-		str.append("\nCurrent Model: \"" + bestSet.get(0) + "\"\n\n");
+		str.append("\nCurrent Model: \"" + bestSet.get(0).getParans() + "\"\n\n");
 
 		return str.toString();
+	}
+
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param argv
+	 *        should contain command line options (see setOptions)
+	 */
+	public static void main(String[] argv) {
+		runClassifier(new PopulationBasedIncrementalLearning(), argv);
 	}
 }
