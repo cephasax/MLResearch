@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
+import br.ufrn.imd.Measures;
+import br.ufrn.imd.pbil.Model;
 import br.ufrn.imd.pbilautoens.Pbil;
 import br.ufrn.imd.pbilautoens.Solution;
 import weka.classifiers.AbstractClassifier;
@@ -23,7 +26,6 @@ import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
 import weka.core.Utils;
 import weka.gui.GUIChooser;
-import weka.gui.explorer.Explorer;
 
 /**
  * Representa um classificador que efetua a otimização de hyperparameters.<br>
@@ -111,15 +113,10 @@ public class PBIL_Auto_Ens_V2 extends AbstractClassifier {
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
 
+		classifier = null;
 		if (stratify) {
 			data.stratify(numFolds);
 		}
-		
-		// TODO remove
-		//population = 4;				// population
-		//maxMinutes = 1;				// tempo de execução
-		//numSamplesUpdate = 2;
-		
 
 		Pbil pbil = new Pbil();
 		pbil.setPopulationSize(population);

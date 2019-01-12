@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+import br.ufrn.imd.Measures;
 import br.ufrn.imd.pbil.Configuration;
 import br.ufrn.imd.pbil.Model;
 import br.ufrn.imd.pbil.Solve;
@@ -24,8 +25,8 @@ import weka.core.Option;
 import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
-import weka.gui.GUIChooser;
 import weka.core.Utils;
+import weka.gui.GUIChooser;
 
 /**
  * Representa um classificador que efetua a otimização de hyperparameters.<br>

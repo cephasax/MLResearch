@@ -130,7 +130,8 @@ public class Pbil {
 			}
 
 			// ---- keepBestSolution();
-			if (population.get(0).getMeanError() < bestSolution.getMeanError()) {
+			// !population.isEmpty(): case in that all evaluated solves are invalid
+			if (!population.isEmpty() && population.get(0).getMeanError() < bestSolution.getMeanError()) {
 				bestSolution = population.get(0);
 			}
 			
