@@ -67,7 +67,7 @@ public class Pbil {
 		//TERMINAL - DETAILS ABOUT DATASET
 		outputDatasetInfo();
 		
-		for (performedSteps = 1; performedSteps <= generations; performedSteps++) {
+		for (performedSteps = 0; performedSteps < generations; performedSteps++) {
 			
 			// ---- OutputStuffAboutRunning(dataset, j);
 			try {
