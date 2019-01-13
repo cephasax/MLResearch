@@ -71,7 +71,7 @@ public class Pbil {
 		//TERMINAL - DETAILS ABOUT DATASET
 		outputDatasetInfo();
 		
-		for (performedSteps = 1; performedSteps <= generations; performedSteps++) {
+		for (performedSteps = 0; performedSteps < generations; performedSteps++) {
 			
 			// ---- OutputStuffAboutRunning(dataset, j);
 			try {
@@ -133,7 +133,8 @@ public class Pbil {
 			}
 
 			// ---- keepBestSolution();
-			if (population.get(0).getMeanError() < bestSolution.getMeanError() && population.size() >= 0) {
+			// !population.isEmpty(): case in that all evaluated solves are invalid
+			if (!population.isEmpty() && population.get(0).getMeanError() < bestSolution.getMeanError()) {
 				bestSolution = population.get(0);
 			}
 			

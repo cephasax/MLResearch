@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Random;
 
 import br.ufrn.imd.pbil.Solve;
-import weka.classifiers.meta.PopulationBasedIncrementalLearning;
+import weka.classifiers.meta.PBIL_Auto_Ens_V1;
 import weka.core.Instances;
 import weka.core.Utils;
 
@@ -56,7 +56,7 @@ public class RunPBIL01WithTestBase {
 	}
 
 	private static void run(File output, String base_train, String base_test, int popSize, int popUpdate, double learning, int iterations, int seed) throws FileNotFoundException {
-		final PopulationBasedIncrementalLearning classifier = new PopulationBasedIncrementalLearning();
+		final PBIL_Auto_Ens_V1 classifier = new PBIL_Auto_Ens_V1();
 		classifier.setTimeLimit(maxTime);
 		classifier.setNumFolds(numFoldsFitness);
 		classifier.setGenerations(iterations);

@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
+import br.ufrn.imd.Measures;
+import br.ufrn.imd.pbil.Model;
 import br.ufrn.imd.pbilautoens.Pbil;
 import br.ufrn.imd.pbilautoens.Solution;
 import weka.classifiers.AbstractClassifier;
@@ -22,7 +25,7 @@ import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Field;
 import weka.core.TechnicalInformation.Type;
 import weka.core.Utils;
-import weka.gui.explorer.Explorer;
+import weka.gui.GUIChooser;
 
 /**
  * Representa um classificador que efetua a otimização de hyperparameters.<br>
@@ -34,7 +37,7 @@ import weka.gui.explorer.Explorer;
  * @author antonino
  *
  */
-public class PbilAutoEns extends AbstractClassifier {
+public class PBIL_Auto_Ens_V2 extends AbstractClassifier {
 
 	/**
 	 * Main method for testing this class.
@@ -43,7 +46,8 @@ public class PbilAutoEns extends AbstractClassifier {
 	 *             should contain command line options (see setOptions)
 	 */
 	public static void main(String[] argv) {
-		Explorer.main(argv);
+		GUIChooser.main(argv);
+		//Explorer.main(argv);
 		// runClassifier(new PopulationBasedIncrementalLearning(), argv);
 	}
 
@@ -64,12 +68,12 @@ public class PbilAutoEns extends AbstractClassifier {
 	private double timeProcessed;
 	private int performedSteps;
 
-	public PbilAutoEns() {
+	public PBIL_Auto_Ens_V2() {
 		seed = 0;						// seed
 		population = 30;				// population
 		maxMinutes = 15;				// tempo de execução
-		maxSecondsBySolve = 5;
-		generations = 100;				// no. gerações
+		maxSecondsBySolve = 15;
+		generations = 20;				// no. gerações
 		numBestSolves = 1;				// no. de soluções
 		learningRate = 0.1;				// taxa de aprendizagem
 		numSamplesUpdate = 15;			// tamanho do vetor de melhores individuos
@@ -109,15 +113,10 @@ public class PbilAutoEns extends AbstractClassifier {
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
 
+		classifier = null;
 		if (stratify) {
 			data.stratify(numFolds);
 		}
-		
-		// TODO remove
-		//population = 4;				// population
-		//maxMinutes = 1;				// tempo de execução
-		//numSamplesUpdate = 2;
-		
 
 		Pbil pbil = new Pbil();
 		pbil.setPopulationSize(population);
@@ -394,16 +393,7 @@ public class PbilAutoEns extends AbstractClassifier {
 
 		// -I
 		newVector.addElement(new Option("\tNumber of iterations to allow learning. Use 0 for ilimited iterations (in this case set the maximum minutes).\n"
-				+ "\t(Default = 500)", "I", 1, "-I <number of samples>"));
-
-		// -C
-		newVector.addElement(new Option("\tPath to file with configuration of allowed ensembles, classifiers and applicable parameters for each one.\n"
-				+ "\t(Default = ./pbil-parameters.txt)", "C", 1, "-C <file>"));
-
-		// -P
-		newVector.addElement(new Option("\tThe percent of dataset used for training the PBIL. Value between 0 and 1 (exclusive values), i.e. the values "
-				+ "must be bigger than 0 and minor than 1.\n"
-				+ "\t(Default = 0.66 (If is 25% for validation then 0.66 results in 25% for test and 50% for training))", "P", 1, "-P <value>"));
+				+ "\t(Default = 20)", "I", 1, "-I <number of samples>"));
 
 		// -S
 		newVector.addElement(new Option("\tSeed for generation of pseudo-random numbers. Must be natural a value.\n"
@@ -413,15 +403,16 @@ public class PbilAutoEns extends AbstractClassifier {
 		newVector.addElement(new Option("\tThe number of best solves to be reported. Must be bigger than 0. "
 				+ "The output will have util the specified number of best solves.\n" + "\t(Default = 1)", "R", 1, "-R <value>"));
 
-		// -T
-		newVector.addElement(new Option("\tThe maximum time in minutes for execution of PBIL. The execution may exceed that limit because of "
-				+ "the training of the model selected by the PBIL. Use 0 for ilimited time (in this case set the generations).\n"
-				+ "\t(Default = 5 min)", "T", 1, "-T <minutes>"));
-
 		// -M
 		newVector.addElement(new Option("\tThe maximum time in seconds for solve evaluation. The execution may exceed that limit because of "
 				+ "the training of the model selected by the PBIL.\n"
-				+ "\t(Default = 5 seconds)", "T", 1, "-M <seconds>"));
+				+ "\t(Default = 15 seconds)", "T", 1, "-M <seconds>"));
+		
+		// -T
+		newVector.addElement(new Option("\tThe maximum time in minutes for execution of PBIL. The execution may exceed that limit because of "
+				+ "the training of the model selected by the PBIL. Use 0 for ilimited time (in this case set the generations).\n"
+				+ "\t(Default = 15 min)", "T", 1, "-T <minutes>"));
+	
 
 		newVector.addAll(Collections.list(super.listOptions()));
 
@@ -529,14 +520,14 @@ public class PbilAutoEns extends AbstractClassifier {
 
 		String timeStringBySolve = Utils.getOption('M', options);
 		if (timeStringBySolve.length() != 0) {
-			int time = Integer.parseInt(timeString);
+			int time = Integer.parseInt(timeStringBySolve);
 			if (time < 0) {
 				throw new Exception("Invalid maximum seconds " + time + ". Maximum seconds must be a natural value.");
 			} else {
 				setTimeLimitBySolveInSeconds(time);
 			}
 		} else {
-			setTimeLimitBySolveInSeconds(5);
+			setTimeLimitBySolveInSeconds(15);
 		}
 
 		String updateString = Utils.getOption('U', options);
@@ -548,7 +539,7 @@ public class PbilAutoEns extends AbstractClassifier {
 				setNumSamplesUpdate(samples);
 			}
 		} else {
-			setNumSamplesUpdate(Math.max(1, getPopulation() / 2));
+			setNumSamplesUpdate(Math.min(15, getPopulation() / 2));
 		}
 
 		String learningRateString = Utils.getOption('L', options);
@@ -572,7 +563,7 @@ public class PbilAutoEns extends AbstractClassifier {
 				setGenerations(generations);
 			}
 		} else {
-			setGenerations(500);
+			setGenerations(20);
 		}
 
 		String numFoldsString = Utils.getOption("cv", options);
@@ -614,13 +605,12 @@ public class PbilAutoEns extends AbstractClassifier {
 		}
 
 		if (getGenerations() == 0 && getTimeLimit() == 0) {
-			setGenerations(500);
+			setGenerations(20);
 			setTimeLimit(15);
 			throw new Exception("Invalid stop condition, the maximum minutes or the number of generations must be bigger than 0.");
 		}
 
 		super.setOptions(options);
-
 		Utils.checkForRemainingOptions(options);
 	}
 
@@ -643,13 +633,16 @@ public class PbilAutoEns extends AbstractClassifier {
 		options.add(Integer.toString(getTimeLimit()));
 		options.add("-R");
 		options.add(Integer.toString(getNumBestSolves()));
+		options.add("-S");
+		options.add(Integer.toString(getSeed()));
+		options.add("-M");
+		options.add(Integer.toString(getTimeLimitBySolveInSeconds()));
+		
 		options.add("-cv");
 		options.add(Integer.toString(getNumFolds()));
 		if (getStratify()) {
 			options.add("-stratify");
 		}
-		options.add("-S");
-		options.add(Integer.toString(getSeed()));
 		Collections.addAll(options, super.getOptions());
 		return options.toArray(new String[0]);
 	}
