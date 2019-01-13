@@ -173,6 +173,10 @@ public class PBIL_Auto_Ens_V2 extends AbstractClassifier {
 		pbil.logInfo(this.toString());
 		System.out.println(this);
 	}
+	
+	public Solution getBestSolution () {
+		return bestSet.get(0);
+	}
 
 	/**
 	 * Recupera o tempo total utilizado no processo de otimização mais o tempo necessário para treinar o modelo
