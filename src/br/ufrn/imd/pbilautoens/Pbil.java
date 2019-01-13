@@ -64,6 +64,10 @@ public class Pbil {
 		pww.setTotalTime(maxMinutes);
 		pww.setPopulationSize(populationSize);
 
+		//prevent error with empty bestSolution
+		bestSolution = new Solution();
+		
+		
 		//TERMINAL - DETAILS ABOUT DATASET
 		outputDatasetInfo();
 		
@@ -114,7 +118,6 @@ public class Pbil {
 			//TERMINAL - ORDERING INFO
 			outputInfo("\nORDERING SOLUTIONS ACCORDING FITNESS \n");
 			
-			
 			// ---- logBadSolutions
 			// ---- TODO
 
@@ -130,7 +133,7 @@ public class Pbil {
 			}
 
 			// ---- keepBestSolution();
-			if (population.get(0).getMeanError() < bestSolution.getMeanError()) {
+			if (population.get(0).getMeanError() < bestSolution.getMeanError() && population.size() >= 0) {
 				bestSolution = population.get(0);
 			}
 			
