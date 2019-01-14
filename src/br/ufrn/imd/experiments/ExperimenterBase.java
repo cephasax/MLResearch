@@ -35,6 +35,10 @@ class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 }
 
 public class ExperimenterBase {
+	
+	public static final String [] set1 = {"./resources/datasets/Ecoli.arff","./resources/datasets/Sonar.arff","./resources/datasets/KR-vs-KP.arff","./resources/datasets/Nursery.arff","./resources/datasets/Secom.arff"};
+	public static final String [] set2 = {"./resources/datasets/Car.arff","./resources/datasets/GermanCredit.arff","./resources/datasets/Wine.arff","./resources/datasets/Waveform.arff","./resources/datasets/Madelon.arff"};
+	public static final String [] set3 = {"./resources/datasets/Yeast.arff","./resources/datasets/Abalone.arff","./resources/datasets/Arrhythmia.arff","./resources/datasets/Semeion.arff","./resources/datasets/Adult.arff"};
 
 	public int maxMinutes = 1; 						// in minutes
 	public int maxSecondsBySolve = 5; 						// in seconds
@@ -48,19 +52,24 @@ public class ExperimenterBase {
 			"./resources/datasets/Ecoli.arff",
 			"./resources/datasets/Car.arff",
 			"./resources/datasets/Yeast.arff",
+			
 			"./resources/datasets/Sonar.arff",
 			"./resources/datasets/GermanCredit.arff",
 			"./resources/datasets/Abalone.arff",
+			
 			"./resources/datasets/KR-vs-KP.arff",
 			"./resources/datasets/Wine.arff",
 			"./resources/datasets/Arrhythmia.arff",
+			
 			"./resources/datasets/Semeion.arff",
 			"./resources/datasets/Waveform.arff",
 			"./resources/datasets/Nursery.arff",
+			
 			"./resources/datasets/Adult.arff",
 			"./resources/datasets/Madelon.arff",
 			"./resources/datasets/Secom.arff"
 	};
+	
 	public String output_name = "exp";	// nome do arquivo csv
 
 	private static int numFoldsFitness = 10;
@@ -139,11 +148,11 @@ public class ExperimenterBase {
 		double error = 0;
 		double steps = 0;
 		double time = 0;
-		String bestConfiguration = null;
-		int runningFold = 0;
 		double minError = 0;
-		Measures measures = null;
+		double [] measures = null;
+		String bestConfiguration = null;
 
+		int fold = 0;
 		AbstractClassifier classifier = auto.classifier();
 		try {
 			final Random rand = new Random(seed);
@@ -151,11 +160,10 @@ public class ExperimenterBase {
 			instances.setClassIndex(instances.numAttributes() - 1);
 			instances.randomize(rand);
 			instances.stratify(numFoldsEvaluate);
-			int[][] matrix = new int[instances.numClasses()][instances.numClasses()];
 
-			for (int fold = 0; fold < numFoldsEvaluate; fold++) {
-				System.out.println("Running Fold " + fold + " for " + basePath); // TODO remove print
-				runningFold = fold;
+			for (fold = 0; fold < numFoldsEvaluate; fold++) {
+				int[][] matrix = new int[instances.numClasses()][instances.numClasses()];
+				System.out.print("Running Fold " + fold + " for " + basePath + " :: ");
 
 				// chamada do 10 fold/CV
 				classifier.buildClassifier(instances.trainCV(numFoldsEvaluate, fold));
@@ -181,11 +189,22 @@ public class ExperimenterBase {
 				}
 
 				System.out.format("Fold Execution %d - Error %.4f\n", fold, (miss / (double) test.numInstances()));
+				
+				if(measures == null) {
+					measures = new Measures(instances, matrix).toArray();
+				} else {
+					double [] mNew = new Measures(instances, matrix).toArray();
+					for(int i=0;i<measures.length;i++) {
+						measures[i] += mNew[i];
+					}
+				}
 			}
 			error = error / (double) numFoldsEvaluate;
 			steps = steps / (double) numFoldsEvaluate;
 			time = time / (double) numFoldsEvaluate;
-			measures = new Measures(instances, matrix);
+			for(int i=0;i<measures.length;i++) {
+				measures[i] /= (double) numFoldsEvaluate;
+			}
 		} catch (Exception e) {
 			bestConfiguration = null;
 		}
@@ -195,14 +214,12 @@ public class ExperimenterBase {
 		if (bestConfiguration != null) {
 			StringBuilder str = new StringBuilder(2000);
 			str.append(String.format("%.4f,%.4f,%.4f,\"%s\",\"%s\",\"%s\"", error, steps, time, basePath, configuration, bestConfiguration));
-			double[] ms = measures.toArray();
-			for (double d : ms) {
+			for (double d : measures) {
 				str.append(", " + d);
 			}
-			System.out.println(str); // TODO remove print
 			out.println(str.toString());
 		} else {
-			out.format("%.4f,%.4f,%.4f,\"%s\",\"%s\",\"%s\"\n", Double.NaN, Double.NaN, Double.NaN, basePath, configuration, "Error on Fold " + runningFold);
+			out.format("%.4f,%.4f,%.4f,\"%s\",\"%s\",\"%s\"\n", Double.NaN, Double.NaN, Double.NaN, basePath, configuration, "Error on Fold " + fold);
 		}
 		out.close();
 	}
