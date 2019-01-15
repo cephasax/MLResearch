@@ -24,7 +24,7 @@ public class RunAutoWEKA {
 				"./resources/datasets/Secom.arff",
 			};
 		
-		exp.maxMinutes = 60; 						// in minutes
+		exp.maxMinutes = 1; 						// in minutes
 		exp.numRepetitions = 10;					// default = 10 mas, preciso baixar p/ 1
 		exp.numFoldsEvaluate = 5;				// número de folds 10 default
 		exp.output_name = "Exp_AutoWEKAClassifier";	// nome do arquivo csv

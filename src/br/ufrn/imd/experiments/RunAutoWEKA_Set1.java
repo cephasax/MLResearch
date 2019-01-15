@@ -6,9 +6,9 @@ public class RunAutoWEKA_Set1 {
 		ExperimenterBase exp = new ExperimenterBase();
 		exp.bases = ExperimenterBase.set1;
 		exp.maxMinutes = 60; 						// in minutes
-		exp.numRepetitions = 10;					// default = 10 mas, preciso baixar p/ 1
+		exp.numRepetitions = 2;					// default = 10 mas, preciso baixar p/ 1
 		exp.numFoldsEvaluate = 5;				// número de folds 10 default
-		exp.output_name = "Exp_AutoWEKAClassifier";	// nome do arquivo csv
+		exp.output_name = "Exp_AutoWEKAClassifier_set1";	// nome do arquivo csv
 		exp.experimenter(AutoClassifier.Auto_WEKA);
 	}
 }

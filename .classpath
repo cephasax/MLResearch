@@ -12,6 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="autoweka.jar"/>
+	<classpathentry kind="lib" path="AutoWEKA-2.6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

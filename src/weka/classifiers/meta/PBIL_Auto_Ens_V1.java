@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import br.ufrn.imd.Measures;
 import br.ufrn.imd.pbil.Configuration;
 import br.ufrn.imd.pbil.Model;
 import br.ufrn.imd.pbil.Solve;

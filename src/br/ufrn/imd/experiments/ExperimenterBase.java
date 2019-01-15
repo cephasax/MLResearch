@@ -36,9 +36,12 @@ class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 
 public class ExperimenterBase {
 	
-	public static final String [] set1 = {"./resources/datasets/Ecoli.arff","./resources/datasets/Sonar.arff","./resources/datasets/KR-vs-KP.arff","./resources/datasets/Nursery.arff","./resources/datasets/Secom.arff"};
-	public static final String [] set2 = {"./resources/datasets/Car.arff","./resources/datasets/GermanCredit.arff","./resources/datasets/Wine.arff","./resources/datasets/Waveform.arff","./resources/datasets/Madelon.arff"};
-	public static final String [] set3 = {"./resources/datasets/Yeast.arff","./resources/datasets/Abalone.arff","./resources/datasets/Arrhythmia.arff","./resources/datasets/Semeion.arff","./resources/datasets/Adult.arff"};
+	private static final String DIR = "./resources/datasets/";
+	
+	public static final String [] set1 = {DIR + "Ecoli.arff",DIR + "GermanCredit.arff",DIR + "Arrhythmia.arff",DIR + "Secom.arff"};
+	public static final String [] set2 = {DIR + "Car.arff",DIR + "Abalone.arff",DIR + "Semeion.arff",DIR + "Madelon.arff"};
+	public static final String [] set3 = {DIR + "Yeast.arff",DIR + "KR-vs-KP.arff",DIR + "Waveform.arff",DIR + "Adult.arff"};
+	public static final String [] set4 = {DIR + "Sonar.arff",DIR + "Wine.arff",DIR + "Nursery.arff"};
 
 	public int maxMinutes = 1; 						// in minutes
 	public int maxSecondsBySolve = 5; 						// in seconds
@@ -49,25 +52,24 @@ public class ExperimenterBase {
 	public double[] population_update = { 0.5 };	// Update em % {0.1, 0.2, 0.3, 0.4, 0.5}
 	public double[] learning = { 0.1 }; 				// private static double[] learning = { 0.2, 0.1, 0.05, 0.01 };
 	public String[] bases = {
-			"./resources/datasets/Ecoli.arff",
-			"./resources/datasets/Car.arff",
-			"./resources/datasets/Yeast.arff",
+			DIR + "Ecoli.arff",
+			DIR + "Car.arff",
+			DIR + "Yeast.arff",
+			DIR + "Sonar.arff",
 			
-			"./resources/datasets/Sonar.arff",
-			"./resources/datasets/GermanCredit.arff",
-			"./resources/datasets/Abalone.arff",
+			DIR + "GermanCredit.arff",
+			DIR + "Abalone.arff",
+			DIR + "KR-vs-KP.arff",
+			DIR + "Wine.arff",
 			
-			"./resources/datasets/KR-vs-KP.arff",
-			"./resources/datasets/Wine.arff",
-			"./resources/datasets/Arrhythmia.arff",
+			DIR + "Arrhythmia.arff",
+			DIR + "Semeion.arff",
+			DIR + "Waveform.arff",
+			DIR + "Nursery.arff",
 			
-			"./resources/datasets/Semeion.arff",
-			"./resources/datasets/Waveform.arff",
-			"./resources/datasets/Nursery.arff",
-			
-			"./resources/datasets/Adult.arff",
-			"./resources/datasets/Madelon.arff",
-			"./resources/datasets/Secom.arff"
+			DIR + "Adult.arff",
+			DIR + "Madelon.arff",
+			DIR + "Secom.arff"
 	};
 	
 	public String output_name = "exp";	// nome do arquivo csv
