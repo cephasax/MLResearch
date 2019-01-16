@@ -6,7 +6,7 @@ import java.util.Random;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
-import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.lazy.IBk;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -15,13 +15,14 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class Measures implements Serializable {
 
 	public static void main(String[] args) throws Exception {
-		Instances instances = DataSource.read("./resources/datasets/Sonar.arff");
+		String path = "./resources/datasets/Abalone.arff";
+		Instances instances = DataSource.read(path);
 		instances.setClassIndex(instances.numAttributes() - 1);
-		Classifier classifier = new NaiveBayes();
+		Classifier classifier = new IBk(10);
 
-		System.out.println(new Measures(classifier, instances, 10, new Random(0)).toSummary());
+		//System.out.println(new Measures(classifier, instances, 10, new Random(0)).toSummary());
 
-		instances = DataSource.read("./resources/datasets/Sonar.arff");
+		instances = DataSource.read(path);
 		instances.setClassIndex(instances.numAttributes() - 1);
 		instances.randomize(new Random(0));
 		instances.stratify(10);
@@ -45,7 +46,7 @@ public class Measures implements Serializable {
 
 		// System.out.println(matrix);
 
-		instances = DataSource.read("./resources/datasets/Sonar.arff");
+		instances = DataSource.read(path);
 		instances.setClassIndex(instances.numAttributes() - 1);
 		System.out.println(new Measures(instances, m).toSummary());
 		
@@ -113,9 +114,9 @@ public class Measures implements Serializable {
 		recall = new double[numClasses];
 		fmeasure = new double[numClasses];
 		for (int i = 0; i < numClasses; i++) {
-			precision[i] = eval.precision(i);
-			recall[i] = eval.recall(i);
-			fmeasure[i] = eval.fMeasure(i);
+			precision[i] = fixNaN(eval.precision(i));
+			recall[i] = fixNaN(eval.recall(i));
+			fmeasure[i] = fixNaN(eval.fMeasure(i));
 			classesDistribution[i] /= numInstances;
 		}
 
@@ -216,7 +217,7 @@ public class Measures implements Serializable {
 			}
 			total += matrix[classIndex][j];
 		}
-		return correct / total;
+		return total == 0 ? 0 : correct / total;
 	}
 
 	private double precision(int classIndex, int[][] matrix) {
@@ -228,11 +229,12 @@ public class Measures implements Serializable {
 			}
 			total += matrix[i][classIndex];
 		}
-		return correct / total;
+		return total == 0 ? 0 : correct / total;
 	}
 
 	private double fMeasure(double precision, double recall) {
-		return (2.0 * (precision * recall)) / (precision + recall);
+		double sum = precision + recall;
+		return sum == 0 ? 0 : (2.0 * (precision * recall)) / sum;
 	}
 
 	private double average(double[] values) {
@@ -246,8 +248,12 @@ public class Measures implements Serializable {
 	private double averageByDistribution(double[] values) {
 		double avg = 0;
 		for (int i = 0; i < values.length; i++) {
-			avg += values[i] * classesDistribution[i];
+			avg += fixNaN(values[i] * classesDistribution[i]);
 		}
 		return avg;
+	}
+	
+	private static double fixNaN(double value) {
+		return Double.isNaN(value) ? 0 : value;
 	}
 }

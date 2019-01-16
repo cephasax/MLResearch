@@ -12,7 +12,7 @@ import weka.core.Instances;
 
 public class PbilWekaWorker{
 	
-	private static final int maxNumThreads = 5;
+	private static final int maxNumThreads = 1;
 	private Instances dataset;
 	private ArrayList<Solution> correctSolutions;
 	private ArrayList<Solution> solutions;

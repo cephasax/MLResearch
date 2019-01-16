@@ -19,18 +19,26 @@ import weka.core.Utils;
 class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 
 	private static final long serialVersionUID = 1L;
+	
+	protected double performedTime = 0;
 
 	public AbstractClassifier getClassifier() {
 		return (AbstractClassifier) classifier;
 	}
 
 	public double getPerformedTime() {
-		return finalTrainTime;
+		return performedTime;
 	}
 
 	public int getPerformedStesp() {
 		return 0;
 		// return totalTried;
+	}
+
+	public void buildClassifier(Instances is) throws Exception {
+		long startTime = System.currentTimeMillis();
+		super.buildClassifier(is);
+		performedTime = (System.currentTimeMillis() - startTime) / 60000.0;
 	}
 }
 
@@ -38,31 +46,31 @@ public class ExperimenterBase {
 	
 	private static final String DIR = "./resources/datasets/";
 	
-	public static final String [] set1 = {DIR + "Ecoli.arff",DIR + "GermanCredit.arff",DIR + "Arrhythmia.arff",DIR + "Secom.arff"};
-	public static final String [] set2 = {DIR + "Car.arff",DIR + "Abalone.arff",DIR + "Semeion.arff",DIR + "Madelon.arff"};
-	public static final String [] set3 = {DIR + "Yeast.arff",DIR + "KR-vs-KP.arff",DIR + "Waveform.arff",DIR + "Adult.arff"};
-	public static final String [] set4 = {DIR + "Sonar.arff",DIR + "Wine.arff",DIR + "Nursery.arff"};
+	public static final String [] set1 = {DIR + "Ecoli.arff",DIR + "Sonar.arff",DIR + "KR-vs-KP.arff",DIR + "Semeion.arff",DIR + "Adult.arff"};
+	public static final String [] set2 = {DIR + "Car.arff",DIR + "GermanCredit.arff",DIR + "Wine.arff",DIR + "Waveform.arff",DIR + "Madelon.arff"};
+	public static final String [] set3 = {DIR + "Yeast.arff",DIR + "Abalone.arff",DIR + "Arrhythmia.arff",DIR + "Nursery.arff",DIR + "Secom.arff"};
 
-	public int maxMinutes = 1; 						// in minutes
-	public int maxSecondsBySolve = 5; 						// in seconds
-	public int numRepetitions = 1;					// default = 10 mas, preciso baixar p/ 1
-	public int numFoldsEvaluate = 10;				// número de folds 10 default
+	public int maxMinutes = 60; 						// in minutes
+	public int maxSecondsBySolve = (maxMinutes * 60) / 12; 						// in seconds
+	public int numRepetitions = 2;					// default = 10 mas, preciso baixar p/ 1
+	public int numFoldsEvaluate = 5;				// número de folds 10 default
 	public int[] iterations = { 20 };  				// gerações = { 20, 50, 100 };
-	public int[] population_size = { 10 };			// população = {10, 20, 30, 50, 70, 100}
+	public int[] population_size = { 30 };			// população = {10, 20, 30, 50, 70, 100}
 	public double[] population_update = { 0.5 };	// Update em % {0.1, 0.2, 0.3, 0.4, 0.5}
-	public double[] learning = { 0.1 }; 				// private static double[] learning = { 0.2, 0.1, 0.05, 0.01 };
+	public double[] learning = { 0.5 }; 				// private static double[] learning = { 0.2, 0.1, 0.05, 0.01 };
 	public String[] bases = {
 			DIR + "Ecoli.arff",
 			DIR + "Car.arff",
 			DIR + "Yeast.arff",
-			DIR + "Sonar.arff",
 			
+			DIR + "Sonar.arff",
 			DIR + "GermanCredit.arff",
 			DIR + "Abalone.arff",
+			
 			DIR + "KR-vs-KP.arff",
 			DIR + "Wine.arff",
-			
 			DIR + "Arrhythmia.arff",
+			
 			DIR + "Semeion.arff",
 			DIR + "Waveform.arff",
 			DIR + "Nursery.arff",
