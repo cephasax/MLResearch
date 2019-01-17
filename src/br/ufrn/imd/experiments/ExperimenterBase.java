@@ -46,9 +46,9 @@ public class ExperimenterBase {
 	
 	private static final String DIR = "./resources/datasets/";
 	
-	public static final String [] set1 = {DIR + "Ecoli.arff",DIR + "Sonar.arff",DIR + "KR-vs-KP.arff",DIR + "Semeion.arff",DIR + "Adult.arff"};
-	public static final String [] set2 = {DIR + "Car.arff",DIR + "GermanCredit.arff",DIR + "Wine.arff",DIR + "Waveform.arff",DIR + "Madelon.arff"};
-	public static final String [] set3 = {DIR + "Yeast.arff",DIR + "Abalone.arff",DIR + "Arrhythmia.arff",DIR + "Nursery.arff",DIR + "Secom.arff"};
+	public static final String [] set1 = {DIR + "Glass Identificaton.arff",DIR + "Flags.arff",DIR + "Car.arff",DIR + "GermanCredit.arff",DIR + "Wine.arff",DIR + "Semeion.arff",DIR + "Adult.arff"};
+	public static final String [] set2 = {DIR + "SolarFlare1",DIR + "Automobile.arff",DIR + "Yeast.arff",DIR + "Abalone.arff",DIR + "Image Segmentation.arff",DIR + "Waveform.arff",DIR + "Madelon.arff"};
+	public static final String [] set3 = {DIR + "Ecoli.arff",DIR + "Dermatology.arff",DIR + "Sonar.arff",DIR + "KR-vs-KP.arff",DIR + "Arrhythmia.arff",DIR + "Nursery.arff",DIR + "Secom.arff"};
 
 	public int maxMinutes = 60; 						// in minutes
 	public int maxSecondsBySolve = (maxMinutes * 60) / 12; 						// in seconds
@@ -59,16 +59,25 @@ public class ExperimenterBase {
 	public double[] population_update = { 0.5 };	// Update em % {0.1, 0.2, 0.3, 0.4, 0.5}
 	public double[] learning = { 0.5 }; 				// private static double[] learning = { 0.2, 0.1, 0.05, 0.01 };
 	public String[] bases = {
+			
+			DIR + "Glass Identificaton.arff",
+			DIR + "SolarFlare1",
 			DIR + "Ecoli.arff",
+			
+			DIR + "Flags.arff",
+			DIR + "Automobile.arff",
+			DIR + "Dermatology.arff",
+			
 			DIR + "Car.arff",
 			DIR + "Yeast.arff",
-			
 			DIR + "Sonar.arff",
+			
 			DIR + "GermanCredit.arff",
 			DIR + "Abalone.arff",
-			
 			DIR + "KR-vs-KP.arff",
+			
 			DIR + "Wine.arff",
+			DIR + "Image Segmentation.arff",
 			DIR + "Arrhythmia.arff",
 			
 			DIR + "Semeion.arff",
@@ -101,7 +110,7 @@ public class ExperimenterBase {
 				String base = bases[bIndex];
 				for (int i = 0; i < numRepetitions; i++) {
 					AutoWEKAClassifier_Adapter classifier = auto.classifier();
-					classifier.setSeed(i + bIndex * numRepetitions);
+					classifier.setSeed(i * 13 + 123);
 					classifier.setTimeLimit(maxMinutes);
 					classifier.setMemLimit(4096);
 					classifier.setnBestConfigs(1);
@@ -131,7 +140,7 @@ public class ExperimenterBase {
 										classifier.setLearningRate(rate);
 										classifier.setNumSamplesUpdate((int) Math.max(1, update * popSize));
 										classifier.setPopulation(popSize);
-										classifier.setSeed(i);
+										classifier.setSeed(i * 13 + 123);
 										classifier.setTimeLimitBySolveInSeconds(maxSecondsBySolve);
 									} else {
 										PBIL_Auto_Ens_V2 classifier = auto.classifier();
@@ -141,7 +150,7 @@ public class ExperimenterBase {
 										classifier.setLearningRate(rate);
 										classifier.setNumSamplesUpdate((int) Math.max(1, update * popSize));
 										classifier.setPopulation(popSize);
-										classifier.setSeed(i);
+										classifier.setSeed(i * 13 + 123);
 										classifier.setTimeLimitBySolveInSeconds(maxSecondsBySolve);
 									}
 									run(auto, output_file, base, i);
