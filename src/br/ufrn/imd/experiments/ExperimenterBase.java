@@ -19,7 +19,7 @@ import weka.core.Utils;
 class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected double performedTime = 0;
 
 	public AbstractClassifier getClassifier() {
@@ -43,52 +43,52 @@ class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 }
 
 public class ExperimenterBase {
-	
+
 	private static final String DIR = "./resources/datasets/";
-	
-	public static final String [] set1 = {DIR + "Glass Identificaton.arff",DIR + "Flags.arff",DIR + "Car.arff",DIR + "GermanCredit.arff",DIR + "Wine.arff",DIR + "Semeion.arff",DIR + "Adult.arff"};
-	public static final String [] set2 = {DIR + "SolarFlare1",DIR + "Automobile.arff",DIR + "Yeast.arff",DIR + "Abalone.arff",DIR + "Image Segmentation.arff",DIR + "Waveform.arff",DIR + "Madelon.arff"};
-	public static final String [] set3 = {DIR + "Ecoli.arff",DIR + "Dermatology.arff",DIR + "Sonar.arff",DIR + "KR-vs-KP.arff",DIR + "Arrhythmia.arff",DIR + "Nursery.arff",DIR + "Secom.arff"};
+
+	public static final String[] set1 = { DIR + "Glass Identificaton.arff", DIR + "Flags.arff", DIR + "Car.arff", DIR + "GermanCredit.arff", DIR + "Wine.arff", DIR + "Semeion.arff", DIR + "Adult.arff" };
+	public static final String[] set2 = { DIR + "SolarFlare1", DIR + "Automobile.arff", DIR + "Yeast.arff", DIR + "Abalone.arff", DIR + "Image Segmentation.arff", DIR + "Waveform.arff", DIR + "Madelon.arff" };
+	public static final String[] set3 = { DIR + "Ecoli.arff", DIR + "Dermatology.arff", DIR + "Sonar.arff", DIR + "KR-vs-KP.arff", DIR + "Arrhythmia.arff", DIR + "Nursery.arff", DIR + "Secom.arff" };
 
 	public int maxMinutes = 60; 						// in minutes
 	public int maxSecondsBySolve = (maxMinutes * 60) / 12; 						// in seconds
-	public int numRepetitions = 2;					// default = 10 mas, preciso baixar p/ 1
+	public int numRepetitions = 5;					// default = 10 mas, preciso baixar p/ 1
 	public int numFoldsEvaluate = 5;				// número de folds 10 default
 	public int[] iterations = { 20 };  				// gerações = { 20, 50, 100 };
 	public int[] population_size = { 30 };			// população = {10, 20, 30, 50, 70, 100}
 	public double[] population_update = { 0.5 };	// Update em % {0.1, 0.2, 0.3, 0.4, 0.5}
 	public double[] learning = { 0.5 }; 				// private static double[] learning = { 0.2, 0.1, 0.05, 0.01 };
 	public String[] bases = {
-			
+
 			DIR + "Glass Identificaton.arff",
 			DIR + "SolarFlare1",
 			DIR + "Ecoli.arff",
-			
+
 			DIR + "Flags.arff",
 			DIR + "Automobile.arff",
 			DIR + "Dermatology.arff",
-			
+
 			DIR + "Car.arff",
 			DIR + "Yeast.arff",
 			DIR + "Sonar.arff",
-			
+
 			DIR + "GermanCredit.arff",
 			DIR + "Abalone.arff",
 			DIR + "KR-vs-KP.arff",
-			
+
 			DIR + "Wine.arff",
 			DIR + "Image Segmentation.arff",
 			DIR + "Arrhythmia.arff",
-			
+
 			DIR + "Semeion.arff",
 			DIR + "Waveform.arff",
 			DIR + "Nursery.arff",
-			
+
 			DIR + "Adult.arff",
 			DIR + "Madelon.arff",
 			DIR + "Secom.arff"
 	};
-	
+
 	public String output_name = "exp";	// nome do arquivo csv
 
 	private static int numFoldsFitness = 10;
@@ -106,11 +106,11 @@ public class ExperimenterBase {
 		createResultsLog();
 		switch (auto) {
 		case Auto_WEKA:
-			for (int bIndex = 0; bIndex < bases.length; bIndex++) {
-				String base = bases[bIndex];
-				for (int i = 0; i < numRepetitions; i++) {
+			for (int i = 0; i < numRepetitions; i++) {
+				for (int bIndex = 0; bIndex < bases.length; bIndex++) {
+					String base = bases[bIndex];
 					AutoWEKAClassifier_Adapter classifier = auto.classifier();
-					classifier.setSeed(i * 13 + 123);
+					classifier.setSeed(i * 127 + 123);
 					classifier.setTimeLimit(maxMinutes);
 					classifier.setMemLimit(4096);
 					classifier.setnBestConfigs(1);
@@ -122,16 +122,16 @@ public class ExperimenterBase {
 		case PBIL_Auto_Ens_v1:
 		case PBIL_Auto_Ens_v2:
 
-			for (String base : bases) {
-				for (int pIndex = 0; pIndex < population_size.length; pIndex++) {
-					int popSize = population_size[pIndex];
-					for (int uIndex = 0; uIndex < population_update.length; uIndex++) {
-						double update = population_update[uIndex];
-						for (int rIndex = 0; rIndex < learning.length; rIndex++) {
-							double rate = learning[rIndex];
-							for (int sIndex = 0; sIndex < iterations.length; sIndex++) {
-								int step = iterations[sIndex];
-								for (int i = 0; i < numRepetitions; i++) {
+			for (int i = 0; i < numRepetitions; i++) {
+				for (String base : bases) {
+					for (int pIndex = 0; pIndex < population_size.length; pIndex++) {
+						int popSize = population_size[pIndex];
+						for (int uIndex = 0; uIndex < population_update.length; uIndex++) {
+							double update = population_update[uIndex];
+							for (int rIndex = 0; rIndex < learning.length; rIndex++) {
+								double rate = learning[rIndex];
+								for (int sIndex = 0; sIndex < iterations.length; sIndex++) {
+									int step = iterations[sIndex];
 									if (auto == AutoClassifier.PBIL_Auto_Ens_v1) {
 										PBIL_Auto_Ens_V1 classifier = auto.classifier();
 										classifier.setTimeLimit(maxMinutes);
@@ -140,7 +140,7 @@ public class ExperimenterBase {
 										classifier.setLearningRate(rate);
 										classifier.setNumSamplesUpdate((int) Math.max(1, update * popSize));
 										classifier.setPopulation(popSize);
-										classifier.setSeed(i * 13 + 123);
+										classifier.setSeed(i * 127 + 123);
 										classifier.setTimeLimitBySolveInSeconds(maxSecondsBySolve);
 									} else {
 										PBIL_Auto_Ens_V2 classifier = auto.classifier();
@@ -150,7 +150,7 @@ public class ExperimenterBase {
 										classifier.setLearningRate(rate);
 										classifier.setNumSamplesUpdate((int) Math.max(1, update * popSize));
 										classifier.setPopulation(popSize);
-										classifier.setSeed(i * 13 + 123);
+										classifier.setSeed(i * 127 + 123);
 										classifier.setTimeLimitBySolveInSeconds(maxSecondsBySolve);
 									}
 									run(auto, output_file, base, i);
@@ -168,7 +168,7 @@ public class ExperimenterBase {
 		double steps = 0;
 		double time = 0;
 		double minError = 0;
-		double [] measures = null;
+		double[] measures = null;
 		String bestConfiguration = null;
 
 		int fold = 0;
@@ -208,12 +208,12 @@ public class ExperimenterBase {
 				}
 
 				System.out.format("Fold Execution %d - Error %.4f\n", fold, (miss / (double) test.numInstances()));
-				
-				if(measures == null) {
+
+				if (measures == null) {
 					measures = new Measures(instances, matrix).toArray();
 				} else {
-					double [] mNew = new Measures(instances, matrix).toArray();
-					for(int i=0;i<measures.length;i++) {
+					double[] mNew = new Measures(instances, matrix).toArray();
+					for (int i = 0; i < measures.length; i++) {
 						measures[i] += mNew[i];
 					}
 				}
@@ -221,7 +221,7 @@ public class ExperimenterBase {
 			error = error / (double) numFoldsEvaluate;
 			steps = steps / (double) numFoldsEvaluate;
 			time = time / (double) numFoldsEvaluate;
-			for(int i=0;i<measures.length;i++) {
+			for (int i = 0; i < measures.length; i++) {
 				measures[i] /= (double) numFoldsEvaluate;
 			}
 		} catch (Exception e) {

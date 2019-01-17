@@ -11,7 +11,7 @@ public class RunV2_Set1 {
 		
 		exp.bases = ExperimenterBase.set1;
 		exp.maxMinutes = 60; 						// in minutes
-		exp.numRepetitions = 2;					// default = 10 mas, preciso baixar p/ 1
+		exp.numRepetitions = 5;					// default = 10 mas, preciso baixar p/ 1
 		exp.numFoldsEvaluate = 5;				// número de folds 10 default
 		exp.output_name = "Exp_PBIL_Auto_Ens_v2_set1";	// nome do arquivo csv
 		exp.experimenter(AutoClassifier.PBIL_Auto_Ens_v2);
