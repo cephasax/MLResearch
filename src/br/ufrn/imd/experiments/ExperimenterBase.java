@@ -44,10 +44,62 @@ class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 
 public class ExperimenterBase {
 
+	public static void main(String[] args) throws Exception {
+		String base = DIR + args[0];
+		AutoClassifier alg = AutoClassifier.valueOf(args[1]);
+		int seed = Integer.parseInt(args[2]);
+		String output_file = args[3];
+
+		final File output = new File(output_file);
+		if (!output.exists()) {
+			final PrintStream out = new PrintStream(output);
+			out.println("Error,Steps,Time,Base,Parameters,\"Best Solve\",\"Precision Simple AVG\",\"Recall Simple AVG\",\"F-Measure Simple Avg\",\"Precision Weighted AVG\",\"Recall Weighted AVG\",\"F-Measure Weighted Avg\",\"Precision Recall F-Measure by Class\"");
+			out.close();
+		}
+
+		switch (alg) {
+			case Auto_WEKA: {
+				AutoWEKAClassifier_Adapter classifier = alg.classifier();
+				classifier.setSeed(seed);
+				classifier.setTimeLimit(60);
+				classifier.setMemLimit(4096);
+				classifier.setnBestConfigs(1);
+				classifier.setParallelRuns(1);
+				run(alg, output_file, base, seed/127 - 123, 5);
+				break;
+			}
+			case PBIL_Auto_Ens_v1:
+			case PBIL_Auto_Ens_v2: {
+				if (alg == AutoClassifier.PBIL_Auto_Ens_v1) {
+					PBIL_Auto_Ens_V1 classifier = alg.classifier();
+					classifier.setTimeLimit(75);
+					classifier.setNumFolds(10);
+					classifier.setGenerations(500);
+					classifier.setLearningRate(0.5);
+					classifier.setNumSamplesUpdate((int) Math.max(1, 0.5 * 50));
+					classifier.setPopulation(50);
+					classifier.setSeed(seed);
+					classifier.setTimeLimitBySolveInSeconds((60 * 60) / 12);
+				} else {
+					PBIL_Auto_Ens_V2 classifier = alg.classifier();
+					classifier.setTimeLimit(60);
+					classifier.setNumFolds(10);
+					classifier.setGenerations(500);
+					classifier.setLearningRate(0.5);
+					classifier.setNumSamplesUpdate((int) Math.max(1, 0.5 * 50));
+					classifier.setPopulation(50);
+					classifier.setSeed(seed);
+					classifier.setTimeLimitBySolveInSeconds((60 * 60) / 12);
+				}
+				run(alg, output_file, base, seed/127 - 123, 5);
+			}
+		}
+	}
+
 	private static final String DIR = "./resources/datasets/";
 
 	public static final String[] set1 = { DIR + "Glass Identificaton.arff", DIR + "Flags.arff", DIR + "Car.arff", DIR + "GermanCredit.arff", DIR + "Wine.arff", DIR + "Semeion.arff", DIR + "Adult.arff" };
-	public static final String[] set2 = { DIR + "SolarFlare1", DIR + "Automobile.arff", DIR + "Yeast.arff", DIR + "Abalone.arff", DIR + "Image Segmentation.arff", DIR + "Waveform.arff", DIR + "Madelon.arff" };
+	public static final String[] set2 = { DIR + "SolarFlare1.arff", DIR + "Automobile.arff", DIR + "Yeast.arff", DIR + "Abalone.arff", DIR + "Image Segmentation.arff", DIR + "Waveform.arff", DIR + "Madelon.arff" };
 	public static final String[] set3 = { DIR + "Ecoli.arff", DIR + "Dermatology.arff", DIR + "Sonar.arff", DIR + "KR-vs-KP.arff", DIR + "Arrhythmia.arff", DIR + "Nursery.arff", DIR + "Secom.arff" };
 
 	public int maxMinutes = 60; 						// in minutes
@@ -115,7 +167,7 @@ public class ExperimenterBase {
 					classifier.setMemLimit(4096);
 					classifier.setnBestConfigs(1);
 					classifier.setParallelRuns(1);
-					run(auto, output_file, base, i);
+					run(auto, output_file, base, i, numFoldsEvaluate);
 				}
 			}
 			break;
@@ -153,7 +205,7 @@ public class ExperimenterBase {
 										classifier.setSeed(i * 127 + 123);
 										classifier.setTimeLimitBySolveInSeconds(maxSecondsBySolve);
 									}
-									run(auto, output_file, base, i);
+									run(auto, output_file, base, i, numFoldsEvaluate);
 								}
 							}
 						}
@@ -163,7 +215,7 @@ public class ExperimenterBase {
 		}
 	}
 
-	private void run(AutoClassifier auto, String outputPath, String basePath, int seed) throws Exception {
+	private static void run(AutoClassifier auto, String outputPath, String basePath, int seed, int numFoldsEvaluate) throws Exception {
 		double error = 0;
 		double steps = 0;
 		double time = 0;
