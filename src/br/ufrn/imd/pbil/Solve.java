@@ -156,11 +156,11 @@ public class Solve implements Comparable<Solve>, Serializable {
 		this.configuration = configuration;
 
 		// configuração 1/15 (1.1) (já rodei)
-		//numModels = configuration.classifiers.size() + configuration.ensembles.size();
+		numModels = configuration.classifiers.size() + configuration.ensembles.size();
 		//System.out.println("numModels.: " + numModels);
 		
 		// configuração 1/6 (1.3) (já rodei)
-		numModels = configuration.ensembles.size() + 3;
+		//numModels = configuration.ensembles.size() + 3;
 		//System.out.println("numModels.: " + numModels);
 		
 		// configuração 1/7 (1.2)
@@ -271,8 +271,8 @@ public class Solve implements Comparable<Solve>, Serializable {
 		if (!isValid(numModels - 1, 0)) {
 			
 			// pega apenas base classifier soluções se repair for chamado
-			//int newModel = rand.nextInt(numModels);
-			int newModel = rand.nextInt(configuration.classifiers.size());
+			int newModel = rand.nextInt(numModels);
+			//int newModel = rand.nextInt(configuration.classifiers.size());
 			
 			
 			// pega apenas meta/ensemble soluções se repair for chamado
