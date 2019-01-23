@@ -16,6 +16,8 @@ import weka.classifiers.meta.PBIL_Auto_Ens_V2;
 import weka.core.Instances;
 import weka.core.Utils;
 
+// ...
+
 class AutoWEKAClassifier_Adapter extends AutoWEKAClassifier {
 
 	private static final long serialVersionUID = 1L;
