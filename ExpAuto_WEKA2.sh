@@ -4,9 +4,6 @@ app="br.ufrn.imd.experiments.ExperimenterBase"
 java $args -cp ".:$jars" $app "Ecoli.arff" Auto_WEKA 123 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Ecoli.arff" Auto_WEKA 250 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Ecoli.arff" Auto_WEKA 377 V2_ResAuto_WEKA2.txt
-java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 123 V2_ResAuto_WEKA2.txt
-java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 250 V2_ResAuto_WEKA2.txt
-java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 377 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Sonar.arff" Auto_WEKA 123 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Sonar.arff" Auto_WEKA 250 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Sonar.arff" Auto_WEKA 377 V2_ResAuto_WEKA2.txt
@@ -24,8 +21,6 @@ java $args -cp ".:$jars" $app "Secom.arff" Auto_WEKA 250 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Secom.arff" Auto_WEKA 377 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Ecoli.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Ecoli.arff" Auto_WEKA 631 V2_ResAuto_WEKA2.txt
-java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
-java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 631 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Sonar.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Sonar.arff" Auto_WEKA 631 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "KR-vs-KP.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
@@ -36,4 +31,10 @@ java $args -cp ".:$jars" $app "Nursery.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Nursery.arff" Auto_WEKA 631 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Secom.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
 java $args -cp ".:$jars" $app "Secom.arff" Auto_WEKA 631 V2_ResAuto_WEKA2.txt
+
+java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 123 V2_ResAuto_WEKA2.txt
+java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 250 V2_ResAuto_WEKA2.txt
+java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 377 V2_ResAuto_WEKA2.txt
+java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 504 V2_ResAuto_WEKA2.txt
+java $args -cp ".:$jars" $app "Dermatology.arff" Auto_WEKA 631 V2_ResAuto_WEKA2.txt
 sleep(5d)
