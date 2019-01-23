@@ -76,7 +76,7 @@ public class ExperimenterBase {
 					PBIL_Auto_Ens_V1 classifier = alg.classifier();
 					classifier.setTimeLimit(75);
 					classifier.setNumFolds(10);
-					classifier.setGenerations(500);
+					classifier.setGenerations(20);
 					classifier.setLearningRate(0.5);
 					classifier.setNumSamplesUpdate((int) Math.max(1, 0.5 * 50));
 					classifier.setPopulation(50);
@@ -86,7 +86,7 @@ public class ExperimenterBase {
 					PBIL_Auto_Ens_V2 classifier = alg.classifier();
 					classifier.setTimeLimit(60);
 					classifier.setNumFolds(10);
-					classifier.setGenerations(500);
+					classifier.setGenerations(20);
 					classifier.setLearningRate(0.5);
 					classifier.setNumSamplesUpdate((int) Math.max(1, 0.5 * 50));
 					classifier.setPopulation(50);
