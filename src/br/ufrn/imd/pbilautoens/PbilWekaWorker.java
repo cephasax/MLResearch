@@ -20,6 +20,7 @@ public class PbilWekaWorker{
 	private int solutionTimeInSeconds;
 	private int totalTime;
 	private int populationSize;
+	private Solution bestSolve;
 
 	public PbilWekaWorker(Instances instances) throws Exception {
 		correctSolutions = new ArrayList<Solution>();
@@ -31,6 +32,14 @@ public class PbilWekaWorker{
 		this.solutions = solutions;
 	}
 	
+	public Solution getBestSolve() {
+		return bestSolve;
+	}
+
+	public void setBestSolve(Solution bestSolve) {
+		this.bestSolve = bestSolve;
+	}
+
 	@SuppressWarnings("deprecation")
 	public void runSolutions() {
 		int success = 0;
@@ -67,6 +76,9 @@ public class PbilWekaWorker{
 					it.remove();
 					if(e.isValid()) {
 						success++;
+						if(bestSolve == null || e.getSolution().getMeanError() < bestSolve.getMeanError() ) {
+							bestSolve = e.getSolution();
+						}
 						correctSolutions.add(e.getSolution());
 					}
 					//System.out.println("Success for " + e.getSolution());

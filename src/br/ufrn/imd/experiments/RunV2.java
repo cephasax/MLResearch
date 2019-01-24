@@ -2,6 +2,8 @@ package br.ufrn.imd.experiments;
 
 public class RunV2 {
 
+	// Não é utilizada, veja scripts na raiz chamando a classe ExperimenterBase
+	
 	public static void main(String[] args) throws Exception {
 		ExperimenterBase exp = new ExperimenterBase();
 		exp.iterations = new int[] { 500 };  				// gerações = { 20, 50, 100 }; // max to stop by time

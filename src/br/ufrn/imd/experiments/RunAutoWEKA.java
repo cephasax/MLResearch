@@ -1,6 +1,8 @@
 package br.ufrn.imd.experiments;
 
 public class RunAutoWEKA {
+	
+	// Não é utilizada, veja scripts na raiz chamando a classe ExperimenterBase
 		
 	public static void main(String[] args) throws Exception {
 		ExperimenterBase exp = new ExperimenterBase();

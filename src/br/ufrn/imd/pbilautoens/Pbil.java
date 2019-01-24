@@ -25,11 +25,9 @@ public class Pbil {
 	private ArrayList<Solution> auxPopulation;
 	private int updateReason = 2; // best solutions size to improve pv (2 = 1/2, n = 1/n, where 1=population size)
 
-	private Solution bestSolution;
-
 	private Instances instances;
 	private PbilOutputWriter pow;
-	private PbilWekaWorker pww;
+	private PbilWekaWorker pbilWekaWorker;
 
 	private int performedSteps;
 
@@ -43,7 +41,6 @@ public class Pbil {
 		f.setLearningRate(learningRate);
 		population = new ArrayList<Solution>();
 		auxPopulation = new ArrayList<Solution>();
-		bestSolution = new Solution();
 		
 		actualDataset = instances.relationName();
 		
@@ -55,17 +52,14 @@ public class Pbil {
 
 		// ---- BuildPbilWorker(dataset);
 		try {
-			pww = new PbilWekaWorker(instances);
+			pbilWekaWorker = new PbilWekaWorker(instances);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		pww.setFold(numFolds);
-		pww.setSolutionTime(maxSecondsPerSolution);
-		pww.setTotalTime(maxMinutes);
-		pww.setPopulationSize(populationSize);
-
-		//prevent error with empty bestSolution
-		bestSolution = new Solution();
+		pbilWekaWorker.setFold(numFolds);
+		pbilWekaWorker.setSolutionTime(maxSecondsPerSolution);
+		pbilWekaWorker.setTotalTime(maxMinutes);
+		pbilWekaWorker.setPopulationSize(populationSize);
 		
 		
 		//TERMINAL - DETAILS ABOUT DATASET
@@ -102,15 +96,15 @@ public class Pbil {
 			}
 
 			// ---- buildAndRunWekaSolutions();
-			pww.setSolutions(population);
-			pww.convertSolutionsToWekaClassifiers();
+			pbilWekaWorker.setSolutions(population);
+			pbilWekaWorker.convertSolutionsToWekaClassifiers();
 			
 			//TERMINAL - RUNNING INFO
 			outputRunningInfo();
 			
 			// ---- run();
-			pww.runSolutions();
-			population = (ArrayList<Solution>) pww.getCorrectSolutions();
+			pbilWekaWorker.runSolutions();
+			population = (ArrayList<Solution>) pbilWekaWorker.getCorrectSolutions();
 
 			// ---- orderSolutions();
 			Collections.sort(population, Solution.meanErrorComparator);
@@ -130,12 +124,6 @@ public class Pbil {
 				pow.writeInFile();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-
-			// ---- keepBestSolution();
-			// !population.isEmpty(): case in that all evaluated solves are invalid
-			if (!population.isEmpty() && population.get(0).getMeanError() < bestSolution.getMeanError()) {
-				bestSolution = population.get(0);
 			}
 			
 			//TERMINAL - ORDERING INFO
@@ -173,7 +161,7 @@ public class Pbil {
 
 			// ---- logBestSolution();
 			pow.addContentline("\n --->>>> Best Solution for " + actualDataset + " - according mean error <<<<---\n");
-			pow.logSolutionAccuracyFirst(bestSolution);
+			pow.logSolutionAccuracyFirst(pbilWekaWorker.getBestSolve());
 			try {
 				pow.writeInFile();
 			} catch (IOException e) {
@@ -189,7 +177,7 @@ public class Pbil {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			pww.clearSolutionLists();
+			pbilWekaWorker.clearSolutionLists();
 		}
 		
 		// ---- log PVs
@@ -216,7 +204,7 @@ public class Pbil {
 	}
 
 	public Solution getBestSolution() {
-		return bestSolution;
+		return pbilWekaWorker.getBestSolve();
 	}
 
 	public void setPopulationSize(int populationSize) {
@@ -278,7 +266,7 @@ public class Pbil {
 	}
 	
 	public void outputBestSolutionInfo() {
-		pow.outputBestSolutionInfo(performedSteps, bestSolution.getPossibilityKeySet().toString());
+		pow.outputBestSolutionInfo(performedSteps, pbilWekaWorker.getBestSolve().getPossibilityKeySet().toString());
 	}
 	
 	public void logBadSolutions() {
